@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fmacj.Tests", "Tests\Fmacj.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fmacj.Emitter", "Emitter\Fmacj.Emitter.csproj", "{1EF044B4-BEB8-4898-A16B-59F73BA0CA0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fmacj.Runtime", "Fmacj.Runtime\Fmacj.Runtime.csproj", "{B8D09CBB-91D0-4119-829F-FE0698396B23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fmacj.Runtime", "Runtime\Fmacj.Runtime.csproj", "{B8D09CBB-91D0-4119-829F-FE0698396B23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
