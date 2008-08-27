@@ -48,7 +48,7 @@
     <Compile Include="TypeParallelizer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fmacj.Runtime\Fmacj.Runtime.csproj">
+    <ProjectReference Include="..\Runtime\Fmacj.Runtime.csproj">
       <Project>{B8D09CBB-91D0-4119-829F-FE0698396B23}</Project>
       <Name>Fmacj.Runtime</Name>
     </ProjectReference>
