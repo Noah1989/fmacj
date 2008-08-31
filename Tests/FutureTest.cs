@@ -50,7 +50,7 @@ namespace Fmacj.Tests
                 TcpClient tcpClient = new TcpClient();
                 tcpClient.Connect(IPAddress.Loopback, 23000);
                 StreamWriter streamWriter = new StreamWriter(tcpClient.GetStream());
-                streamWriter.Write("Test");
+                streamWriter.Write("Aloha ʻoe");
                 streamWriter.Flush();
                 tcpClient.Close();
 
@@ -129,8 +129,8 @@ namespace Fmacj.Tests
             
             TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
             tcpListener.Start();
-            
-            futureTestClass.TestMethod("Test");
+
+            futureTestClass.TestMethod("Aloha ʻoe");
 
             int i = 0;
             while (!tcpListener.Pending())
@@ -144,7 +144,7 @@ namespace Fmacj.Tests
             }
 
             TcpClient tcpClient = tcpListener.AcceptTcpClient();
-            Expect(new StreamReader(tcpClient.GetStream()).ReadToEnd(), EqualTo("Test"));
+            Expect(new StreamReader(tcpClient.GetStream()).ReadToEnd(), EqualTo("Aloha ʻoe"));
 
             tcpClient.Close();
             tcpListener.Stop();
@@ -173,7 +173,7 @@ namespace Fmacj.Tests
             }
 
             TcpClient tcpClient = tcpListener.AcceptTcpClient();
-            Expect(new StreamReader(tcpClient.GetStream()).ReadToEnd(), EqualTo("Test"));
+            Expect(new StreamReader(tcpClient.GetStream()).ReadToEnd(), EqualTo("Aloha ʻoe"));
 
             tcpClient.Close();
             tcpListener.Stop();
@@ -188,7 +188,7 @@ namespace Fmacj.Tests
             TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
             tcpListener.Start();
 
-            futureTestClass.TestMethod("Te", "st");
+            futureTestClass.TestMethod("Aloha", " ʻoe");
 
             int i = 0;
             while (!tcpListener.Pending())
@@ -202,7 +202,7 @@ namespace Fmacj.Tests
             }
 
             TcpClient tcpClient = tcpListener.AcceptTcpClient();
-            Expect(new StreamReader(tcpClient.GetStream()).ReadToEnd(), EqualTo("Test"));
+            Expect(new StreamReader(tcpClient.GetStream()).ReadToEnd(), EqualTo("Aloha ʻoe"));
 
             tcpClient.Close();
             tcpListener.Stop();

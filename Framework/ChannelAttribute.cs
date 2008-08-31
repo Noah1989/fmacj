@@ -11,13 +11,9 @@ namespace Fmacj.Framework
     {
         public ChannelAttribute(string name)
         {
-            _name = name; 
+            Name = name; 
         }
 
-        private readonly string _name;
-        public string Name
-        {
-            get { return _name; }
-        }
+        public string Name { get; private set; }
     }
 }

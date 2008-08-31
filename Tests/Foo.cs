@@ -35,19 +35,19 @@ namespace Fmacj.Tests
             }
 
             [Asynchronous]
-            protected void Baz(int val, [Channel("Baz")] out int result)
+            protected void Baz(int val, [Channel("Baz")] out double result)
             {
-                result = 1/val;
+                result = 1/(double)val;
             }
 
             [Chord]
-            protected int Sum([Channel("Bar")] int bar, [Channel("Baz")] int baz)
+            protected double Sum([Channel("Bar")] int bar, [Channel("Baz")] double baz)
             {
                 return bar + baz;
             }
 
             [Join]
-            public abstract int Sum();
+            public abstract double Sum();
 
             [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
             public virtual void GetObjectData(SerializationInfo info, StreamingContext context)

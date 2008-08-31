@@ -156,14 +156,19 @@ namespace Fmacj.Tests
             Thread.Sleep(100);
 
             List<int> result = new List<int>();
-           
+
             Thread thread =
                 new Thread(
                     delegate()
-                        { for (int i = 1; i <= 1000; i++)
-                            result.Add(ChannelFactory<int>.GetChannel(channelTestClass, "TestChannel").Receive()); });
+                        {
+                            Channel<int> channel = ChannelFactory<int>.GetChannel(channelTestClass, "TestChannel");
+                            for (int i = 1; i <= 1000; i++)
+                            {
+                                result.Add(channel.Receive());
+                            }
+                        });
             thread.Start();
-            Thread.Sleep(100);
+            Thread.Sleep(500);
             thread.Abort();
             
 

@@ -39,8 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bus.cs" />
     <Compile Include="Channel.cs" />
     <Compile Include="ChannelFactory.cs" />
+    <Compile Include="ChordManager.cs" />
+    <Compile Include="IChannel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

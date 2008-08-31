@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ChannelTest.cs" />
     <Compile Include="ChordTest.cs" />
+    <Compile Include="BusTest.cs" />
     <Compile Include="ShortcutTest.cs" />
     <Compile Include="Foo.cs">
       <SubType>Code</SubType>

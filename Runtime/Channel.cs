@@ -3,9 +3,9 @@ using System.Threading;
 
 namespace Fmacj.Runtime
 {
-    public class Channel<T>
+    public class Channel<T> : IChannel
     {
-        private readonly EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
+        private readonly EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
 
         public string Name
         {
@@ -41,20 +41,40 @@ namespace Fmacj.Runtime
             while (!recieved)
             {
                 waitHandle.WaitOne();
-
-                // Conditions have been created where this is lock is necessary
-                // to prevent other threads from stealing the last element from
-                // the queue just between the count check and the dequeuing.
-                lock (values)
-                {
-                    if (values.Count == 0) continue;
-                    result = values.Dequeue();
-                    recieved = true;
-                    if (values.Count == 0) continue;
-                    waitHandle.Set();
-                }
+                recieved = TryRecieve(ref result);
             }
+
             return result;
+        }
+
+        private bool TryRecieve(ref T result)
+        {
+            waitHandle.Reset();
+
+            // Conditions have been created where this is lock is necessary
+            // to prevent other threads from stealing the last element from
+            // the queue just between the count check and the dequeuing.
+            lock (values)
+            {
+                if (values.Count == 0) return false;
+                result = values.Dequeue();
+                if (values.Count == 0) return true;
+                waitHandle.Set();
+            }
+            return true;
+        }
+
+        public WaitHandle WaitHandle
+        {
+            get { return waitHandle; }
+        }
+
+        public bool TryReceive(out object value)
+        {
+            T result = default(T);
+            bool received = TryRecieve(ref result);
+            value = result;
+            return received;
         }
     }
 }
