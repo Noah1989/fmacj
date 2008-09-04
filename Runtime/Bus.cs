@@ -57,16 +57,21 @@ namespace Fmacj.Runtime
             if(channel.TryReceive(out value))
             {
                 data[channel] = value;
-                receivedCount++;
+                Interlocked.Increment(ref receivedCount);
             }
             else
             {
                 RegisterChannel(channel);
             }
 
-            if (receivedCount == channels.Length)
-                dataAvailable = true;
+            // lock here because
+            // setting dataAvailable
+            lock (data)
+            {
+                if (receivedCount == channels.Length)
+                    dataAvailable = true;
                 waitHandle.Set();
+            }
         }
 
         public object[] Receive()
