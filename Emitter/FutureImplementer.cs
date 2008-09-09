@@ -50,14 +50,13 @@ namespace Fmacj.Emitter
                 generator.Emit(OpCodes.Stelem_Ref);
             }
 
-            // IL: Start caller in new Thread
+            // IL: Start caller in new Thread (now using ThreadPool)
             generator.Emit(OpCodes.Ldarg_0);
             generator.Emit(OpCodes.Ldftn, GetCaller(futureGroup));
-            generator.Emit(OpCodes.Newobj, typeof(ParameterizedThreadStart).GetConstructor(new Type[] { typeof(object), typeof(IntPtr) }));
-            generator.Emit(OpCodes.Newobj, typeof(Thread).GetConstructor(new Type[] { typeof(ParameterizedThreadStart) }));
+            generator.Emit(OpCodes.Newobj, typeof(WaitCallback).GetConstructor(new Type[] { typeof(object), typeof(IntPtr) }));
             generator.Emit(OpCodes.Ldloc_0);
-            generator.EmitCall(OpCodes.Call, typeof(Thread).GetMethod("Start", new Type[] { typeof(object) }), null);
-
+            generator.EmitCall(OpCodes.Call, typeof(ThreadPool).GetMethod("QueueUserWorkItem", new Type[] { typeof(WaitCallback), typeof(object) }), null);
+            generator.Emit(OpCodes.Pop);
             generator.Emit(OpCodes.Ret);
 
             return result;
