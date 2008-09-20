@@ -8,11 +8,6 @@ namespace Fmacj.Tests
     [TestFixture]
     public class TypeValidatorTest : AssertionHelper
     {
-        private static object Dummy()
-        {
-            throw new System.NotImplementedException();
-        }
-
         [Test]
         public void AbstractClass()
         {
@@ -20,9 +15,6 @@ namespace Fmacj.Tests
         }
         private abstract class AbstractTestClass : IParallelizable
         {
-            protected AbstractTestClass(SerializationInfo info, StreamingContext context) { Dummy(); }
-            public object Clone() { return Dummy(); }
-            public void GetObjectData(SerializationInfo info, StreamingContext context) { Dummy(); }
         }
 
         [Test]
@@ -32,9 +24,6 @@ namespace Fmacj.Tests
         }
         private class NonAbstractTestClass : IParallelizable
         {
-            public NonAbstractTestClass(SerializationInfo info, StreamingContext context) { Dummy(); }
-            public object Clone() { return Dummy(); }
-            public void GetObjectData(SerializationInfo info, StreamingContext context) { Dummy(); }
         }
 
         [Test]
@@ -51,9 +40,6 @@ namespace Fmacj.Tests
         }
         private struct TestStruct : IParallelizable
         {
-            public TestStruct(SerializationInfo info, StreamingContext context) { Dummy(); }
-            public object Clone() { return Dummy(); }
-            public void GetObjectData(SerializationInfo info, StreamingContext context) { Dummy(); }
         }
 
         [Test]

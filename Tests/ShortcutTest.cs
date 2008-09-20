@@ -16,17 +16,8 @@ namespace Fmacj.Tests
     public class ShortcutTest : AssertionHelper
     {
         [Parallelizable]
-        [Serializable]
         public abstract class ShortcutTestClass : IParallelizable
         {
-            protected ShortcutTestClass()
-            {
-            }
-
-            protected ShortcutTestClass(SerializationInfo info, StreamingContext context)
-            {
-            }
-
             [Fork]
             [Asynchronous]
             public virtual void NoChannelForkGroup(string testString)
@@ -37,17 +28,6 @@ namespace Fmacj.Tests
                 streamWriter.Write(testString);
                 streamWriter.Flush();
                 tcpClient.Close();
-            }
-            
-
-            public object Clone()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void GetObjectData(SerializationInfo info, StreamingContext context)
-            {
-                throw new NotImplementedException();
             }
         }
 
@@ -84,7 +64,6 @@ namespace Fmacj.Tests
 
             tcpClient.Close();
             tcpListener.Stop();
-
         }
     }
 }

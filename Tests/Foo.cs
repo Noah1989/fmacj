@@ -10,18 +10,9 @@ namespace Fmacj.Tests
     [TestFixture]
     public class FooTest : AssertionHelper
     {
-        [Serializable]
         [Parallelizable]
         public abstract class Foo : IParallelizable
         {
-            protected Foo()
-            {
-            }
-
-            protected Foo(SerializationInfo info, StreamingContext context)
-            {
-            }
-
             [Fork]
             public abstract void Bar(int val);
 
@@ -48,20 +39,9 @@ namespace Fmacj.Tests
 
             [Join]
             public abstract double Sum();
-
-            [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-            public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
-            {
-                // no data.
-            }
-
-            public object Clone()
-            {
-                return GetType().GetConstructor(new Type[] {}).Invoke(new object[] {});
-            }
         }
 
-       [SetUp]
+        [SetUp]
         public void SetUp()
         {
             ParallelizationFactory.Clear();

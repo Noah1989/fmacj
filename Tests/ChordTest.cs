@@ -14,17 +14,8 @@ namespace Fmacj.Tests
     public class ChordTest : AssertionHelper
     {
         [Parallelizable]
-        [Serializable]
         public abstract class ChordTestClass : IParallelizable
         {
-            protected ChordTestClass()
-            {
-            }
-
-            protected ChordTestClass(SerializationInfo info, StreamingContext context)
-            {
-            }
-
             [Fork]
             public abstract void TestMethod1(int value);
             [Asynchronous]
@@ -145,8 +136,6 @@ namespace Fmacj.Tests
 
             tcpClient.Close();
             tcpListener.Stop();
-            
         }
-
     }
 }

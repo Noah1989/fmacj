@@ -13,17 +13,8 @@ namespace Fmacj.Tests
     public class ChannelTest : AssertionHelper
     {
         [Parallelizable]
-        [Serializable]
         public abstract class ChannelTestClass : IParallelizable
         {
-            protected ChannelTestClass()
-            {
-            }
-
-            protected ChannelTestClass(SerializationInfo info, StreamingContext context)
-            {
-            }
-
             [Fork]
             public abstract void ChannelTestMethod(int value);
             
@@ -174,7 +165,6 @@ namespace Fmacj.Tests
 
             for (int i = 1; i <= 1000; i++)
                 Expect(result.Contains(i*i));
-
         }
     }
 }

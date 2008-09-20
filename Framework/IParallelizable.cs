@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Fmacj.Framework
 {
-    public interface IParallelizable : ICloneable, ISerializable
+    public interface IParallelizable
     {
     }
 }

@@ -16,17 +16,8 @@ namespace Fmacj.Tests
     public class ForkTest : AssertionHelper
     {
         [Parallelizable]
-        [Serializable]
         public abstract class ForkTestClass : IParallelizable
         {
-            protected ForkTestClass()
-            {
-            }
-
-            protected ForkTestClass(SerializationInfo info, StreamingContext context)
-            {
-            }
-
             [Fork]
             public abstract void TestMethod(string testString);
             [Asynchronous]
@@ -102,16 +93,6 @@ namespace Fmacj.Tests
                 tcpClient.Close();
 
                 dummy = null;
-            }
-
-            public object Clone()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void GetObjectData(SerializationInfo info, StreamingContext context)
-            {
-                throw new NotImplementedException();
             }
         }
 
@@ -291,6 +272,5 @@ namespace Fmacj.Tests
             tcpClient.Close();
             tcpListener.Stop();
         }
-
     }
 }

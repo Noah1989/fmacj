@@ -13,17 +13,8 @@ namespace Fmacj.Tests
     public class BusTest : AssertionHelper
     {
         [Parallelizable]
-        [Serializable]
         public abstract class BusTestClass : IParallelizable
         {
-            protected BusTestClass()
-            {
-            }
-
-            protected BusTestClass(SerializationInfo info, StreamingContext context)
-            {
-            }
-
             [Fork]
             public abstract void TestMethod1(int value);
             [Asynchronous]
@@ -46,16 +37,6 @@ namespace Fmacj.Tests
             protected void TestMethod3(int value, [Channel("TestChannel3")] out int result)
             {
                 result = -value;
-            }
-
-            public object Clone()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void GetObjectData(SerializationInfo info, StreamingContext context)
-            {
-                throw new NotImplementedException();
             }
         }
 
@@ -89,7 +70,6 @@ namespace Fmacj.Tests
             thread.Abort();
 
             Expect(result, EqualTo(-5));
-
         }
 
         [Test]
@@ -117,7 +97,6 @@ namespace Fmacj.Tests
             thread.Abort();
 
             Expect(result, EqualTo(2*2 + 1d/3));
-            
         }
 
         [Test]
@@ -162,7 +141,6 @@ namespace Fmacj.Tests
 
             for (int i = 1; i <= 1000; i++)
                 Expect(result2.Contains(1d/-i));
-
         }
     }
 }

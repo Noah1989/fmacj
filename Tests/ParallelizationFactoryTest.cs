@@ -14,24 +14,6 @@ namespace Fmacj.Tests
         [Parallelizable]
         public abstract class ParallelizationFactoryTestClass : IParallelizable
         {
-            protected ParallelizationFactoryTestClass()
-            {
-            }
-
-            protected ParallelizationFactoryTestClass(SerializationInfo info, StreamingContext context)
-            {
-                throw new NotImplementedException();
-            }
-
-            public object Clone()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void GetObjectData(SerializationInfo info, StreamingContext context)
-            {
-                throw new NotImplementedException();
-            }
         }
         
         [SetUp]
