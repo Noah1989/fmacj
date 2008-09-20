@@ -40,8 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyParallelizer.cs" />
-    <Compile Include="FutureGroup.cs" />
-    <Compile Include="FutureImplementer.cs" />
+    <Compile Include="ForkGroup.cs" />
+    <Compile Include="ForkImplementer.cs" />
     <Compile Include="ParallelizationFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeAnalyzer.cs" />

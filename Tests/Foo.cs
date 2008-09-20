@@ -22,10 +22,10 @@ namespace Fmacj.Tests
             {
             }
 
-            [Future]
+            [Fork]
             public abstract void Bar(int val);
 
-            [Future]
+            [Fork]
             public abstract void Baz(int val);
 
             [Movable]

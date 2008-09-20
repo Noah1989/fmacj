@@ -47,7 +47,7 @@
     <Compile Include="ChannelAttribute.cs" />
     <Compile Include="ChordAttribute.cs" />
     <Compile Include="InvalidMethodException.cs" />
-    <Compile Include="FutureAttribute.cs" />
+    <Compile Include="ForkAttribute.cs" />
     <Compile Include="InvalidTypeException.cs" />
     <Compile Include="IParallelizable.cs" />
     <Compile Include="JoinAttribute.cs" />

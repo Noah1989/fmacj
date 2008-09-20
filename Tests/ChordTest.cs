@@ -25,7 +25,7 @@ namespace Fmacj.Tests
             {
             }
 
-            [Future]
+            [Fork]
             public abstract void TestMethod1(int value);
             [Asynchronous]
             protected void TestMethod1(int value, [Channel("TestChannel1")] out int result)
@@ -33,7 +33,7 @@ namespace Fmacj.Tests
                 result = value*value;
             }
 
-            [Future]
+            [Fork]
             public abstract void TestMethod2(int value);
             [Asynchronous]
             protected void TestMethod2(int value, [Channel("TestChannel2")] out double result)
@@ -41,7 +41,7 @@ namespace Fmacj.Tests
                 result = 1/(double)value;
             }
 
-            [Future]
+            [Fork]
             public abstract void TestMethod3(int value);
             [Asynchronous]
             protected void TestMethod3(int value, [Channel("TestChannel3")] out int result)

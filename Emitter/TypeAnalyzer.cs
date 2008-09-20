@@ -14,28 +14,28 @@ namespace Fmacj.Emitter
             this.source = source;
         }
 
-        public IEnumerable<FutureGroup> GetFutureGroups()
+        public IEnumerable<ForkGroup> GetForkGroups()
         {
-            foreach (MethodInfo futureMethod in GetFutureMethods())
+            foreach (MethodInfo forkMethod in GetForkMethods())
             {
-                if (!futureMethod.IsAbstract && !IsParallel(futureMethod))
-                    throw new InvalidMethodException(source.Name, futureMethod.Name,
-                                                     "The [Future] method is not abstract and not a channellless future group.");
+                if (!forkMethod.IsAbstract && !IsParallel(forkMethod))
+                    throw new InvalidMethodException(source.Name, forkMethod.Name,
+                                                     "The [Fork] method is not abstract and not a channellless fork group.");
 
-                yield return new FutureGroup(source, futureMethod, GetParallelMethod(futureMethod));
+                yield return new ForkGroup(source, forkMethod, GetParallelMethod(forkMethod));
             }
         }
 
-        private IEnumerable<MethodInfo> GetFutureMethods()
+        private IEnumerable<MethodInfo> GetForkMethods()
         {
             foreach (MethodInfo method in
                 source.GetMethods(BindingFlags.Instance | BindingFlags.Static |
                                   BindingFlags.Public | BindingFlags.NonPublic))
-                if (method.GetCustomAttributes(typeof(FutureAttribute), false).Length > 0)
+                if (method.GetCustomAttributes(typeof(ForkAttribute), false).Length > 0)
                     yield return method;
         }
 
-        private MethodInfo GetParallelMethod(MethodInfo futureMethod)
+        private MethodInfo GetParallelMethod(MethodInfo forkMethod)
         {
             MethodInfo result = null;
             MethodInfo[] methods =
@@ -43,19 +43,19 @@ namespace Fmacj.Emitter
                                   BindingFlags.Public | BindingFlags.NonPublic);
             foreach (MethodInfo method in methods)
                 if ((IsParallel(method))
-                    && SignatureMatch(futureMethod, method))
+                    && SignatureMatch(forkMethod, method))
                 {
                     if (result == null)
                         result = method;
                     else
-                        throw new InvalidMethodException(source.Name, futureMethod.ToString(),
-                                                         "There is more than one parallel method which has a nonchannel parameter signature that matches this [Future] method.");
+                        throw new InvalidMethodException(source.Name, forkMethod.ToString(),
+                                                         "There is more than one parallel method which has a nonchannel parameter signature that matches this [Fork] method.");
 
                 }
 
             if (result == null)
-                throw new InvalidMethodException(source.Name, futureMethod.ToString(),
-                                                 "There is no parallel method which has a nonchannel parameter signature that matches this [Future] method.");
+                throw new InvalidMethodException(source.Name, forkMethod.ToString(),
+                                                 "There is no parallel method which has a nonchannel parameter signature that matches this [Fork] method.");
 
             return result;
         }
@@ -66,22 +66,22 @@ namespace Fmacj.Emitter
                    || method.GetCustomAttributes(typeof(MovableAttribute), false).Length > 0;
         }
 
-        private static bool SignatureMatch(MethodInfo futureMethod , MethodInfo parallelMethod)
+        private static bool SignatureMatch(MethodInfo forkMethod , MethodInfo parallelMethod)
         {
-            if (futureMethod.Name != parallelMethod.Name)
+            if (forkMethod.Name != parallelMethod.Name)
                 return false;
 
             IEnumerable<ParameterInfo> parallelMethodParameters = GetNonChannelParameters(parallelMethod);
             IEnumerator<ParameterInfo> parallelMethodParameterEnumerator = parallelMethodParameters.GetEnumerator();
 
-            foreach (ParameterInfo futureMethodParameter in futureMethod.GetParameters())
+            foreach (ParameterInfo forkMethodParameter in forkMethod.GetParameters())
             {
                 if(!parallelMethodParameterEnumerator.MoveNext())
                     return false;
 
                 ParameterInfo parallelMethodParameter = parallelMethodParameterEnumerator.Current;
                 
-                if(futureMethodParameter.ParameterType != parallelMethodParameter.ParameterType)
+                if(forkMethodParameter.ParameterType != parallelMethodParameter.ParameterType)
                     return false;
             }
 

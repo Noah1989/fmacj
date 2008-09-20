@@ -50,7 +50,7 @@
     <Compile Include="Foo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FutureTest.cs" />
+    <Compile Include="ForkTest.cs" />
     <Compile Include="ParallelizationFactoryTest.cs" />
     <Compile Include="TypeValidatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

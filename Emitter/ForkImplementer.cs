@@ -6,26 +6,26 @@ using Fmacj.Runtime;
 
 namespace Fmacj.Emitter
 {
-    internal class FutureImplementer
+    internal class ForkImplementer
     {
         private readonly TypeBuilder target;
 
-        public FutureImplementer(TypeBuilder target)
+        public ForkImplementer(TypeBuilder target)
         {
             this.target = target;
         }
 
-        public void Implement(FutureGroup futureGroup)
+        public void Implement(ForkGroup forkGroup)
         {
-            target.DefineMethodOverride(GetBody(futureGroup), futureGroup.FutureMethod);
+            target.DefineMethodOverride(GetBody(forkGroup), forkGroup.ForkMethod);
         }
 
 
-        private MethodBuilder GetBody(FutureGroup futureGroup)
+        private MethodBuilder GetBody(ForkGroup forkGroup)
         {
-            MethodBuilder result = target.DefineMethod(futureGroup.Name, MethodAttributes.Virtual | MethodAttributes.Public,
-                                                       typeof(void), futureGroup.ParameterTypes);
-            int parameterCount = futureGroup.Parameters.Length;
+            MethodBuilder result = target.DefineMethod(forkGroup.Name, MethodAttributes.Virtual | MethodAttributes.Public,
+                                                       typeof(void), forkGroup.ParameterTypes);
+            int parameterCount = forkGroup.Parameters.Length;
 
             ILGenerator generator = result.GetILGenerator();
 
@@ -38,21 +38,21 @@ namespace Fmacj.Emitter
             for (int parameterIndex = 0; parameterIndex < parameterCount; parameterIndex++)
             {
                 // Parameters are to be attributed and named nicely
-                ParameterInfo parameter = futureGroup.Parameters[parameterIndex];
+                ParameterInfo parameter = forkGroup.Parameters[parameterIndex];
                 result.DefineParameter(parameterIndex + 1, parameter.Attributes, parameter.Name);
 
                 // IL: Wrap up argument array
                 generator.Emit(OpCodes.Ldloc_0);
                 generator.Emit(OpCodes.Ldc_I4, parameterIndex);
                 generator.Emit(OpCodes.Ldarg, parameterIndex + 1);
-                if (futureGroup.ParameterTypes[parameterIndex].IsValueType)
-                    generator.Emit(OpCodes.Box, futureGroup.ParameterTypes[parameterIndex]);
+                if (forkGroup.ParameterTypes[parameterIndex].IsValueType)
+                    generator.Emit(OpCodes.Box, forkGroup.ParameterTypes[parameterIndex]);
                 generator.Emit(OpCodes.Stelem_Ref);
             }
 
             // IL: Start caller in new Thread (now using ThreadPool)
             generator.Emit(OpCodes.Ldarg_0);
-            generator.Emit(OpCodes.Ldftn, GetCaller(futureGroup));
+            generator.Emit(OpCodes.Ldftn, GetCaller(forkGroup));
             generator.Emit(OpCodes.Newobj, typeof(WaitCallback).GetConstructor(new Type[] { typeof(object), typeof(IntPtr) }));
             generator.Emit(OpCodes.Ldloc_0);
             generator.EmitCall(OpCodes.Call, typeof(ThreadPool).GetMethod("QueueUserWorkItem", new Type[] { typeof(WaitCallback), typeof(object) }), null);
@@ -63,14 +63,14 @@ namespace Fmacj.Emitter
 
         }
 
-        private MethodBuilder GetCaller(FutureGroup futureGroup)
+        private MethodBuilder GetCaller(ForkGroup forkGroup)
         {
-            MethodBuilder result = target.DefineMethod(string.Format("{0}Caller", futureGroup.Name),
+            MethodBuilder result = target.DefineMethod(string.Format("{0}Caller", forkGroup.Name),
                                                        MethodAttributes.Private,
                                                        typeof(void), new Type[] { typeof(object) });
             result.DefineParameter(1, ParameterAttributes.In, "argumentArray");
-            int parameterCount = futureGroup.Parameters.Length;
-            int channelParameterCount = futureGroup.ChannelParameters.Length;
+            int parameterCount = forkGroup.Parameters.Length;
+            int channelParameterCount = forkGroup.ChannelParameters.Length;
 
             ILGenerator generator = result.GetILGenerator();
 
@@ -81,28 +81,28 @@ namespace Fmacj.Emitter
                 generator.Emit(OpCodes.Ldarg_1);
                 generator.Emit(OpCodes.Ldc_I4, parameterIndex);
                 generator.Emit(OpCodes.Ldelem_Ref);
-                if (futureGroup.ParameterTypes[parameterIndex].IsValueType)
-                    generator.Emit(OpCodes.Unbox_Any, futureGroup.ParameterTypes[parameterIndex]);
+                if (forkGroup.ParameterTypes[parameterIndex].IsValueType)
+                    generator.Emit(OpCodes.Unbox_Any, forkGroup.ParameterTypes[parameterIndex]);
             }
 
             // IL: Prepare channels
             for (int channelParameterIndex = 0; channelParameterIndex < channelParameterCount; channelParameterIndex++)
             {
-                generator.DeclareLocal(futureGroup.ChannelParameters[channelParameterIndex].ParameterType);
+                generator.DeclareLocal(forkGroup.ChannelParameters[channelParameterIndex].ParameterType);
                 generator.Emit(OpCodes.Ldloca, channelParameterIndex);
             }
 
             // IL: Call parallel method
-            generator.EmitCall(OpCodes.Call, futureGroup.ParallelMethod, null);
+            generator.EmitCall(OpCodes.Call, forkGroup.ParallelMethod, null);
 
             // IL: Handle channel results
             for (int channelParameterIndex = 0; channelParameterIndex < channelParameterCount; channelParameterIndex++)
             {
                 generator.Emit(OpCodes.Ldarg_0);
-                generator.Emit(OpCodes.Ldstr, futureGroup.ChannelNames[channelParameterIndex]);
+                generator.Emit(OpCodes.Ldstr, forkGroup.ChannelNames[channelParameterIndex]);
                 Type[] typeArguments = new Type[]
                                        {
-                                           futureGroup.ChannelParameters[channelParameterIndex].
+                                           forkGroup.ChannelParameters[channelParameterIndex].
                                                ParameterType.GetElementType()
                                        };
                 generator.EmitCall(OpCodes.Call,

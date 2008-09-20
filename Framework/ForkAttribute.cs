@@ -7,7 +7,7 @@ namespace Fmacj.Framework
         AllowMultiple = false,
         Inherited = true)
     ]
-    public sealed class FutureAttribute : Attribute
+    public sealed class ForkAttribute : Attribute
     {
     }
 }

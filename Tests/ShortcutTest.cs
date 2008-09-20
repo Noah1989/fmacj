@@ -27,9 +27,9 @@ namespace Fmacj.Tests
             {
             }
 
-            [Future]
+            [Fork]
             [Asynchronous]
-            public virtual void NoChannelFutureGroup(string testString)
+            public virtual void NoChannelForkGroup(string testString)
             {
                 TcpClient tcpClient = new TcpClient();
                 tcpClient.Connect(IPAddress.Loopback, 23000);
@@ -59,14 +59,14 @@ namespace Fmacj.Tests
         }
 
         [Test]
-        public void NoChannelFutureGroup()
+        public void NoChannelForkGroup()
         {
             ShortcutTestClass shortcutTestClass = ParallelizationFactory.GetParallelized<ShortcutTestClass>();
             
             TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
             tcpListener.Start();
             
-            shortcutTestClass.NoChannelFutureGroup("Test");
+            shortcutTestClass.NoChannelForkGroup("Test");
 
             int i = 0;
             while (!tcpListener.Pending())

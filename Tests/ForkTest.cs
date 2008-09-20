@@ -13,21 +13,21 @@ using NUnit.Framework;
 namespace Fmacj.Tests
 {
     [TestFixture]
-    public class FutureTest : AssertionHelper
+    public class ForkTest : AssertionHelper
     {
         [Parallelizable]
         [Serializable]
-        public abstract class FutureTestClass : IParallelizable
+        public abstract class ForkTestClass : IParallelizable
         {
-            protected FutureTestClass()
+            protected ForkTestClass()
             {
             }
 
-            protected FutureTestClass(SerializationInfo info, StreamingContext context)
+            protected ForkTestClass(SerializationInfo info, StreamingContext context)
             {
             }
 
-            [Future]
+            [Fork]
             public abstract void TestMethod(string testString);
             [Asynchronous]
             protected void TestMethod(string testString, [Channel("Dummy")] out object dummy)
@@ -42,7 +42,7 @@ namespace Fmacj.Tests
                 dummy = null;
             }
 
-            [Future]
+            [Fork]
             public abstract void TestMethod();
             [Asynchronous]
             protected void TestMethod([Channel("Dummy")] out object dummy)
@@ -57,7 +57,7 @@ namespace Fmacj.Tests
                 dummy = null;
             }
 
-            [Future]
+            [Fork]
             public abstract void TestMethod(string testString, string testString2);
             [Asynchronous]
             protected void TestMethod(string testString, string testString2, [Channel("Dummy")] out object dummy)
@@ -72,7 +72,7 @@ namespace Fmacj.Tests
                 dummy = null;
             }
 
-            [Future]
+            [Fork]
             public abstract void MassiveTest(string testValue);
             [Asynchronous]
             protected void MassiveTest(string testValue, [Channel("Dummy")] out object dummy)
@@ -89,7 +89,7 @@ namespace Fmacj.Tests
                 dummy = null;
             }
 
-            [Future]
+            [Fork]
             public abstract void ValueTypeTest(int testValue);
             [Asynchronous]
             protected void ValueTypeTest(int testValue, [Channel("Dummy")] out object dummy)
@@ -119,18 +119,18 @@ namespace Fmacj.Tests
         public void SetUp()
         {
             ParallelizationFactory.Clear();
-            ParallelizationFactory.Parallelize(typeof(FutureTestClass).Assembly);
+            ParallelizationFactory.Parallelize(typeof(ForkTestClass).Assembly);
         }
 
         [Test]
         public void WithParameter()
         {
-            FutureTestClass futureTestClass = ParallelizationFactory.GetParallelized<FutureTestClass>();
+            ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>();
             
             TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
             tcpListener.Start();
 
-            futureTestClass.TestMethod("Aloha ʻoe");
+            forkTestClass.TestMethod("Aloha ʻoe");
 
             int i = 0;
             while (!tcpListener.Pending())
@@ -154,12 +154,12 @@ namespace Fmacj.Tests
         [Test]
         public void WithoutParameter()
         {
-            FutureTestClass futureTestClass = ParallelizationFactory.GetParallelized<FutureTestClass>();
+            ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>();
 
             TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
             tcpListener.Start();
 
-            futureTestClass.TestMethod();
+            forkTestClass.TestMethod();
 
             int i = 0;
             while (!tcpListener.Pending())
@@ -183,12 +183,12 @@ namespace Fmacj.Tests
         [Test]
         public void MultipleParameters()
         {
-            FutureTestClass futureTestClass = ParallelizationFactory.GetParallelized<FutureTestClass>();
+            ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>();
 
             TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
             tcpListener.Start();
 
-            futureTestClass.TestMethod("Aloha", " ʻoe");
+            forkTestClass.TestMethod("Aloha", " ʻoe");
 
             int i = 0;
             while (!tcpListener.Pending())
@@ -212,7 +212,7 @@ namespace Fmacj.Tests
         [Test]
         public void MassiveInvoke()
         {
-            FutureTestClass futureTestClass = ParallelizationFactory.GetParallelized<FutureTestClass>();
+            ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>();
 
             List<TcpListener> tcpListeners = new List<TcpListener>();
 
@@ -222,7 +222,7 @@ namespace Fmacj.Tests
                 tcpListeners.Add(tcpListener);
                 tcpListener.Start();
 
-                futureTestClass.MassiveTest(i.ToString());
+                forkTestClass.MassiveTest(i.ToString());
             }
 
             List<int> results = new List<int>();
@@ -267,12 +267,12 @@ namespace Fmacj.Tests
         [Test]
         public void ValueTypeParameter()
         {
-            FutureTestClass futureTestClass = ParallelizationFactory.GetParallelized<FutureTestClass>();
+            ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>();
 
             TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
             tcpListener.Start();
 
-            futureTestClass.ValueTypeTest(235);
+            forkTestClass.ValueTypeTest(235);
 
             int i = 0;
             while (!tcpListener.Pending())

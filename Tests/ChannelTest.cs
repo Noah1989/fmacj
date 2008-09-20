@@ -24,7 +24,7 @@ namespace Fmacj.Tests
             {
             }
 
-            [Future]
+            [Fork]
             public abstract void ChannelTestMethod(int value);
             
             [Asynchronous]
@@ -33,7 +33,7 @@ namespace Fmacj.Tests
                 result = value * value;
             }
 
-            [Future]
+            [Fork]
             public abstract void TwoChannelTestMethod(int value);
 
             [Asynchronous]

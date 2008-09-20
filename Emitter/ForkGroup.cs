@@ -5,12 +5,12 @@ using Fmacj.Framework;
 
 namespace Fmacj.Emitter
 {
-    internal struct FutureGroup
+    internal struct ForkGroup
     {
-        public FutureGroup(Type sourceType, MethodInfo futureMethod, MethodInfo parallelMethod) : this()
+        public ForkGroup(Type sourceType, MethodInfo forkMethod, MethodInfo parallelMethod) : this()
         {
             SourceType = sourceType;
-            FutureMethod = futureMethod;
+            ForkMethod = forkMethod;
             ParallelMethod = parallelMethod;
             FindChannelParameters();
         }
@@ -29,15 +29,15 @@ namespace Fmacj.Emitter
         }
 
         public Type SourceType { get; private set; }
-        public MethodInfo FutureMethod { get; private set; }
+        public MethodInfo ForkMethod { get; private set; }
         public MethodInfo ParallelMethod { get; private set; }
 
-        public string Name { get { return FutureMethod.Name; } }
+        public string Name { get { return ForkMethod.Name; } }
         public Type[] ParameterTypes
         {
             get
             {
-                ParameterInfo[] parameters = FutureMethod.GetParameters();
+                ParameterInfo[] parameters = ForkMethod.GetParameters();
                 Type[] result = new Type[parameters.Length];
 
                 for (int i = 0; i < parameters.Length; i++)
@@ -49,7 +49,7 @@ namespace Fmacj.Emitter
 
         public ParameterInfo[] Parameters
         {
-            get { return FutureMethod.GetParameters(); }
+            get { return ForkMethod.GetParameters(); }
         }
        
         public ParameterInfo[] ChannelParameters

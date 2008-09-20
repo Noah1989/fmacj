@@ -4,7 +4,7 @@
     {
         public InvalidMethodException()
             : base(
-                "A [Future], [Movable], [Asynchronous], [Chord] or [Join] method does not meet the required specifications for parallelization."
+                "A [Fork], [Movable], [Asynchronous], [Chord] or [Join] method does not meet the required specifications for parallelization."
                 )
         {
         }

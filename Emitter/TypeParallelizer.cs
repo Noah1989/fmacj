@@ -32,11 +32,11 @@ namespace Fmacj.Emitter
             typeBuilder.SetParent(source);
 
             TypeAnalyzer typeAnalyzer = new TypeAnalyzer(source);
-            FutureImplementer futureImplementer = new FutureImplementer(typeBuilder);
+            ForkImplementer forkImplementer = new ForkImplementer(typeBuilder);
 
 
-            foreach (FutureGroup futureGroup in typeAnalyzer.GetFutureGroups())
-                futureImplementer.Implement(futureGroup);
+            foreach (ForkGroup forkGroup in typeAnalyzer.GetForkGroups())
+                forkImplementer.Implement(forkGroup);
 
             return typeBuilder.CreateType();
         }
