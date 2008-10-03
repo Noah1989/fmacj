@@ -1,0 +1,45 @@
+BINDIR = ../bin
+
+ASSEMBLY = $(BINDIR)/Fmacj.Tests.dll
+
+FILES =  \
+	Properties/AssemblyInfo.cs \
+	BusTest.cs \
+	ChannelTest.cs \
+	ChordTest.cs \
+	Foo.cs \
+	ForkTest.cs \
+	ParallelizationFactoryTest.cs \
+	ShortcutTest.cs \
+	TypeValidatorTest.cs
+
+
+NUNITDIR = ../lib/nunit
+NUNITDLL = nunit.framework.dll
+NUNITEXE = nunit-console.exe
+
+REFERENCES =  \
+	-r:$(BINDIR)/Fmacj.Framework.dll \
+	-r:$(BINDIR)/Fmacj.Runtime.dll \
+	-r:$(BINDIR)/Fmacj.Emitter.dll \
+	-r:$(NUNITDIR)/$(NUNITDLL) \
+
+all: $(ASSEMBLY) test
+
+$(ASSEMBLY): $(FILES) 
+	gmcs -out:$(ASSEMBLY) $(REFERENCES) -target:library -debug $(FILES); \
+
+$(BINDIR)/$(NUNITDLL):
+	cp -f $(NUNITDIR)/$(NUNITDLL) $(BINDIR)
+
+clean:
+	-rm -vf $(ASSEMBLY)*; \
+	rm -vf $(BINDIR)/$(NUNITDLL);
+
+new: clean all
+
+compile: $(ASSEMBLY)
+
+test: $(BINDIR)/$(NUNITDLL)
+	mono $(NUNITDIR)/$(NUNITEXE) $(ASSEMBLY)
+

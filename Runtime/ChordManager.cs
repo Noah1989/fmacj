@@ -8,7 +8,7 @@ namespace Fmacj.Runtime
 {
     public static class ChordManager
     {
-        static void RegisterChord(IChannel[] channels, WaitOrTimerCallback callback)
+        public static void RegisterChord(IChannel[] channels, WaitOrTimerCallback callback)
         {
             if(channels.Length==0)
                 throw new ArgumentException("There must be at least one channel provided for a chord.", "channels");
