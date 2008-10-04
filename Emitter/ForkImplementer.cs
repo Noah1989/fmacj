@@ -88,7 +88,7 @@ namespace Fmacj.Emitter
             // IL: Prepare channels
             for (int channelParameterIndex = 0; channelParameterIndex < channelParameterCount; channelParameterIndex++)
             {
-                generator.DeclareLocal(forkGroup.ChannelParameters[channelParameterIndex].ParameterType);
+                generator.DeclareLocal(forkGroup.ChannelParameters[channelParameterIndex].ParameterType.GetElementType());
                 generator.Emit(OpCodes.Ldloca, channelParameterIndex);
             }
 

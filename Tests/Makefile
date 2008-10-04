@@ -41,5 +41,5 @@ new: clean all
 compile: $(ASSEMBLY)
 
 test: $(BINDIR)/$(NUNITDLL)
-	mono $(NUNITDIR)/$(NUNITEXE) $(ASSEMBLY)
+	mono --debug $(NUNITDIR)/$(NUNITEXE) $(ASSEMBLY)
 

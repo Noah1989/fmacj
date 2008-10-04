@@ -164,7 +164,7 @@ namespace Fmacj.Tests
             
 
             for (int i = 1; i <= 1000; i++)
-                Expect(result.Contains(i*i));
+                Expect(result.Contains(i*i), String.Format("Missing number: {0}", i));
         }
     }
 }
