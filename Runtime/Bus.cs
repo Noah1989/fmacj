@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Threading;
 
 namespace Fmacj.Runtime
@@ -7,7 +8,7 @@ namespace Fmacj.Runtime
     public class Bus
     {
         private readonly IChannel[] channels;
-        private readonly Dictionary<IChannel, object> data = new Dictionary<IChannel, object>();
+        private readonly OrderedDictionary data = new OrderedDictionary();
         private readonly Dictionary<IChannel, RegisteredWaitHandle> registeredWaitHandles = new Dictionary<IChannel, RegisteredWaitHandle>();
         private readonly EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
         private int receivedCount;

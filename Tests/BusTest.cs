@@ -93,7 +93,7 @@ namespace Fmacj.Tests
                             result = (int) objects[0] + (double) objects[1];
                         });
             thread.Start();
-            Thread.Sleep(100);
+            Thread.Sleep(500);
             thread.Abort();
 
             Expect(result, EqualTo(2*2 + 1d/3));
@@ -132,15 +132,17 @@ namespace Fmacj.Tests
                             }
                         });
             thread.Start();
-            Thread.Sleep(500);
-            thread.Abort();
-
-
-            for (int i = 1; i <= 1000; i++)
-                Expect(result1.Contains(i*i));
+            Thread.Sleep(10000);
+            thread.Anort();
 
             for (int i = 1; i <= 1000; i++)
-                Expect(result2.Contains(1d/-i));
+	    	Console.WriteLine(Math.Sqrt(result1[i-1]));
+
+            for (int i = 1; i <= 1000; i++)
+                Expect(result1.Contains(i*i), String.Format("Missing number: {0} ({1} received)", i, result1.Count));
+
+            for (int i = 1; i <= 1000; i++)
+                Expect(result2.Contains(1d/-i), String.Format("Missing number: {0} ({1} received)", i, result1.Count));
         }
     }
 }
