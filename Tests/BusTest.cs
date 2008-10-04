@@ -132,11 +132,11 @@ namespace Fmacj.Tests
                             }
                         });
             thread.Start();
-            Thread.Sleep(10000);
-            thread.Anort();
+            Thread.Sleep(1000);
+            thread.Abort();
 
-            for (int i = 1; i <= 1000; i++)
-	    	Console.WriteLine(Math.Sqrt(result1[i-1]));
+            //for (int i = 1; i <= 1000; i++)
+	    	//Console.WriteLine(Math.Sqrt(result1[i-1]));
 
             for (int i = 1; i <= 1000; i++)
                 Expect(result1.Contains(i*i), String.Format("Missing number: {0} ({1} received)", i, result1.Count));

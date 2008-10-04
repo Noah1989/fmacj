@@ -22,8 +22,8 @@ namespace Fmacj.Runtime
 
         public void Send(T value)
         {
-
-            values.Enqueue(value);
+            lock (values)
+                values.Enqueue(value);
             waitHandle.Set();
 
         }
