@@ -11,6 +11,7 @@ FILES =  \
 	ForkTest.cs \
 	ParallelizationFactoryTest.cs \
 	ShortcutTest.cs \
+	ThreadTimeout.cs \
 	TypeValidatorTest.cs
 
 

@@ -197,7 +197,7 @@ namespace Fmacj.Tests
 
             List<TcpListener> tcpListeners = new List<TcpListener>();
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 500; i++)
             {
                 TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000 + i);
                 tcpListeners.Add(tcpListener);
@@ -238,7 +238,7 @@ namespace Fmacj.Tests
             
             Debug.Print(string.Format("Received {0} results.", results.Count));
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 500; i++)
             {
                 Expect(results.Contains(i), string.Format("Missing value: {0}", i));
             }
