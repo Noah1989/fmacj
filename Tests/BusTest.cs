@@ -66,8 +66,8 @@ namespace Fmacj.Tests
                             result = (int) objects[0];
                         });
             thread.Start();
-            Thread.Sleep(100);
-            thread.Abort();
+
+            ThreadTimeout.Timeout(thread, 10000);
 
             Expect(result, EqualTo(-5));
         }
@@ -93,8 +93,8 @@ namespace Fmacj.Tests
                             result = (int) objects[0] + (double) objects[1];
                         });
             thread.Start();
-            Thread.Sleep(500);
-            thread.Abort();
+
+            ThreadTimeout.Timeout(thread, 10000);
 
             Expect(result, EqualTo(2*2 + 1d/3));
         }
@@ -132,8 +132,8 @@ namespace Fmacj.Tests
                             }
                         });
             thread.Start();
-            Thread.Sleep(1000);
-            thread.Abort();
+
+            ThreadTimeout.Timeout(thread, 10000);
 
             //for (int i = 1; i <= 1000; i++)
 	    	//Console.WriteLine(Math.Sqrt(result1[i-1]));

@@ -52,6 +52,7 @@
     </Compile>
     <Compile Include="ForkTest.cs" />
     <Compile Include="ParallelizationFactoryTest.cs" />
+    <Compile Include="ThreadTimeout.cs" />
     <Compile Include="TypeValidatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

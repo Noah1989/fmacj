@@ -62,8 +62,8 @@ namespace Fmacj.Tests
 
             Thread thread = new Thread(delegate() { result = ChannelFactory<int>.GetChannel(channelTestClass, "TestChannel").Receive(); });
             thread.Start();
-            Thread.Sleep(100);
-            thread.Abort();
+
+            ThreadTimeout.Timeout(thread, 10000);
             
             Expect(result,EqualTo(25));
 
@@ -84,8 +84,8 @@ namespace Fmacj.Tests
                                                result2 = ChannelFactory<string>.GetChannel(channelTestClass, "TestChannel2").Receive();
                                            });
             thread.Start();
-            Thread.Sleep(100);
-            thread.Abort();
+
+            ThreadTimeout.Timeout(thread, 10000);
 
             Expect(result1, EqualTo(529));
             Expect(result2, EqualTo("->23<-"));
@@ -130,8 +130,8 @@ namespace Fmacj.Tests
 
             Thread thread = new Thread(delegate() { result = ChannelFactory<int>.GetChannel(instance, "TestChannel").Receive(); });
             thread.Start();
-            Thread.Sleep(100);
-            thread.Abort();
+
+            ThreadTimeout.Timeout(thread, 10000);
 
             Expect(result, EqualTo(value*value));
         }
@@ -159,9 +159,8 @@ namespace Fmacj.Tests
                             }
                         });
             thread.Start();
-            Thread.Sleep(500);
-            thread.Abort();
-            
+
+            ThreadTimeout.Timeout(thread, 10000);
 
             for (int i = 1; i <= 1000; i++)
                 Expect(result.Contains(i*i), String.Format("Missing number: {0}", i));
