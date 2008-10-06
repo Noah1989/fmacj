@@ -95,8 +95,8 @@ namespace Fmacj.Tests
         public void InstanceChannels()
         {
             List<Thread> threads = new List<Thread>();
-            bool[] successArray = new bool[100];
-            for (int i = 1; i <= 100; i++)
+            bool[] successArray = new bool[20];
+            for (int i = 1; i <= 20; i++)
             {
                 int i1 = i;
                 Thread thread = new Thread(delegate()
@@ -135,8 +135,8 @@ namespace Fmacj.Tests
         public void ManyValues()
         {
             ChannelTestClass channelTestClass = ParallelizationFactory.GetParallelized<ChannelTestClass>();
-
-            for (int i = 1; i <= 1000; i++)
+            
+	for (int i = 1; i <= 1000; i++)
                 channelTestClass.ChannelTestMethod(i);
 
             Thread.Sleep(100);
