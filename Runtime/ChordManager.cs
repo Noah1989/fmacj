@@ -14,8 +14,12 @@ namespace Fmacj.Runtime
                 throw new ArgumentException("There must be at least one channel provided for a chord.", "channels");
 
             Bus bus = new Bus(channels);
-            ThreadPool.RegisterWaitForSingleObject(bus.WaitHandle, callback, bus, -1, false);
+            RegisterBus(bus, callback);
         }
-        
+
+        public static void RegisterBus(Bus bus, WaitOrTimerCallback callback)
+        {
+            ThreadPool.RegisterWaitForSingleObject(bus.WaitHandle, callback, bus, -1, true);
+        }
     }
 }

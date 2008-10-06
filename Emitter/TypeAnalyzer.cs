@@ -14,6 +14,15 @@ namespace Fmacj.Emitter
             this.source = source;
         }
 
+        public IEnumerable<ChordInfo> GetChords()
+        {
+            foreach (MethodInfo chordMethod in
+                source.GetMethods(BindingFlags.Instance | BindingFlags.Static |
+                                  BindingFlags.Public | BindingFlags.NonPublic))
+                if (chordMethod.GetCustomAttributes(typeof(ChordAttribute), false).Length > 0)
+                    yield return new ChordInfo(source, chordMethod);
+        }
+
         public IEnumerable<ForkGroup> GetForkGroups()
         {
             foreach (MethodInfo forkMethod in GetForkMethods())
@@ -34,6 +43,8 @@ namespace Fmacj.Emitter
                 if (method.GetCustomAttributes(typeof(ForkAttribute), false).Length > 0)
                     yield return method;
         }
+
+
 
         private MethodInfo GetParallelMethod(MethodInfo forkMethod)
         {

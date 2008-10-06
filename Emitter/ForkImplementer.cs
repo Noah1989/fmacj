@@ -74,8 +74,9 @@ namespace Fmacj.Emitter
 
             ILGenerator generator = result.GetILGenerator();
 
-            // IL: Unwrap argument array
             generator.Emit(OpCodes.Ldarg_0);
+
+            // IL: Unwrap argument array
             for (int parameterIndex = 0; parameterIndex < parameterCount; parameterIndex++)
             {
                 generator.Emit(OpCodes.Ldarg_1);

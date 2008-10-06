@@ -33,10 +33,16 @@ namespace Fmacj.Emitter
 
             TypeAnalyzer typeAnalyzer = new TypeAnalyzer(source);
             ForkImplementer forkImplementer = new ForkImplementer(typeBuilder);
+            ChordImplementer chordImplementer = new ChordImplementer(typeBuilder, source);
 
 
             foreach (ForkGroup forkGroup in typeAnalyzer.GetForkGroups())
                 forkImplementer.Implement(forkGroup);
+
+            foreach (ChordInfo chord in typeAnalyzer.GetChords())
+                chordImplementer.Implement(chord);
+
+            chordImplementer.ImplementConstructor();
 
             return typeBuilder.CreateType();
         }

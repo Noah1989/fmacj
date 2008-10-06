@@ -48,8 +48,8 @@ namespace Fmacj.Emitter
                 }
                 catch (Exception ex)
                 {
-                    Debug.Print("Something went wrong during parallelization.\n{0}: {1}\n{2}\n",
-                                ex.GetType(), ex.Message, ex.StackTrace);
+                    Debug.Print("Something went wrong during parallelization of type {3}.\n{0}: {1}\n{2}\n",
+                                ex.GetType(), ex.Message, ex.StackTrace, sourceType.Name);
                 }
 #endif
             }

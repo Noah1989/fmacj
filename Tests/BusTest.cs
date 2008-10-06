@@ -135,9 +135,6 @@ namespace Fmacj.Tests
 
             ThreadTimeout.Timeout(thread, 10000);
 
-            //for (int i = 1; i <= 1000; i++)
-	    	//Console.WriteLine(Math.Sqrt(result1[i-1]));
-
             for (int i = 1; i <= 1000; i++)
                 Expect(result1.Contains(i*i), String.Format("Missing number: {0} ({1} received)", i, result1.Count));
 

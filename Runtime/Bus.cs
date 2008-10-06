@@ -11,6 +11,9 @@ namespace Fmacj.Runtime
         private readonly OrderedDictionary data = new OrderedDictionary();
         private readonly Dictionary<IChannel, RegisteredWaitHandle> registeredWaitHandles = new Dictionary<IChannel, RegisteredWaitHandle>();
         private readonly EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+        private readonly EventWaitHandle publicWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
+
+
         private int receivedCount;
         private bool dataAvailable;
         
@@ -72,6 +75,7 @@ namespace Fmacj.Runtime
                 if (receivedCount == channels.Length)
                     dataAvailable = true;
                 waitHandle.Set();
+                publicWaitHandle.Set();
             }
         }
 
@@ -104,6 +108,6 @@ namespace Fmacj.Runtime
             return true;
         }
 
-        public WaitHandle WaitHandle { get { return waitHandle; } }
+        public WaitHandle WaitHandle { get { return publicWaitHandle; } }
     }
 }
