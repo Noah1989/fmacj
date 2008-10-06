@@ -104,13 +104,14 @@ namespace Fmacj.Tests
                                                    TestForInstance(ParallelizationFactory.GetParallelized<ChannelTestClass>(), i1);
                                                    successArray[i1 - 1] = true;
                                                });
-                thread.Start();
                 threads.Add(thread);
+                thread.Start();
             }
 
             foreach(Thread thread in threads)
             {
-                thread.Join();
+                if (!ThreadTimeout.Timeout(thread, 10000))
+                    throw new TimeoutException();
             }
 
             foreach(bool success in successArray)
@@ -126,13 +127,7 @@ namespace Fmacj.Tests
             Thread.Sleep(random.Next(200));
             instance.ChannelTestMethod(value);
 
-            int result = 0;
-
-            Thread thread = new Thread(delegate() { result = ChannelFactory<int>.GetChannel(instance, "TestChannel").Receive(); });
-            thread.Start();
-
-            ThreadTimeout.Timeout(thread, 10000);
-
+            int result = ChannelFactory<int>.GetChannel(instance, "TestChannel").Receive();
             Expect(result, EqualTo(value*value));
         }
 

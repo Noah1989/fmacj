@@ -8,18 +8,23 @@ namespace Fmacj.Tests
 {
     internal static class ThreadTimeout
     {
-        public static void Timeout(Thread thread, int timeout)
+        public static bool Timeout(Thread thread, int timeout)
         {
+            bool result = true;
             Thread timeoutThread =
                 new Thread(
                     delegate()
-                    {
-                        Thread.Sleep(timeout);
-                        thread.Abort();
-                    });
+                        {
+                            Thread.Sleep(timeout);
+                            if (thread.ThreadState != ThreadState.Stopped)
+                            {
+                                result = false;
+                                thread.Abort();
+                            }
+                        });
             timeoutThread.Start();
             thread.Join();
-            timeoutThread.Abort();
+            return result;
         }
     }
 }
