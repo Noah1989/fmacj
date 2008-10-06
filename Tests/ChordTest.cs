@@ -69,7 +69,7 @@ namespace Fmacj.Tests
             [Asynchronous]
             protected void TestMethod4(string value, [Channel("TestChannel4")] out string result)
             {
-                Thread.Sleep(random.Next(20));
+                Thread.Sleep(random.Next(80));
                 result = string.Format("{0},{{0}}", value);
             }
 
@@ -78,7 +78,7 @@ namespace Fmacj.Tests
             [Asynchronous]
             protected void TestMethod5(int value, [Channel("TestChannel5")] out int result)
             {
-                Thread.Sleep(random.Next(20));
+                Thread.Sleep(random.Next(80));
                 result = 23000 + value;
             }
 
@@ -191,26 +191,19 @@ namespace Fmacj.Tests
            
             List<string> results = new List<string>();
 
-            int timeoutCount = 0;
-
             foreach (TcpListener tcpListener in tcpListeners)
             {
                 int i = 0;
-                var timeout = 2;
+                var timeout = 10;
                 while (!tcpListener.Pending())
                 {
-                    Thread.Sleep(200);
+                    Thread.Sleep(100);
                     if (++i > timeout)
                     {
                         tcpListener.Stop();
-                        if (timeoutCount++ > 10)
-                            throw new TimeoutException();
-                        break;
+                        throw new TimeoutException();
                     }
                 }
-
-                if (i > timeout)
-                    continue;
 
                 TcpClient tcpClient = tcpListener.AcceptTcpClient();
                 results.Add(new BinaryReader(tcpClient.GetStream()).ReadString());

@@ -208,21 +208,17 @@ namespace Fmacj.Tests
 
             List<int> results = new List<int>();
             
-            int timeoutCount = 0;
-
             foreach (TcpListener tcpListener in tcpListeners)
             {
                 int i = 0;
-                var timeout = 2;
+                var timeout = 10;
                 while (!tcpListener.Pending())
                 {
                     Thread.Sleep(100);
                     if (++i > timeout)
                     {
                         tcpListener.Stop();
-                        if (timeoutCount++ > 10)
-                            throw new TimeoutException();
-                        break;
+                        throw new TimeoutException();
                     }
                 }
 
