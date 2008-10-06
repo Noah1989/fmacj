@@ -7,6 +7,7 @@ using NUnit.Framework;
 
 namespace Fmacj.Tests
 {
+    [Ignore]
     [TestFixture]
     public class FooTest : AssertionHelper
     {

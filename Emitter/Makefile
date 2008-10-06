@@ -3,6 +3,8 @@ ASSEMBLY = ../bin/Fmacj.Emitter.dll
 FILES =  \
 	Properties/AssemblyInfo.cs \
 	AssemblyParallelizer.cs \
+	ChordImplementer.cs \
+	ChordInfo.cs \
 	ForkGroup.cs \
 	ForkImplementer.cs \
 	ParallelizationFactory.cs \
