@@ -69,7 +69,7 @@ namespace Fmacj.Tests
             [Asynchronous]
             protected void TestMethod4(string value, [Channel("TestChannel4")] out string result)
             {
-                Thread.Sleep(random.Next(80));
+                Thread.Sleep(random.Next(20));
                 result = string.Format("{0},{{0}}", value);
             }
 
@@ -78,7 +78,7 @@ namespace Fmacj.Tests
             [Asynchronous]
             protected void TestMethod5(int value, [Channel("TestChannel5")] out int result)
             {
-                Thread.Sleep(random.Next(80));
+                Thread.Sleep(random.Next(20));
                 result = 23000 + value;
             }
 
@@ -128,7 +128,7 @@ namespace Fmacj.Tests
             int i = 0;
             while (!tcpListener.Pending())
             {
-                Thread.Sleep(100);
+                Thread.Sleep(200);
                 if (i++ > 20)
                 {
                     tcpListener.Stop();
