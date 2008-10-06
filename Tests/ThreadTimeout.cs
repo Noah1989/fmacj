@@ -17,6 +17,7 @@ namespace Fmacj.Tests
                         Thread.Sleep(timeout);
                         thread.Abort();
                     });
+            timeoutThread.Start();
             thread.Join();
             timeoutThread.Abort();
         }
