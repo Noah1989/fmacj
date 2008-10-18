@@ -1,0 +1,37 @@
+<Project name="Tests" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="bin/Debug" assembly="Tests" />
+      <Build debugmode="True" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" definesymbols="DEBUG" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="bin/Release" assembly="Tests" />
+      <Build debugmode="False" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+    <File name="Properties/AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="BusTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="ChannelTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="ChordTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="Foo.cs" subtype="Code" buildaction="Compile" />
+    <File name="ForkTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="ParallelizationFactoryTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="ShortcutTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="ThreadTimeout.cs" subtype="Code" buildaction="Compile" />
+    <File name="TypeValidatorTest.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile" BuildTargetName="compile" ExecuteTargetName="test" SyncReferences="True">
+    <BuildFilesVar Sync="True" Name="FILES" />
+    <DeployFilesVar />
+    <ResourcesVar />
+    <OthersVar />
+    <GacRefVar Sync="True" Name="REFERENCES" Prefix="-r:" />
+    <AsmRefVar Sync="True" Name="REFERENCES" Prefix="-r:" />
+    <ProjectRefVar Sync="True" Name="REFERENCES" Prefix="-r:" />
+  </MonoDevelop.Autotools.MakefileInfo>
+</Project>

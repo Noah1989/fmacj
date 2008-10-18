@@ -1,0 +1,28 @@
+<Combine name="Fmacj" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="Framework" configuration="Debug" />
+      <Entry build="True" name="Runtime" configuration="Debug" />
+      <Entry build="True" name="Emitter" configuration="Debug" />
+      <Entry build="True" name="Tests" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="Framework" configuration="Release" />
+      <Entry build="True" name="Runtime" configuration="Release" />
+      <Entry build="True" name="Emitter" configuration="Release" />
+      <Entry build="True" name="Tests" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="Tests" single="True">
+    <Execute type="None" entry="Framework" />
+    <Execute type="None" entry="Runtime" />
+    <Execute type="None" entry="Emitter" />
+    <Execute type="None" entry="Tests" />
+  </StartMode>
+  <Entries>
+    <Entry filename="Framework/Framework.mdp" />
+    <Entry filename="Runtime/Runtime.mdp" />
+    <Entry filename="Emitter/Emitter.mdp" />
+    <Entry filename="Tests/Tests.mdp" />
+  </Entries>
+</Combine>
