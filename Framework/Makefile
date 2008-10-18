@@ -1,18 +1,18 @@
 ASSEMBLY = ../bin/Fmacj.Framework.dll
 
 FILES =  \
-	Properties/AssemblyInfo.cs \
 	AsynchronousAttribute.cs \
 	ChannelAttribute.cs \
 	ChordAttribute.cs \
 	ForkAttribute.cs \
-	IParallelizable.cs \
 	InvalidMethodException.cs \
 	InvalidTypeException.cs \
+	IParallelizable.cs \
 	JoinAttribute.cs \
 	MovableAttribute.cs \
 	ParallelizableAttribute.cs \
 	ParallelizationException.cs \
+	Properties/AssemblyInfo.cs \
 	TypeNotFoundException.cs \
 	TypeValidator.cs
 

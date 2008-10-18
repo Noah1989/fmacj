@@ -1,12 +1,12 @@
 ASSEMBLY = ../bin/Fmacj.Runtime.dll
 
 FILES =  \
-	Properties/AssemblyInfo.cs \
 	Bus.cs \
 	Channel.cs \
 	ChannelFactory.cs \
 	ChordManager.cs \
 	IChannel.cs \
+	Properties/AssemblyInfo.cs
 
 REFERENCES = -r:../bin/Fmacj.Framework.dll
 

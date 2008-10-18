@@ -1,17 +1,18 @@
 ASSEMBLY = ../bin/Fmacj.Emitter.dll
 
 FILES =  \
-	Properties/AssemblyInfo.cs \
 	AssemblyParallelizer.cs \
 	ChordImplementer.cs \
 	ChordInfo.cs \
 	ForkGroup.cs \
 	ForkImplementer.cs \
+	JoinGroup.cs \
 	ParallelizationFactory.cs \
+	Properties/AssemblyInfo.cs \
 	TypeAnalyzer.cs \
 	TypeParallelizer.cs
 
-REFERENCES = \
+REFERENCES =  \
 	-r:../bin/Fmacj.Framework.dll \
 	-r:../bin/Fmacj.Runtime.dll
 

@@ -3,13 +3,13 @@ BINDIR = ../bin
 ASSEMBLY = $(BINDIR)/Fmacj.Tests.dll
 
 FILES =  \
-	Properties/AssemblyInfo.cs \
 	BusTest.cs \
 	ChannelTest.cs \
 	ChordTest.cs \
 	Foo.cs \
 	ForkTest.cs \
 	ParallelizationFactoryTest.cs \
+	Properties/AssemblyInfo.cs \
 	ShortcutTest.cs \
 	ThreadTimeout.cs \
 	TypeValidatorTest.cs
@@ -20,10 +20,10 @@ NUNITDLL = nunit.framework.dll
 NUNITEXE = nunit-console.exe
 
 REFERENCES =  \
+	-r:$(BINDIR)/Fmacj.Emitter.dll \
 	-r:$(BINDIR)/Fmacj.Framework.dll \
 	-r:$(BINDIR)/Fmacj.Runtime.dll \
-	-r:$(BINDIR)/Fmacj.Emitter.dll \
-	-r:$(NUNITDIR)/$(NUNITDLL) \
+	-r:$(NUNITDIR)/$(NUNITDLL)
 
 all: $(ASSEMBLY) test
 
