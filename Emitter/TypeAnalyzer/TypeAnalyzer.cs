@@ -14,26 +14,29 @@ namespace Fmacj.Emitter
             this.source = source;
         }
 		
-        private static bool SignatureMatch(MethodInfo forkMethod , MethodInfo parallelMethod)
+        private static bool SignatureMatch(MethodInfo shortMethod , MethodInfo longMethod)
         {
-            if (forkMethod.Name != parallelMethod.Name)
+            if (shortMethod.Name != longMethod.Name)
+                return false;
+			
+			if (shortMethod.ReturnType != longMethod.ReturnType)
                 return false;
 
-            IEnumerable<ParameterInfo> parallelMethodParameters = GetNonChannelParameters(parallelMethod);
-            IEnumerator<ParameterInfo> parallelMethodParameterEnumerator = parallelMethodParameters.GetEnumerator();
+            IEnumerable<ParameterInfo> longMethodParameters = GetNonChannelParameters(longMethod);
+            IEnumerator<ParameterInfo> longMethodParameterEnumerator = longMethodParameters.GetEnumerator();
 
-            foreach (ParameterInfo forkMethodParameter in forkMethod.GetParameters())
+            foreach (ParameterInfo shortMethodParameter in shortMethod.GetParameters())
             {
-                if(!parallelMethodParameterEnumerator.MoveNext())
+                if(!longMethodParameterEnumerator.MoveNext())
                     return false;
 
-                ParameterInfo parallelMethodParameter = parallelMethodParameterEnumerator.Current;
+                ParameterInfo longMethodParameter = longMethodParameterEnumerator.Current;
                 
-                if(forkMethodParameter.ParameterType != parallelMethodParameter.ParameterType)
+                if(shortMethodParameter.ParameterType != longMethodParameter.ParameterType)
                     return false;
             }
 
-            if (parallelMethodParameterEnumerator.MoveNext())
+            if (longMethodParameterEnumerator.MoveNext())
                 return false;
 
         

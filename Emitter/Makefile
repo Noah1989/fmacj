@@ -7,11 +7,13 @@ FILES =  \
 	ForkGroup.cs \
 	ForkImplementer.cs \
 	JoinGroup.cs \
+	JoinImplementer.cs \
 	ParallelizationFactory.cs \
 	Properties/AssemblyInfo.cs \
 	TypeAnalyzer/TypeAnalyzer.Chord.cs \
 	TypeAnalyzer/TypeAnalyzer.cs \
 	TypeAnalyzer/TypeAnalyzer.Fork.cs \
+	TypeAnalyzer/TypeAnalyzer.Join.cs \
 	TypeParallelizer.cs
 
 REFERENCES =  \
@@ -21,7 +23,7 @@ REFERENCES =  \
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(FILES)
-	gmcs -out:$(ASSEMBLY) $(REFERENCES) -target:library -debug $(FILES) 
+	gmcs -out:$(ASSEMBLY) $(REFERENCES) -target:library -d:DEBUG -debug $(FILES) 
 
 clean:
 	-rm -vf $(ASSEMBLY)*

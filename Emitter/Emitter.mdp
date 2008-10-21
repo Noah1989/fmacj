@@ -23,10 +23,11 @@
     <File name="JoinGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="ParallelizationFactory.cs" subtype="Code" buildaction="Compile" />
     <File name="TypeParallelizer.cs" subtype="Code" buildaction="Compile" />
-    <File name="TypeAnalyzer" subtype="Directory" buildaction="Compile" />
     <File name="TypeAnalyzer/TypeAnalyzer.cs" subtype="Code" buildaction="Compile" />
     <File name="TypeAnalyzer/TypeAnalyzer.Fork.cs" subtype="Code" buildaction="Compile" />
     <File name="TypeAnalyzer/TypeAnalyzer.Chord.cs" subtype="Code" buildaction="Compile" />
+    <File name="TypeAnalyzer/TypeAnalyzer.Join.cs" subtype="Code" buildaction="Compile" />
+    <File name="JoinImplementer.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="../bin/Fmacj.Runtime.dll" />

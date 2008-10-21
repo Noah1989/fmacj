@@ -35,7 +35,7 @@ namespace Fmacj.Emitter
                 source.GetMethods(BindingFlags.Instance | BindingFlags.Static |
                                   BindingFlags.Public | BindingFlags.NonPublic);
             foreach (MethodInfo method in methods)
-                if ((IsParallel(method))
+                if (IsParallel(method)
                     && SignatureMatch(forkMethod, method))
                 {
                     if (result == null)
