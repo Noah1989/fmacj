@@ -6,8 +6,8 @@ FILES =  \
 	BusTest.cs \
 	ChannelTest.cs \
 	ChordTest.cs \
-	Foo.cs \
 	ForkTest.cs \
+	JoinTest.cs \
 	ParallelizationFactoryTest.cs \
 	Properties/AssemblyInfo.cs \
 	ShortcutTest.cs \

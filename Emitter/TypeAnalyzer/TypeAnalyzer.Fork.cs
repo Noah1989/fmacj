@@ -5,25 +5,9 @@ using Fmacj.Framework;
 
 namespace Fmacj.Emitter
 {
-    internal class TypeAnalyzer
+    internal partial class TypeAnalyzer
     {
-        private readonly Type source;
-
-        public TypeAnalyzer(Type source)
-        {
-            this.source = source;
-        }
-
-        public IEnumerable<ChordInfo> GetChords()
-        {
-            foreach (MethodInfo chordMethod in
-                source.GetMethods(BindingFlags.Instance | BindingFlags.Static |
-                                  BindingFlags.Public | BindingFlags.NonPublic))
-                if (chordMethod.GetCustomAttributes(typeof(ChordAttribute), false).Length > 0)
-                    yield return new ChordInfo(source, chordMethod);
-        }
-
-        public IEnumerable<ForkGroup> GetForkGroups()
+		public IEnumerable<ForkGroup> GetForkGroups()
         {
             foreach (MethodInfo forkMethod in GetForkMethods())
             {
@@ -43,8 +27,6 @@ namespace Fmacj.Emitter
                 if (method.GetCustomAttributes(typeof(ForkAttribute), false).Length > 0)
                     yield return method;
         }
-
-
 
         private MethodInfo GetParallelMethod(MethodInfo forkMethod)
         {
@@ -76,38 +58,5 @@ namespace Fmacj.Emitter
             return method.GetCustomAttributes(typeof(AsynchronousAttribute), false).Length > 0
                    || method.GetCustomAttributes(typeof(MovableAttribute), false).Length > 0;
         }
-
-        private static bool SignatureMatch(MethodInfo forkMethod , MethodInfo parallelMethod)
-        {
-            if (forkMethod.Name != parallelMethod.Name)
-                return false;
-
-            IEnumerable<ParameterInfo> parallelMethodParameters = GetNonChannelParameters(parallelMethod);
-            IEnumerator<ParameterInfo> parallelMethodParameterEnumerator = parallelMethodParameters.GetEnumerator();
-
-            foreach (ParameterInfo forkMethodParameter in forkMethod.GetParameters())
-            {
-                if(!parallelMethodParameterEnumerator.MoveNext())
-                    return false;
-
-                ParameterInfo parallelMethodParameter = parallelMethodParameterEnumerator.Current;
-                
-                if(forkMethodParameter.ParameterType != parallelMethodParameter.ParameterType)
-                    return false;
-            }
-
-            if (parallelMethodParameterEnumerator.MoveNext())
-                return false;
-
-        
-            return true;
-        }
-
-        private static IEnumerable<ParameterInfo> GetNonChannelParameters(MethodInfo method)
-        {
-            foreach (ParameterInfo parameter in method.GetParameters())
-                if(parameter.GetCustomAttributes(typeof(ChannelAttribute),false).Length == 0)
-                    yield return parameter;
-        }
-    }
+	}
 }

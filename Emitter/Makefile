@@ -9,7 +9,9 @@ FILES =  \
 	JoinGroup.cs \
 	ParallelizationFactory.cs \
 	Properties/AssemblyInfo.cs \
-	TypeAnalyzer.cs \
+	TypeAnalyzer/TypeAnalyzer.Chord.cs \
+	TypeAnalyzer/TypeAnalyzer.cs \
+	TypeAnalyzer/TypeAnalyzer.Fork.cs \
 	TypeParallelizer.cs
 
 REFERENCES =  \

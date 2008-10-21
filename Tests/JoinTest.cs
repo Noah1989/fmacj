@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
+using System.Threading;
 using Fmacj.Framework;
 using Fmacj.Emitter;
 using NUnit.Framework;
 
 namespace Fmacj.Tests
 {
-    [Ignore]
     [TestFixture]
-    public class FooTest : AssertionHelper
+    public class JoinTest : AssertionHelper
     {
         [Parallelizable]
-        public abstract class Foo : IParallelizable
+        public abstract class JoinTestClass : IParallelizable
         {
             [Fork]
             public abstract void Bar(int val);
@@ -46,16 +44,24 @@ namespace Fmacj.Tests
         public void SetUp()
         {
             ParallelizationFactory.Clear();
-            ParallelizationFactory.Parallelize(typeof(Foo).Assembly);
+            ParallelizationFactory.Parallelize(typeof(JoinTestClass).Assembly);
         }
 
         [Test]
         public void Test()
         {
-            Foo foo = ParallelizationFactory.GetParallelized<Foo>();
+            JoinTestClass foo = ParallelizationFactory.GetParallelized<JoinTestClass>();
             foo.Bar(2);
             foo.Baz(3);
-            Expect(foo.Sum(), EqualTo(2*2 + 1/3));
+
+			double result = 0;
+
+            Thread thread = new Thread(delegate() { result = foo.Sum(); });
+            thread.Start();
+
+            ThreadTimeout.Timeout(thread, 10000);
+            
+            Expect(result, EqualTo(2*2 + 1/3));            
         }
     }
 }

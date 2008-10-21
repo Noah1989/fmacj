@@ -18,7 +18,7 @@
     <File name="BusTest.cs" subtype="Code" buildaction="Compile" />
     <File name="ChannelTest.cs" subtype="Code" buildaction="Compile" />
     <File name="ChordTest.cs" subtype="Code" buildaction="Compile" />
-    <File name="Foo.cs" subtype="Code" buildaction="Compile" />
+    <File name="JoinTest.cs" subtype="Code" buildaction="Compile" />
     <File name="ForkTest.cs" subtype="Code" buildaction="Compile" />
     <File name="ParallelizationFactoryTest.cs" subtype="Code" buildaction="Compile" />
     <File name="ShortcutTest.cs" subtype="Code" buildaction="Compile" />
