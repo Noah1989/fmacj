@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{55492816-B96A-4300-9329-73CBBBBBE9C6}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -46,10 +46,8 @@
     <Compile Include="ChannelTest.cs" />
     <Compile Include="ChordTest.cs" />
     <Compile Include="BusTest.cs" />
+    <Compile Include="JoinTest.cs" />
     <Compile Include="ShortcutTest.cs" />
-    <Compile Include="Foo.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="ForkTest.cs" />
     <Compile Include="ParallelizationFactoryTest.cs" />
     <Compile Include="ThreadTimeout.cs" />

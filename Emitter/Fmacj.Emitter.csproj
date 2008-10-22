@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1EF044B4-BEB8-4898-A16B-59F73BA0CA0D}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -44,9 +44,14 @@
     <Compile Include="ChordInfo.cs" />
     <Compile Include="ForkGroup.cs" />
     <Compile Include="ForkImplementer.cs" />
+    <Compile Include="JoinGroup.cs" />
+    <Compile Include="JoinImplementer.cs" />
     <Compile Include="ParallelizationFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypeAnalyzer.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.Chord.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.Fork.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.Join.cs" />
     <Compile Include="TypeParallelizer.cs" />
   </ItemGroup>
   <ItemGroup>
