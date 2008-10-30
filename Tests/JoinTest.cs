@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace Fmacj.Tests
 {
+	[Ignore("not implemented yet")]
     [TestFixture]
     public class JoinTest : AssertionHelper
     {
