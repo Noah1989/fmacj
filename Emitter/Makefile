@@ -2,6 +2,7 @@ ASSEMBLY = ../bin/Fmacj.Emitter.dll
 
 FILES =  \
 	AssemblyParallelizer.cs \
+	ChannelImplementer.cs \
 	ChordImplementer.cs \
 	ChordInfo.cs \
 	ForkGroup.cs \

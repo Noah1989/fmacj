@@ -3,7 +3,6 @@ ASSEMBLY = ../bin/Fmacj.Runtime.dll
 FILES =  \
 	Bus.cs \
 	Channel.cs \
-	ChannelFactory.cs \
 	ChordManager.cs \
 	IChannel.cs \
 	Properties/AssemblyInfo.cs

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
 using System.Threading;
 using Fmacj.Runtime;
 using Fmacj.Framework;
@@ -14,14 +12,16 @@ namespace Fmacj.Emitter
     {
         private readonly TypeBuilder target;
         private readonly Type baseType;
+		private readonly ChannelImplementer channelImplementer;
 
         private readonly Dictionary<ChordInfo, MethodBuilder> callbacks = new Dictionary<ChordInfo, MethodBuilder>();
 
 
-        public ChordImplementer(TypeBuilder target, Type baseType)
+        public ChordImplementer(TypeBuilder target, Type baseType, ChannelImplementer channelImplementer)
         {
             this.target = target;
             this.baseType = baseType;
+			this.channelImplementer = channelImplementer;
         }
 
         public void Implement(ChordInfo chord)
@@ -95,6 +95,7 @@ namespace Fmacj.Emitter
             generator.Emit(OpCodes.Call, baseType.GetConstructor(BindingFlags.Instance | BindingFlags.Public
                                                                   | BindingFlags.NonPublic, null, new Type[] { }, null));
 
+			channelImplementer.ImplementChannelInitialization(generator);
 
             foreach (ChordInfo chord in callbacks.Keys)
             {
@@ -112,20 +113,9 @@ namespace Fmacj.Emitter
                     generator.Emit(OpCodes.Ldc_I4, parameterIndex);
 
                     generator.Emit(OpCodes.Ldarg_0);
-                    generator.Emit(OpCodes.Ldstr, chord.ChannelNames[parameterIndex]);
-                    generator.EmitCall(OpCodes.Call,
-                                       typeof(ChannelFactory<>)
-                                           .MakeGenericType(new Type[]
-                                                            {
-                                                                chord.ChannelParameters[parameterIndex].
-                                                                    ParameterType
-                                                            })
-                                           .GetMethod("GetChannel", new Type[]
-                                                                    {
-                                                                        typeof (IParallelizable),
-                                                                        typeof (string)
-                                                                    }
-                                           ), null);
+                    generator.Emit(OpCodes.Ldfld, channelImplementer
+					               .GetChannelField(chord.ChannelNames[parameterIndex],
+					                                chord.ChannelParameters[parameterIndex].ParameterType));
 
                     generator.Emit(OpCodes.Stelem_Ref);
                 }

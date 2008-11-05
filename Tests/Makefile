@@ -4,6 +4,7 @@ ASSEMBLY = $(BINDIR)/Fmacj.Tests.dll
 
 FILES =  \
 	BusTest.cs \
+	ChannelResolver.cs \
 	ChannelTest.cs \
 	ChordTest.cs \
 	ForkTest.cs \

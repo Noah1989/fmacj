@@ -9,10 +9,12 @@ namespace Fmacj.Emitter
     internal class ForkImplementer
     {
         private readonly TypeBuilder target;
+		private readonly ChannelImplementer channelImplementer;
 
-        public ForkImplementer(TypeBuilder target)
+        public ForkImplementer(TypeBuilder target, ChannelImplementer channelImplementer)
         {
             this.target = target;
+			this.channelImplementer = channelImplementer;
         }
 
         public void Implement(ForkGroup forkGroup)
@@ -99,18 +101,17 @@ namespace Fmacj.Emitter
             // IL: Handle channel results
             for (int channelParameterIndex = 0; channelParameterIndex < channelParameterCount; channelParameterIndex++)
             {
+				Type channelType = forkGroup.ChannelParameters[channelParameterIndex]
+				                                .ParameterType.GetElementType();
                 generator.Emit(OpCodes.Ldarg_0);
-                generator.Emit(OpCodes.Ldstr, forkGroup.ChannelNames[channelParameterIndex]);
-                Type[] typeArguments = new Type[]
-                                       {
-                                           forkGroup.ChannelParameters[channelParameterIndex].
-                                               ParameterType.GetElementType()
-                                       };
-                generator.EmitCall(OpCodes.Call,
-                                   typeof(ChannelFactory<>).MakeGenericType(typeArguments).GetMethod("GetChannel"), null);
+                    generator.Emit(OpCodes.Ldfld, channelImplementer
+				               .GetChannelField(forkGroup.ChannelNames[channelParameterIndex],
+				                                channelType));
 
                 generator.Emit(OpCodes.Ldloc, channelParameterIndex);
-                generator.EmitCall(OpCodes.Call, typeof(Channel<>).MakeGenericType(typeArguments).GetMethod("Send"), null);
+				generator.EmitCall(OpCodes.Call, typeof(Channel<>)
+				                   .MakeGenericType(new Type[] { channelType })
+				                   .GetMethod("Send"), null);
             }
 
             generator.Emit(OpCodes.Ret);

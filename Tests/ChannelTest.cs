@@ -60,7 +60,7 @@ namespace Fmacj.Tests
 
             int result = 0;
 
-            Thread thread = new Thread(delegate() { result = ChannelFactory<int>.GetChannel(channelTestClass, "TestChannel").Receive(); });
+            Thread thread = new Thread(delegate() { result = ChannelResolver<int>.GetChannel(channelTestClass, "TestChannel").Receive(); });
             thread.Start();
 
             ThreadTimeout.Timeout(thread, 10000);
@@ -80,8 +80,8 @@ namespace Fmacj.Tests
 
             Thread thread = new Thread(delegate()
                                            {
-                                               result1 = ChannelFactory<int>.GetChannel(channelTestClass, "TestChannel1").Receive();
-                                               result2 = ChannelFactory<string>.GetChannel(channelTestClass, "TestChannel2").Receive();
+                                               result1 = ChannelResolver<int>.GetChannel(channelTestClass, "TestChannel1").Receive();
+                                               result2 = ChannelResolver<string>.GetChannel(channelTestClass, "TestChannel2").Receive();
                                            });
             thread.Start();
 
@@ -127,7 +127,7 @@ namespace Fmacj.Tests
             Thread.Sleep(random.Next(200));
             instance.ChannelTestMethod(value);
 
-            int result = ChannelFactory<int>.GetChannel(instance, "TestChannel").Receive();
+            int result = ChannelResolver<int>.GetChannel(instance, "TestChannel").Receive();
             Expect(result, EqualTo(value*value));
         }
 
@@ -147,7 +147,7 @@ namespace Fmacj.Tests
                 new Thread(
                     delegate()
                         {
-                            Channel<int> channel = ChannelFactory<int>.GetChannel(channelTestClass, "TestChannel");
+                            Channel<int> channel = ChannelResolver<int>.GetChannel(channelTestClass, "TestChannel");
                             for (int i = 1; i <= 1000; i++)
                             {
                                 result.Add(channel.Receive());

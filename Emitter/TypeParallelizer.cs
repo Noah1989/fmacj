@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
 
@@ -32,8 +31,9 @@ namespace Fmacj.Emitter
             typeBuilder.SetParent(source);
 
             TypeAnalyzer typeAnalyzer = new TypeAnalyzer(source);
-            ForkImplementer forkImplementer = new ForkImplementer(typeBuilder);
-            ChordImplementer chordImplementer = new ChordImplementer(typeBuilder, source);
+			ChannelImplementer channelImplementer = new ChannelImplementer(typeBuilder);
+            ForkImplementer forkImplementer = new ForkImplementer(typeBuilder, channelImplementer);
+            ChordImplementer chordImplementer = new ChordImplementer(typeBuilder, source, channelImplementer);
 			JoinImplementer joinImplementer = new JoinImplementer(typeBuilder);
 
             foreach (ForkGroup forkGroup in typeAnalyzer.GetForkGroups())

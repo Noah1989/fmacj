@@ -7,16 +7,9 @@ namespace Fmacj.Runtime
     {
         private readonly EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
 
-        public string Name
-        {
-            get;
-            private set;
-        }
-
-        internal Channel(string name)
-        {
-            Name = name;
-        }
+        public Channel()
+		{
+		}
 
         private readonly Queue<T> values = new Queue<T>();
 

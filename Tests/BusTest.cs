@@ -60,7 +60,7 @@ namespace Fmacj.Tests
                 new Thread(
                     delegate()
                         {
-                            Channel<int> channel = ChannelFactory<int>.GetChannel(busTestClass, "TestChannel3");
+                            Channel<int> channel = ChannelResolver<int>.GetChannel(busTestClass, "TestChannel3");
                             object[] objects = new Bus(new IChannel[] {channel}).Receive();
                             Expect(objects.Length, EqualTo(1));
                             result = (int) objects[0];
@@ -86,8 +86,8 @@ namespace Fmacj.Tests
                 new Thread(
                     delegate()
                         {
-                            Channel<int> channel1 = ChannelFactory<int>.GetChannel(busTestClass, "TestChannel1");
-                            Channel<double> channel2 = ChannelFactory<double>.GetChannel(busTestClass, "TestChannel2");
+                            Channel<int> channel1 = ChannelResolver<int>.GetChannel(busTestClass, "TestChannel1");
+                            Channel<double> channel2 = ChannelResolver<double>.GetChannel(busTestClass, "TestChannel2");
                             object[] objects = new Bus(new IChannel[] {channel1, channel2}).Receive();
                             Expect(objects.Length, EqualTo(2));
                             result = (int) objects[0] + (double) objects[1];
@@ -119,8 +119,8 @@ namespace Fmacj.Tests
                 new Thread(
                     delegate()
                         {
-                            Channel<int> channel1 = ChannelFactory<int>.GetChannel(busTestClass,"TestChannel1");
-                            Channel<double> channel2 = ChannelFactory<double>.GetChannel(busTestClass,"TestChannel2");
+                            Channel<int> channel1 = ChannelResolver<int>.GetChannel(busTestClass,"TestChannel1");
+                            Channel<double> channel2 = ChannelResolver<double>.GetChannel(busTestClass,"TestChannel2");
                             var bus = new Bus(new IChannel[] {channel1, channel2});
                             for (int i = 1; i <= 1000; i++)
                             {
