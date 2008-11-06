@@ -34,7 +34,7 @@ namespace Fmacj.Emitter
 			ChannelImplementer channelImplementer = new ChannelImplementer(typeBuilder);
             ForkImplementer forkImplementer = new ForkImplementer(typeBuilder, channelImplementer);
             ChordImplementer chordImplementer = new ChordImplementer(typeBuilder, source, channelImplementer);
-			JoinImplementer joinImplementer = new JoinImplementer(typeBuilder);
+			JoinImplementer joinImplementer = new JoinImplementer(typeBuilder, channelImplementer);
 
             foreach (ForkGroup forkGroup in typeAnalyzer.GetForkGroups())
                 forkImplementer.Implement(forkGroup);

@@ -11,7 +11,7 @@ using Fmacj.Framework;
 using NUnit.Framework;
 
 namespace Fmacj.Tests
-{
+{	
     [TestFixture]
     public class ForkTest : AssertionHelper
     {
@@ -190,7 +190,7 @@ namespace Fmacj.Tests
 
         }
 
-        [Test]
+		[Test]
         public void MassiveInvoke()
         {
             ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>();

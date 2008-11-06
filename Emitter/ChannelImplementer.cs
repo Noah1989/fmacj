@@ -19,29 +19,38 @@ namespace Fmacj.Emitter
 			this.target = target;
 		}
 		
-		public FieldInfo GetChannelField(string name, Type type)
-		{   
-
+		private FieldInfo GetChannelFieldInternal(string internalname, Type type)
+		{
 			Type channelType = typeof(Channel<>).MakeGenericType(new Type[] { type });
 			
 			FieldInfo result;
 						
-			if (!channelFields.TryGetValue(name, out result))
+			if (!channelFields.TryGetValue(internalname, out result))
             {
-				result = target.DefineField(name + "Channel", 
+				result = target.DefineField(internalname, 
 				                            channelType,
 				                            FieldAttributes.Private);
 				
-                channelFields.Add(name, result);
+                channelFields.Add(internalname, result);
             }
 			else
 				if (result.FieldType != channelType)
-					throw new InconsistentChannelTypeException(name, target.Name);
+					throw new InconsistentChannelTypeException(internalname, target.Name);
 				
 			
 
             return result;
+		}
+		
+		public FieldInfo GetChannelField(string name, Type type)
+		{   
+			return GetChannelFieldInternal(name + "Channel", type);
         }
+		
+		public FieldInfo GetJoinChannelField(string name, Type type)
+		{
+			return GetChannelFieldInternal(name + "ChannelJ", type);
+		}
 		
 		public void ImplementChannelInitialization(ILGenerator generator)
 		{

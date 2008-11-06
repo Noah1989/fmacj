@@ -42,8 +42,19 @@ namespace Fmacj.Emitter
 
             int channelParameterCount = chord.ChannelParameters.Length;
 
+			Type returnType = chord.ChordMethod.ReturnType;		
+			
             ILGenerator generator = callback.GetILGenerator();
 
+			// IL: Get join channel			
+			if (returnType != typeof(void))
+			{
+                generator.Emit(OpCodes.Ldarg_0);
+				generator.Emit(OpCodes.Ldfld, channelImplementer
+				               .GetJoinChannelField(chord.ChordMethod.Name,
+				                                    returnType));
+			}
+			
             // IL: Receive from Bus and store array
             generator.DeclareLocal(typeof(object[]));
             generator.Emit(OpCodes.Ldarg_1);
@@ -60,13 +71,20 @@ namespace Fmacj.Emitter
                 generator.Emit(OpCodes.Ldelem_Ref);
                 if (chord.ChannelParameters[parameterIndex].ParameterType.IsValueType)
                     generator.Emit(OpCodes.Unbox_Any, chord.ChannelParameters[parameterIndex].ParameterType);
-            }
-
-
-            // IL: Call chord method
+            }					
+		
+			// IL: Call chord method			
             generator.EmitCall(OpCodes.Call, chord.ChordMethod, null);
+			
+			// IL: Send result to join channel			
+			if (returnType != typeof(void))
+			{							
+				generator.EmitCall(OpCodes.Call, typeof(Channel<>)
+				                   .MakeGenericType(new Type[] { returnType })
+				                   .GetMethod("Send"), null);
+			}
 
-            // Reregister bus
+            // IL: Reregister bus
             generator.Emit(OpCodes.Ldarg_1);
             generator.Emit(OpCodes.Ldarg_0);
             generator.Emit(OpCodes.Ldftn, callback);
@@ -77,7 +95,6 @@ namespace Fmacj.Emitter
             generator.Emit(OpCodes.Ret);
 
             callbacks.Add(chord, callback);
-
         }
 
 
