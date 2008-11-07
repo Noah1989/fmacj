@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using Fmacj.Emitter;
 
-namespace Examples.Mandelbrot
+namespace Fmacj.Examples.Mandelbrot
 {
 	class MainClass
 	{

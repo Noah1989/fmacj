@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 
-namespace Examples.Mandelbrot
+namespace Fmacj.Examples.Mandelbrot
 {
 	internal static class ColorUtil
 	{

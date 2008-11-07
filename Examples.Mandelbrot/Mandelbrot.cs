@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using Fmacj.Framework;
 
-namespace Examples.Mandelbrot
+namespace Fmacj.Examples.Mandelbrot
 {
 	[Parallelizable]
 	public abstract class Mandelbrot : IParallelizable
