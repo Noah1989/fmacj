@@ -9,12 +9,14 @@ namespace Fmacj.Examples.Mandelbrot
 	{		
 		private int width, height;
 		
-		private Bitmap bitmap;
+		private Graphics graphics;
 		
 		public Bitmap Calculate(int size)
 		{
 			width = size; height = size*11/25;
-			bitmap = new Bitmap(width, height);
+			Bitmap bitmap = new Bitmap(width, height);
+
+		    graphics = Graphics.FromImage(bitmap);
 
 			Console.WriteLine("Bitmap initialized.");
 			
@@ -23,7 +25,9 @@ namespace Fmacj.Examples.Mandelbrot
 			
 			for (int n = 0; n < height; n++)
 				Console.WriteLine("Rendered line {0}.", RenderLine());
-			
+
+		    graphics.Dispose();
+
 			return bitmap;
 		}
 
@@ -54,22 +58,28 @@ namespace Fmacj.Examples.Mandelbrot
 				line.Data[x] = i;
 			}
 		}
-		
-		[Chord]
-		protected int RenderLine([Channel("line")] Line line)
-		{
-			int y = line.Y;
-			int hue = (35*line.ColorId)%360;
-			
-			for (int x=0;x<width;x++)		
-			{
-				Color color = ColorUtil.FromHSB(hue,100,line.Data[x]*100/255);
-				bitmap.SetPixel(x,y,color);
-			}
-			
-			return y;
-		}		
-		[Join]
+
+        [Chord]
+        protected int RenderLine([Channel("line")] Line line)
+        {
+            int y = line.Y;
+            int hue = (35*line.ColorId)%360;
+
+            Bitmap lineBitmap = new Bitmap(width, 1);
+
+            for (int x = 0; x < width; x++)
+            {
+                Color color = ColorUtil.FromHSB(hue, 100, line.Data[x]*100/255);
+                lineBitmap.SetPixel(x, 0, color);
+            }
+
+            lock(graphics) graphics.DrawImage(lineBitmap, 0, y);
+
+            lineBitmap.Dispose();
+
+            return y;
+        }
+	    [Join]
 		protected abstract int RenderLine();		
 		
 		protected struct Line

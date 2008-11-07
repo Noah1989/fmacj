@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyParallelizer.cs" />
+    <Compile Include="ChannelImplementer.cs" />
     <Compile Include="ChordImplementer.cs" />
     <Compile Include="ChordInfo.cs" />
     <Compile Include="ForkGroup.cs" />

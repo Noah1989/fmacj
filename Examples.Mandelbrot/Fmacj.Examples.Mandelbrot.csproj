@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{55492816-B96A-4300-9329-73CBBBBBE9C6}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{2C87955C-86A3-4D32-A021-6E2A39D2340F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Fmacj.Tests</RootNamespace>
-    <AssemblyName>Fmacj.Tests</AssemblyName>
+    <RootNamespace>Fmacj.Examples.Mandelbrot</RootNamespace>
+    <AssemblyName>Fmacj.Examples.Mandelbrot</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,45 +30,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.4.6.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\nunit\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ChannelResolver.cs" />
-    <Compile Include="ChannelTest.cs" />
-    <Compile Include="ChordTest.cs" />
-    <Compile Include="BusTest.cs" />
-    <Compile Include="JoinTest.cs" />
-    <Compile Include="ShortcutTest.cs" />
-    <Compile Include="ForkTest.cs" />
-    <Compile Include="ParallelizationFactoryTest.cs" />
-    <Compile Include="ThreadTimeout.cs" />
-    <Compile Include="TypeValidatorTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Emitter\Fmacj.Emitter.csproj">
-      <Project>{1EF044B4-BEB8-4898-A16B-59F73BA0CA0D}</Project>
-      <Name>Fmacj.Emitter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Runtime\Fmacj.Runtime.csproj">
-      <Project>{B8D09CBB-91D0-4119-829F-FE0698396B23}</Project>
-      <Name>Fmacj.Runtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Framework\Fmacj.Framework.csproj">
-      <Project>{A3421000-CF97-4434-82D1-E5C2ECFD6678}</Project>
-      <Name>Fmacj.Framework</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -77,4 +38,23 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Compile Include="ColorUtil.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="Mandelbrot.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Emitter\Fmacj.Emitter.csproj">
+      <Project>{1EF044B4-BEB8-4898-A16B-59F73BA0CA0D}</Project>
+      <Name>Fmacj.Emitter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework\Fmacj.Framework.csproj">
+      <Project>{A3421000-CF97-4434-82D1-E5C2ECFD6678}</Project>
+      <Name>Fmacj.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A3421000-CF97-4434-82D1-E5C2ECFD6678}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -46,6 +46,8 @@
     <Compile Include="AsynchronousAttribute.cs" />
     <Compile Include="ChannelAttribute.cs" />
     <Compile Include="ChordAttribute.cs" />
+    <Compile Include="InconsistentChannelTypeException.cs" />
+    <Compile Include="InvalidChannelException.cs" />
     <Compile Include="InvalidMethodException.cs" />
     <Compile Include="ForkAttribute.cs" />
     <Compile Include="InvalidTypeException.cs" />

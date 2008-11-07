@@ -1,5 +1,6 @@
+using System;
 using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
@@ -12,14 +13,22 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCopyright("Copyright © Stefan Noack 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: CLSCompliant(true)]
 
-// The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
-// If the build and revision are set to '*' they will be updated automatically.
+// Setting ComVisible to false makes the types in this assembly not visible 
+// to COM components.  If you need to access a type in this assembly from 
+// COM, set the ComVisible attribute to true on that type.
+[assembly: ComVisible(false)]
 
-[assembly: AssemblyVersion("1.0.*.*")]
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("609449f6-760c-461d-a949-1c330bc3898f")]
 
-// The following attributes are used to specify the signing key for the assembly, 
-// if desired. See the Mono documentation for more information about signing.
-
-[assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyKeyFile("")]
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+[assembly: AssemblyVersion("0.8")]
+[assembly: AssemblyFileVersion("0.8")]

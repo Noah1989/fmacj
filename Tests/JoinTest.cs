@@ -48,7 +48,7 @@ namespace Fmacj.Tests
         }
 
         [Test]
-        public void Test()
+        public void ForkChordAndJoin()
         {
             JoinTestClass foo = ParallelizationFactory.GetParallelized<JoinTestClass>();
             

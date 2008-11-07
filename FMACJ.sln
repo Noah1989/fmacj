@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fmacj.Emitter", "Emitter\Fm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fmacj.Runtime", "Runtime\Fmacj.Runtime.csproj", "{B8D09CBB-91D0-4119-829F-FE0698396B23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fmacj.Examples.Mandelbrot", "Examples.Mandelbrot\Fmacj.Examples.Mandelbrot.csproj", "{2C87955C-86A3-4D32-A021-6E2A39D2340F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{B8D09CBB-91D0-4119-829F-FE0698396B23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8D09CBB-91D0-4119-829F-FE0698396B23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8D09CBB-91D0-4119-829F-FE0698396B23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C87955C-86A3-4D32-A021-6E2A39D2340F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C87955C-86A3-4D32-A021-6E2A39D2340F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C87955C-86A3-4D32-A021-6E2A39D2340F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C87955C-86A3-4D32-A021-6E2A39D2340F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
