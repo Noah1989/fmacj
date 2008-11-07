@@ -64,7 +64,7 @@ namespace Examples.Mandelbrot
 			for (int x=0;x<width;x++)		
 			{
 				Color color = ColorUtil.FromHSB(hue,100,line.Data[x]*100/255);
-				lock(bitmap) bitmap.SetPixel(x,y,color);
+				bitmap.SetPixel(x,y,color);
 			}
 			
 			return y;

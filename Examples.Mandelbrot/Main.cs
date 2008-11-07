@@ -22,14 +22,12 @@ namespace Examples.Mandelbrot
 				return;
 			}
 			
-			ParallelizationFactory.Parallelize(typeof(Mandelbrot).Assembly);
-			
+			ParallelizationFactory.Parallelize(typeof(Mandelbrot).Assembly);			
 			Mandelbrot mandelbrot = ParallelizationFactory.GetParallelized<Mandelbrot>();
 			
 			Bitmap bitmap = mandelbrot.Calculate(size);
 				
-			Console.WriteLine("Compressing PNG...");
-			
+			Console.WriteLine("Compressing PNG...");			
 			bitmap.Save(filename);
 			
 			Console.WriteLine("Ouput written to {0}", filename);
