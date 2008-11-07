@@ -19,7 +19,13 @@ namespace Fmacj.Runtime
 
         public static void RegisterBus(Bus bus, WaitOrTimerCallback callback)
         {
-            ThreadPool.RegisterWaitForSingleObject(bus.WaitHandle, callback, bus, -1, true);
+			if (bus.RegisteredWaitHandle != null)
+			{
+				bus.RegisteredWaitHandle.Unregister(null);
+				bus.RegisteredWaitHandle = null;
+			}
+			
+            bus.RegisteredWaitHandle = ThreadPool.RegisterWaitForSingleObject(bus.WaitHandle, callback, bus, -1, true);
         }
     }
 }

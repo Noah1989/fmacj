@@ -13,7 +13,8 @@ namespace Fmacj.Runtime
         private readonly EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
         private readonly EventWaitHandle publicWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
 
-
+		private RegisteredWaitHandle registeredWaitHandle;
+		
         private int receivedCount;
         private bool dataAvailable;
         
@@ -109,5 +110,11 @@ namespace Fmacj.Runtime
         }
 
         public WaitHandle WaitHandle { get { return publicWaitHandle; } }
+		
+		internal RegisteredWaitHandle RegisteredWaitHandle 
+		{
+			get { return registeredWaitHandle; } 
+			set { registeredWaitHandle = value; }
+		}
     }
 }

@@ -10,8 +10,8 @@ using Fmacj.Framework;
 using NUnit.Framework;
 
 namespace Fmacj.Tests
-{
-	    [TestFixture]
+{	
+	[TestFixture]
     public class ChordTest : AssertionHelper
     {
         [Parallelizable]
@@ -101,7 +101,7 @@ namespace Fmacj.Tests
         public void SetUp()
         {
             ParallelizationFactory.Clear();
-            ParallelizationFactory.Parallelize(typeof(ChordTestClass).Assembly);
+            ParallelizationFactory.Parallelize(typeof(ChordTestClass).Assembly);			
         }
 
         [Test]
@@ -160,9 +160,8 @@ namespace Fmacj.Tests
 
             tcpClient.Close();
             tcpListener.Stop();
-        }
-
-		[Ignore ("works but breaks other tests")]
+        }		
+		
         [Test]
         public void MassiveInvoke()
         {

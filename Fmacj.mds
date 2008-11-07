@@ -5,12 +5,14 @@
       <Entry build="True" name="Runtime" configuration="Debug" />
       <Entry build="True" name="Emitter" configuration="Debug" />
       <Entry build="True" name="Tests" configuration="Debug" />
+      <Entry build="True" name="Examples.Mandelbrot" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="Framework" configuration="Release" />
       <Entry build="True" name="Runtime" configuration="Release" />
       <Entry build="True" name="Emitter" configuration="Release" />
       <Entry build="True" name="Tests" configuration="Release" />
+      <Entry build="True" name="Examples.Mandelbrot" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Tests" single="True">
@@ -18,11 +20,13 @@
     <Execute type="None" entry="Runtime" />
     <Execute type="None" entry="Emitter" />
     <Execute type="None" entry="Tests" />
+    <Execute type="None" entry="Examples.Mandelbrot" />
   </StartMode>
   <Entries>
     <Entry filename="Framework/Framework.mdp" />
     <Entry filename="Runtime/Runtime.mdp" />
     <Entry filename="Emitter/Emitter.mdp" />
     <Entry filename="Tests/Tests.mdp" />
+    <Entry filename="Examples.Mandelbrot/Examples.Mandelbrot.mdp" />
   </Entries>
 </Combine>

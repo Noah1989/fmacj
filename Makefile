@@ -1,6 +1,7 @@
 SUBDIRS = Framework \
 	  Runtime \
-	  Emitter
+	  Emitter \
+	  Examples.Mandelbrot
 
 TESTDIR = Tests
 

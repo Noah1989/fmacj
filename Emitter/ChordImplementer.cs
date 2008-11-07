@@ -62,6 +62,13 @@ namespace Fmacj.Emitter
             generator.Emit(OpCodes.Stloc_0);
             
             generator.Emit(OpCodes.Ldarg_0);
+			
+			// IL: Reregister bus
+            generator.Emit(OpCodes.Ldarg_1);
+            generator.Emit(OpCodes.Ldarg_0);
+            generator.Emit(OpCodes.Ldftn, callback);
+            generator.Emit(OpCodes.Newobj, typeof(WaitOrTimerCallback).GetConstructor(new Type[] { typeof(object), typeof(IntPtr) }));
+            generator.EmitCall(OpCodes.Call, typeof(ChordManager).GetMethod("RegisterBus", new Type[] { typeof(Bus), typeof(WaitOrTimerCallback) }), null);
 
             // IL: Unwrap value array
             for (int parameterIndex = 0; parameterIndex < channelParameterCount; parameterIndex++)
@@ -82,14 +89,7 @@ namespace Fmacj.Emitter
 				generator.EmitCall(OpCodes.Call, typeof(Channel<>)
 				                   .MakeGenericType(new Type[] { returnType })
 				                   .GetMethod("Send"), null);
-			}
-
-            // IL: Reregister bus
-            generator.Emit(OpCodes.Ldarg_1);
-            generator.Emit(OpCodes.Ldarg_0);
-            generator.Emit(OpCodes.Ldftn, callback);
-            generator.Emit(OpCodes.Newobj, typeof(WaitOrTimerCallback).GetConstructor(new Type[] { typeof(object), typeof(IntPtr) }));
-            generator.EmitCall(OpCodes.Call, typeof(ChordManager).GetMethod("RegisterBus", new Type[] { typeof(Bus), typeof(WaitOrTimerCallback) }), null);
+			}            
 
 
             generator.Emit(OpCodes.Ret);
