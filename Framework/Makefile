@@ -5,6 +5,7 @@ FILES =  \
 	ChannelAttribute.cs \
 	ChordAttribute.cs \
 	ForkAttribute.cs \
+	IChannelEnumerable.cs \
 	InconsistentChannelTypeException.cs \
 	InvalidMethodException.cs \
 	InvalidTypeException.cs \
