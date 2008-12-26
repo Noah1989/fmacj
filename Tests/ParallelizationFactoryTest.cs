@@ -19,6 +19,7 @@ namespace Fmacj.Tests
         [SetUp]
         public void SetUp()
         {
+			ConsoleOut.ShowAvailableThreadPoolThreads();
             ParallelizationFactory.Clear();
         }
 

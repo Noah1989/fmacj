@@ -100,6 +100,7 @@ namespace Fmacj.Tests
         [SetUp]
         public void SetUp()
         {
+			ConsoleOut.ShowAvailableThreadPoolThreads();
             ParallelizationFactory.Clear();
             ParallelizationFactory.Parallelize(typeof(ChordTestClass).Assembly);			
         }
