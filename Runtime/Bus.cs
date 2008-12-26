@@ -129,6 +129,9 @@ namespace Fmacj.Runtime
 
         public void Close()
         {
+            if (isClosed)
+                throw new InvalidOperationException("Cannot close Bus. Bus is already closed.");
+
 			lock (registeredWaitHandles)
             {
 				foreach (RegisteredWaitHandle handle in registeredWaitHandles.Values)

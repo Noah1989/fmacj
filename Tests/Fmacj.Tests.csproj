@@ -47,7 +47,6 @@
     <Compile Include="ChannelTest.cs" />
     <Compile Include="ChordTest.cs" />
     <Compile Include="BusTest.cs" />
-    <Compile Include="ConsoleOut.cs" />
     <Compile Include="JoinTest.cs" />
     <Compile Include="ShortcutTest.cs" />
     <Compile Include="ForkTest.cs" />
