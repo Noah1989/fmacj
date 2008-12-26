@@ -94,6 +94,8 @@ namespace Fmacj.Tests
 
                 dummy = null;
             }
+
+            public abstract void Dispose();
         }
 
         [SetUp]

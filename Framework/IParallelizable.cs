@@ -1,6 +1,8 @@
-﻿namespace Fmacj.Framework
+﻿using System;
+
+namespace Fmacj.Framework
 {
-    public interface IParallelizable
+    public interface IParallelizable : IDisposable
     {
     }
 }

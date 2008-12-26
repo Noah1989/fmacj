@@ -29,6 +29,8 @@ namespace Fmacj.Tests
                 streamWriter.Flush();
                 tcpClient.Close();
             }
+
+            public abstract void Dispose();
         }
 
         [SetUp]

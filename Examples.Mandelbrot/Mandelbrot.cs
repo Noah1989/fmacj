@@ -98,6 +98,8 @@ namespace Fmacj.Examples.Mandelbrot
 			public int Y { get { return y; } }
 			public byte[] Data { get { return data; } }
 			public int ColorId { get { return colorId; } }
-		}		
+		}
+
+	    public abstract void Dispose();
 	}
 }

@@ -43,6 +43,8 @@ namespace Fmacj.Tests
             {
                 throw new NotImplementedException();
             }
+
+            public abstract void Dispose();
         }
 
         [SetUp]

@@ -38,6 +38,8 @@ namespace Fmacj.Tests
             {
                 result = -value;
             }
+
+            public abstract void Dispose();
         }
 
         [SetUp]

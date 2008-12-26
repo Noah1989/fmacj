@@ -38,6 +38,8 @@ namespace Fmacj.Tests
 
             [Join]
             public abstract double Sum();
+
+            public abstract void Dispose();
         }
 
         [SetUp]

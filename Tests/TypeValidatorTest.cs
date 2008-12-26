@@ -15,6 +15,7 @@ namespace Fmacj.Tests
         }
         private abstract class AbstractTestClass : IParallelizable
         {
+            public abstract void Dispose();
         }
 
         [Test]
@@ -24,6 +25,10 @@ namespace Fmacj.Tests
         }
         private class NonAbstractTestClass : IParallelizable
         {
+            public void Dispose()
+            {
+                throw new System.NotImplementedException();
+            }
         }
 
         [Test]
@@ -40,6 +45,10 @@ namespace Fmacj.Tests
         }
         private struct TestStruct : IParallelizable
         {
+            public void Dispose()
+            {
+                throw new System.NotImplementedException();
+            }
         }
 
         [Test]

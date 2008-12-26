@@ -14,6 +14,7 @@ namespace Fmacj.Tests
         [Parallelizable]
         public abstract class ParallelizationFactoryTestClass : IParallelizable
         {
+            public abstract void Dispose();
         }
         
         [SetUp]

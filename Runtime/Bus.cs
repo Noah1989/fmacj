@@ -17,15 +17,20 @@ namespace Fmacj.Runtime
 		
         private int receivedCount;
         private bool dataAvailable;
-        
+        private bool isClosed;
+
         public Bus(IChannel[] channels)
         {
+            isClosed = false;
             this.channels = channels;
             Reset();
         }
 
         private void Reset()
         {
+            if (isClosed)
+                throw new InvalidOperationException("Cannot reset Bus. Bus is closed.");
+
             dataAvailable = false;
             data.Clear();
             registeredWaitHandles.Clear();
@@ -82,6 +87,9 @@ namespace Fmacj.Runtime
 
         public object[] Receive()
         {
+            if (isClosed)
+                throw new InvalidOperationException("Cannot receive from Bus. Bus is closed.");
+
             object[] result = null;
             bool recieved = false;
 
@@ -115,6 +123,21 @@ namespace Fmacj.Runtime
 		{
 			get { return registeredWaitHandle; } 
 			set { registeredWaitHandle = value; }
-		}
+		}         
+
+        public void Close()
+        {
+            foreach (RegisteredWaitHandle handle in registeredWaitHandles.Values)
+                handle.Unregister(null);
+
+            registeredWaitHandle.Unregister(null);
+
+            isClosed = true;
+        }
+
+        public bool IsClosed
+        {
+            get { return isClosed; }
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace Fmacj.Emitter
 		private readonly ChannelImplementer channelImplementer;
 
         private readonly Dictionary<ChordInfo, MethodBuilder> callbacks = new Dictionary<ChordInfo, MethodBuilder>();
-
+        private FieldBuilder disposingEventHandlerField;
 
         public ChordImplementer(TypeBuilder target, Type baseType, ChannelImplementer channelImplementer)
         {
@@ -112,6 +112,8 @@ namespace Fmacj.Emitter
             generator.Emit(OpCodes.Call, baseType.GetConstructor(BindingFlags.Instance | BindingFlags.Public
                                                                   | BindingFlags.NonPublic, null, new Type[] { }, null));
 
+            disposingEventHandlerField = target.DefineField("disposingEventHandler", typeof (EventHandler), FieldAttributes.Private);
+            
 			channelImplementer.ImplementChannelInitialization(generator);
 
             foreach (ChordInfo chord in callbacks.Keys)
@@ -143,10 +145,78 @@ namespace Fmacj.Emitter
                 generator.Emit(OpCodes.Ldarg_0);
                 generator.Emit(OpCodes.Ldftn, callbacks[chord]);
                 generator.Emit(OpCodes.Newobj, typeof(WaitOrTimerCallback).GetConstructor(new Type[] { typeof(object), typeof(IntPtr) }));
-                generator.EmitCall(OpCodes.Call, typeof(ChordManager).GetMethod("RegisterChord", new Type[] { typeof(IChannel[]), typeof(WaitOrTimerCallback) }), null);
+                generator.Emit(OpCodes.Ldarg_0);
+                generator.Emit(OpCodes.Ldflda, disposingEventHandlerField);
+                generator.EmitCall(OpCodes.Call,
+                                   typeof (ChordManager).GetMethod("RegisterChord",
+                                                                   new Type[]
+                                                                       {
+                                                                           typeof (IChannel[]),
+                                                                           typeof (WaitOrTimerCallback),
+                                                                           typeof (EventHandler).MakeByRefType()
+                                                                       }), null);
             }
 
             generator.Emit(OpCodes.Ret);
         }
+
+
+        public void ImplementDisposalBehavior()
+        {
+            target.DefineMethodOverride(GetDisposeMethodBody(), typeof(IDisposable).GetMethod("Dispose", new Type[] {}));
+            target.DefineMethodOverride(GetFinalizeMethodBody(),
+                                        typeof (object).GetMethod("Finalize",
+                                                                  BindingFlags.Instance | BindingFlags.NonPublic));
+        }
+
+        private MethodInfo GetDisposeMethodBody()
+        {
+            MethodBuilder result = target.DefineMethod("Dispose",
+                                                              MethodAttributes.Virtual | MethodAttributes.Public,
+                                                              typeof(void), new Type[] { });
+
+            ILGenerator generator = result.GetILGenerator();
+
+            Label endLabel = generator.DefineLabel();
+
+            generator.Emit(OpCodes.Ldarg_0);
+            generator.Emit(OpCodes.Ldfld, disposingEventHandlerField);
+            generator.Emit(OpCodes.Brfalse, endLabel);
+
+            generator.Emit(OpCodes.Ldarg_0);
+            generator.Emit(OpCodes.Ldfld, disposingEventHandlerField);
+            generator.Emit(OpCodes.Ldarg_0);
+            generator.Emit(OpCodes.Newobj, typeof (EventArgs).GetConstructor(new Type[] {}));
+            generator.EmitCall(OpCodes.Call,
+                               typeof(EventHandler).GetMethod("Invoke",
+                                                               new Type[]
+                                                                   {
+                                                                       typeof (object),
+                                                                       typeof (EventArgs)
+                                                                   }
+                                   ), null);
+            
+            generator.MarkLabel(endLabel);
+            generator.Emit(OpCodes.Ret);
+
+            return result;
+        }
+
+
+        private MethodInfo GetFinalizeMethodBody()
+        {
+            MethodBuilder result = target.DefineMethod("Finalize",
+                                                              MethodAttributes.Virtual | MethodAttributes.Family,
+                                                              typeof(void), new Type[] { });
+
+            ILGenerator generator = result.GetILGenerator();
+
+            generator.Emit(OpCodes.Ldarg_0);
+            generator.EmitCall(OpCodes.Call, typeof(IDisposable).GetMethod("Dispose", new Type[] {}), null);
+            generator.Emit(OpCodes.Ret);
+
+            return result;
+        }
+
     }
 }

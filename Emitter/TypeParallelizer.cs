@@ -46,6 +46,7 @@ namespace Fmacj.Emitter
 				joinImplementer.Implement(joinGroup);
 
             chordImplementer.ImplementConstructor();
+            chordImplementer.ImplementDisposalBehavior();
 
             return typeBuilder.CreateType();
         }

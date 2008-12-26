@@ -95,6 +95,9 @@ namespace Fmacj.Tests
             }
 
             private readonly Random random = new Random();
+
+
+            public abstract void Dispose();
         }
 
         [SetUp]
