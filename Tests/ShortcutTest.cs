@@ -36,7 +36,6 @@ namespace Fmacj.Tests
         [SetUp]
         public void SetUp()
         {
-			ConsoleOut.ShowAvailableThreadPoolThreads();
             ParallelizationFactory.Clear();
             ParallelizationFactory.Parallelize(typeof(ShortcutTestClass).Assembly);
         }
@@ -44,29 +43,30 @@ namespace Fmacj.Tests
         [Test]
         public void NoChannelForkGroup()
         {
-            ShortcutTestClass shortcutTestClass = ParallelizationFactory.GetParallelized<ShortcutTestClass>();
-            
-            TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
-            tcpListener.Start();
-            
-            shortcutTestClass.NoChannelForkGroup("Test");
+            using (ShortcutTestClass shortcutTestClass = ParallelizationFactory.GetParallelized<ShortcutTestClass>())
+			{
+				TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
+				tcpListener.Start();
+				
+				shortcutTestClass.NoChannelForkGroup("Test");
+				
+				int i = 0;
+				while (!tcpListener.Pending())
+				{
+					Thread.Sleep(100);
+					if (i++ > 20)
+					{
+						tcpListener.Stop();
+						throw new TimeoutException();
+					}
+				}
 
-            int i = 0;
-            while (!tcpListener.Pending())
-            {
-                Thread.Sleep(100);
-                if (i++ > 20)
-                {
-                    tcpListener.Stop();
-                    throw new TimeoutException();
-                }
-            }
-
-            TcpClient tcpClient = tcpListener.AcceptTcpClient();
-            Expect(new StreamReader(tcpClient.GetStream()).ReadToEnd(), EqualTo("Test"));
-
-            tcpClient.Close();
-            tcpListener.Stop();
-        }
-    }
+				TcpClient tcpClient = tcpListener.AcceptTcpClient();
+				Expect(new StreamReader(tcpClient.GetStream()).ReadToEnd(), EqualTo("Test"));
+				
+				tcpClient.Close();
+				tcpListener.Stop();
+			}
+		}
+	}
 }

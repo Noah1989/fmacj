@@ -7,7 +7,6 @@ FILES =  \
 	ChannelResolver.cs \
 	ChannelTest.cs \
 	ChordTest.cs \
-	ConsoleOut.cs \
 	ForkTest.cs \
 	JoinTest.cs \
 	ParallelizationFactoryTest.cs \

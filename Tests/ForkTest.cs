@@ -101,7 +101,6 @@ namespace Fmacj.Tests
         [SetUp]
         public void SetUp()
         {
-			ConsoleOut.ShowAvailableThreadPoolThreads();
             ParallelizationFactory.Clear();
             ParallelizationFactory.Parallelize(typeof(ForkTestClass).Assembly);
         }
@@ -109,167 +108,171 @@ namespace Fmacj.Tests
         [Test]
         public void WithParameter()
         {
-            ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>();
-            
-            TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
-            tcpListener.Start();
-
-            forkTestClass.TestMethod("Aloha ʻoe");
-
-            int i = 0;
-            while (!tcpListener.Pending())
-            {
-                Thread.Sleep(100);
-                if (i++ > 20)
-                {
+            using (ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>())
+			{
+				TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
+				tcpListener.Start();
+				
+				forkTestClass.TestMethod("Aloha ʻoe");
+				
+				int i = 0;
+				while (!tcpListener.Pending())
+				{
+					Thread.Sleep(100);
+					if (i++ > 20)
+					{
                     tcpListener.Stop();
                     throw new TimeoutException();
-                }
-            }
-
-            TcpClient tcpClient = tcpListener.AcceptTcpClient();
-            Expect(new StreamReader(tcpClient.GetStream()).ReadToEnd(), EqualTo("Aloha ʻoe"));
-
-            tcpClient.Close();
-            tcpListener.Stop();
-
-        }
-
+					}
+				}
+				
+				TcpClient tcpClient = tcpListener.AcceptTcpClient();
+				Expect(new StreamReader(tcpClient.GetStream()).ReadToEnd(), EqualTo("Aloha ʻoe"));
+				
+				tcpClient.Close();
+				tcpListener.Stop();
+				
+			}
+		}
+		
         [Test]
-        public void WithoutParameter()
+		public void WithoutParameter()
         {
-            ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>();
-
-            TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
-            tcpListener.Start();
-
-            forkTestClass.TestMethod();
-
-            int i = 0;
-            while (!tcpListener.Pending())
-            {
-                Thread.Sleep(100);
+            using (ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>())
+			{
+				TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
+				tcpListener.Start();
+				
+				forkTestClass.TestMethod();
+				
+				int i = 0;
+				while (!tcpListener.Pending())
+				{
+					Thread.Sleep(100);
                 if (i++ > 20)
-                {
-                    tcpListener.Stop();
-                    throw new TimeoutException();
-                }
-            }
-
-            TcpClient tcpClient = tcpListener.AcceptTcpClient();
-            Expect(new StreamReader(tcpClient.GetStream()).ReadToEnd(), EqualTo("Aloha ʻoe"));
-
-            tcpClient.Close();
-            tcpListener.Stop();
-
-        }
-
-        [Test]
-        public void MultipleParameters()
+					{
+						tcpListener.Stop();
+						throw new TimeoutException();
+					}
+				}
+				
+				TcpClient tcpClient = tcpListener.AcceptTcpClient();
+				Expect(new StreamReader(tcpClient.GetStream()).ReadToEnd(), EqualTo("Aloha ʻoe"));
+				
+				tcpClient.Close();
+				tcpListener.Stop();
+				
+			}
+		}
+		[Test]
+		public void MultipleParameters()
         {
-            ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>();
-
-            TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
-            tcpListener.Start();
-
-            forkTestClass.TestMethod("Aloha", " ʻoe");
-
-            int i = 0;
-            while (!tcpListener.Pending())
-            {
-                Thread.Sleep(100);
-                if (i++ > 20)
-                {
-                    tcpListener.Stop();
-                    throw new TimeoutException();
-                }
-            }
-
-            TcpClient tcpClient = tcpListener.AcceptTcpClient();
-            Expect(new StreamReader(tcpClient.GetStream()).ReadToEnd(), EqualTo("Aloha ʻoe"));
-
-            tcpClient.Close();
-            tcpListener.Stop();
-
-        }
-
+            using (ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>())
+			{
+				TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
+				tcpListener.Start();
+				
+				forkTestClass.TestMethod("Aloha", " ʻoe");
+				
+				int i = 0;
+				while (!tcpListener.Pending())
+				{
+					Thread.Sleep(100);
+					if (i++ > 20)
+					{
+						tcpListener.Stop();
+						throw new TimeoutException();
+					}
+				}
+				
+				TcpClient tcpClient = tcpListener.AcceptTcpClient();
+				Expect(new StreamReader(tcpClient.GetStream()).ReadToEnd(), EqualTo("Aloha ʻoe"));
+				
+				tcpClient.Close();
+				tcpListener.Stop();
+				
+			}
+		}
+		
 		[Test]
         public void MassiveInvoke()
         {
-            ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>();
+            using (ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>())
+			{
+				List<TcpListener> tcpListeners = new List<TcpListener>();
+				
+				for (int i = 0; i < 500; i++)
+				{
+					TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000 + i);
+					tcpListeners.Add(tcpListener);
+					tcpListener.Start();
 
-            List<TcpListener> tcpListeners = new List<TcpListener>();
-
-            for (int i = 0; i < 500; i++)
-            {
-                TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000 + i);
-                tcpListeners.Add(tcpListener);
-                tcpListener.Start();
-
-                forkTestClass.MassiveTest(i.ToString());
-            }
-
-            List<int> results = new List<int>();
-            
-            foreach (TcpListener tcpListener in tcpListeners)
-            {
+					forkTestClass.MassiveTest(i.ToString());
+				}
+				
+				List<int> results = new List<int>();
+				
+				foreach (TcpListener tcpListener in tcpListeners)
+				{
                 int i = 0;
-                var timeout = 10;
-                while (!tcpListener.Pending())
-                {
-                    Thread.Sleep(100);
-                    if (++i > timeout)
-                    {
-                        tcpListener.Stop();
-                        throw new TimeoutException();
-                    }
-                }
+					var timeout = 10;
+					while (!tcpListener.Pending())
+					{
+						Thread.Sleep(100);
+						if (++i > timeout)
+						{
+							tcpListener.Stop();
+							throw new TimeoutException();
+						}
+					}
+					
+					if(i > timeout)
+						continue;
+					
+					TcpClient tcpClient = tcpListener.AcceptTcpClient();
+					results.Add(new BinaryReader(tcpClient.GetStream()).ReadInt32());
+					
+					tcpClient.Close();
+					tcpListener.Stop();
+				}
+				
+				Debug.Print(string.Format("Received {0} results.", results.Count));
 
-                if(i > timeout)
-                    continue;
-
-                TcpClient tcpClient = tcpListener.AcceptTcpClient();
-                results.Add(new BinaryReader(tcpClient.GetStream()).ReadInt32());
-
-                tcpClient.Close();
-                tcpListener.Stop();
-            }
-            
-            Debug.Print(string.Format("Received {0} results.", results.Count));
-
-            for (int i = 0; i < 500; i++)
-            {
-                Expect(results.Contains(i), string.Format("Missing value: {0}", i));
-            }
-
-        }
-
+				for (int i = 0; i < 500; i++)
+				{
+					Expect(results.Contains(i), string.Format("Missing value: {0}", i));
+				}
+				
+			}
+		}
+		
         [Test]
         public void ValueTypeParameter()
         {
-            ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>();
-
-            TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
-            tcpListener.Start();
-
-            forkTestClass.ValueTypeTest(235);
-
-            int i = 0;
-            while (!tcpListener.Pending())
-            {
-                Thread.Sleep(100);
-                if (i++ > 20)
-                {
-                    tcpListener.Stop();
-                    throw new TimeoutException();
-                }
-            }
-
-            TcpClient tcpClient = tcpListener.AcceptTcpClient();
-            Expect(new BinaryReader(tcpClient.GetStream()).ReadInt32(), EqualTo(235));
-
-            tcpClient.Close();
-            tcpListener.Stop();
-        }
-    }
+            using (ForkTestClass forkTestClass = ParallelizationFactory.GetParallelized<ForkTestClass>())
+			{
+				TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
+				tcpListener.Start();
+				
+				forkTestClass.ValueTypeTest(235);
+				
+				int i = 0;
+				while (!tcpListener.Pending())
+				{
+					Thread.Sleep(100);
+					if (i++ > 20)
+					{
+						tcpListener.Stop();
+						throw new TimeoutException();
+					}
+				}
+				
+				TcpClient tcpClient = tcpListener.AcceptTcpClient();
+				Expect(new BinaryReader(tcpClient.GetStream()).ReadInt32(), EqualTo(235));
+				
+				tcpClient.Close();
+				tcpListener.Stop();
+			}
+		}
+	}
 }

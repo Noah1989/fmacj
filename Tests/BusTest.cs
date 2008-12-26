@@ -45,7 +45,6 @@ namespace Fmacj.Tests
         [SetUp]
         public void SetUp()
         {
-			ConsoleOut.ShowAvailableThreadPoolThreads();
             ParallelizationFactory.Clear();
             ParallelizationFactory.Parallelize(typeof(BusTestClass).Assembly);
         }
@@ -64,7 +63,9 @@ namespace Fmacj.Tests
                     delegate()
                         {
                             Channel<int> channel = ChannelResolver<int>.GetChannel(busTestClass, "TestChannel3");
-                            object[] objects = new Bus(new IChannel[] {channel}).Receive();
+                            Bus bus = new Bus(new IChannel[] {channel});
+					        object[] objects = bus.Receive();
+					        bus.Close();
                             Expect(objects.Length, EqualTo(1));
                             result = (int) objects[0];
                         });
@@ -91,7 +92,9 @@ namespace Fmacj.Tests
                         {
                             Channel<int> channel1 = ChannelResolver<int>.GetChannel(busTestClass, "TestChannel1");
                             Channel<double> channel2 = ChannelResolver<double>.GetChannel(busTestClass, "TestChannel2");
-                            object[] objects = new Bus(new IChannel[] {channel1, channel2}).Receive();
+                            Bus bus = new Bus(new IChannel[] {channel1, channel2});
+					        object[] objects = bus.Receive();
+					        bus.Close();
                             Expect(objects.Length, EqualTo(2));
                             result = (int) objects[0] + (double) objects[1];
                         });
@@ -133,6 +136,7 @@ namespace Fmacj.Tests
                                 result1.Add((int) objects[0]);
                                 result2.Add((double) objects[1]);
                             }
+					        bus.Close();
                         });
             thread.Start();
 

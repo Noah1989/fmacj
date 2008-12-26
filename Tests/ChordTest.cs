@@ -103,7 +103,6 @@ namespace Fmacj.Tests
         [SetUp]
         public void SetUp()
         {
-			ConsoleOut.ShowAvailableThreadPoolThreads();
             ParallelizationFactory.Clear();
             ParallelizationFactory.Parallelize(typeof(ChordTestClass).Assembly);			
         }
@@ -111,128 +110,123 @@ namespace Fmacj.Tests
         [Test]
         public void SimpleChord()
         {
-            ChordTestClass chordTestClass = ParallelizationFactory.GetParallelized<ChordTestClass>();
-
-            TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
-            tcpListener.Start();
-
-            chordTestClass.TestMethod3(5);
-
-            int i = 0;
-            while (!tcpListener.Pending())
-            {
-                Thread.Sleep(200);
-                if (i++ > 20)
-                {
-                    tcpListener.Stop();
-                    throw new TimeoutException();
-                }
-            }
-
-            TcpClient tcpClient = tcpListener.AcceptTcpClient();
-            Expect(new BinaryReader(tcpClient.GetStream()).ReadInt32(), EqualTo(-5));
-
-            tcpClient.Close();
-            tcpListener.Stop();
-
-        }
-
-        [Test]
+            using (ChordTestClass chordTestClass = ParallelizationFactory.GetParallelized<ChordTestClass>())
+			{
+				TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
+				tcpListener.Start();
+				
+				chordTestClass.TestMethod3(5);
+				
+				int i = 0;
+				while (!tcpListener.Pending())
+				{
+					Thread.Sleep(200);
+					if (i++ > 20)
+					{
+						tcpListener.Stop();
+						throw new TimeoutException();
+					}
+				}
+				
+				TcpClient tcpClient = tcpListener.AcceptTcpClient();
+				Expect(new BinaryReader(tcpClient.GetStream()).ReadInt32(), EqualTo(-5));
+				
+				tcpClient.Close();
+				tcpListener.Stop();
+				
+			}
+		}
+        
+		[Test]
         public void TwoChannelChord()
         {
-            ChordTestClass chordTestClass = ParallelizationFactory.GetParallelized<ChordTestClass>();
-
-            TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
-            tcpListener.Start();
-
-            chordTestClass.TestMethod1(2);
-            chordTestClass.TestMethod2(3);
-
-            int i = 0;
-            while (!tcpListener.Pending())
-            {
-                Thread.Sleep(100);
+            using (ChordTestClass chordTestClass = ParallelizationFactory.GetParallelized<ChordTestClass>())
+			{
+				TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
+				tcpListener.Start();
+				
+				chordTestClass.TestMethod1(2);
+				chordTestClass.TestMethod2(3);
+				
+				int i = 0;
+				while (!tcpListener.Pending())
+				{
+					Thread.Sleep(100);
                 if (i++ > 20)
-                {
-                    tcpListener.Stop();
-                    throw new TimeoutException();
-                }
-            }
-
-            TcpClient tcpClient = tcpListener.AcceptTcpClient();
-            Expect(new BinaryReader(tcpClient.GetStream()).ReadDouble(), EqualTo(2 * 2 + 1d / 3));
-
-            tcpClient.Close();
-            tcpListener.Stop();
-        }		
+					{
+						tcpListener.Stop();
+						throw new TimeoutException();
+					}
+				}
+				
+				TcpClient tcpClient = tcpListener.AcceptTcpClient();
+				Expect(new BinaryReader(tcpClient.GetStream()).ReadDouble(), EqualTo(2 * 2 + 1d / 3));
+				
+				tcpClient.Close();
+				tcpListener.Stop();
+			}		
+		}
 		
         [Test]
         public void MassiveInvoke()
         {
-            ChordTestClass chordTestClass = ParallelizationFactory.GetParallelized<ChordTestClass>();
+            using (ChordTestClass chordTestClass = ParallelizationFactory.GetParallelized<ChordTestClass>())
+			{
+				List<TcpListener> tcpListeners = new List<TcpListener>();
 
-            List<TcpListener> tcpListeners = new List<TcpListener>();
-
-            for (int i = 0; i < 500; i++)
-            {
-                TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000 + i);
-                tcpListeners.Add(tcpListener);
-                tcpListener.Start();
-                chordTestClass.TestMethod4(string.Format("V{0}", i));
-                chordTestClass.TestMethod5(i);
-            }
-           
-            List<string> results = new List<string>();
-
-            foreach (TcpListener tcpListener in tcpListeners)
-            {
-                int i = 0;
-                var timeout = 10;
-                while (!tcpListener.Pending())
-                {
-                    Thread.Sleep(100);
-                    if (++i > timeout)
-                    {
-                        tcpListener.Stop();
-                        throw new TimeoutException();
-                    }
-                }
-
-                TcpClient tcpClient = tcpListener.AcceptTcpClient();
-                results.Add(new BinaryReader(tcpClient.GetStream()).ReadString());
-
-                tcpClient.Close();
-                tcpListener.Stop();
-            }
-
-            Debug.Print(string.Format("Received {0} results.", results.Count));
-
-            List<string> results1 = new List<string>();
-            List<string> results2 = new List<string>();
-
-            foreach(string value in results)
-            {
-                string[] values = value.Split(',');
-                results1.Add(values[0]);
-                results2.Add(values[1]);
-            }
-
-            try
-            {
-                for (int i = 0; i < 500; i++)
-                {
-                    Expect(results1.Contains(string.Format("V{0}", i)),
-                           string.Format("Missing value1: {0}", i));
-                    Expect(results2.Contains(string.Format("{0}", 23000 + i)),
-                           string.Format("Missing value2: {0}", i));
-                }
-            }
-            catch (Exception)
-            {
-                
-                throw;
-            }
-
-        }
-    }
+				for (int i = 0; i < 500; i++)
+				{
+					TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000 + i);
+					tcpListeners.Add(tcpListener);
+					tcpListener.Start();
+					chordTestClass.TestMethod4(string.Format("V{0}", i));
+					chordTestClass.TestMethod5(i);
+				}
+				
+				List<string> results = new List<string>();
+				
+				foreach (TcpListener tcpListener in tcpListeners)
+				{
+					int i = 0;
+					var timeout = 10;
+					while (!tcpListener.Pending())
+					{
+						Thread.Sleep(100);
+						if (++i > timeout)
+						{
+							tcpListener.Stop();
+							throw new TimeoutException();
+						}
+					}
+					
+					TcpClient tcpClient = tcpListener.AcceptTcpClient();
+					results.Add(new BinaryReader(tcpClient.GetStream()).ReadString());
+					
+					tcpClient.Close();
+					tcpListener.Stop();
+				}
+				
+				Debug.Print(string.Format("Received {0} results.", results.Count));
+				
+				List<string> results1 = new List<string>();
+				List<string> results2 = new List<string>();
+				
+				foreach(string value in results)
+				{
+					string[] values = value.Split(',');
+					results1.Add(values[0]);
+					results2.Add(values[1]);
+				}
+				
+				for (int i = 0; i < 500; i++)
+				{
+					Expect(results1.Contains(string.Format("V{0}", i)),
+					       string.Format("Missing value1: {0}", i));
+					Expect(results2.Contains(string.Format("{0}", 23000 + i)),
+					       string.Format("Missing value2: {0}", i));
+				}
+				
+			}
+		}
+	}
 }

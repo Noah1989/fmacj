@@ -45,7 +45,6 @@ namespace Fmacj.Tests
         [SetUp]
         public void SetUp()
         {
-			ConsoleOut.ShowAvailableThreadPoolThreads();
             ParallelizationFactory.Clear();
             ParallelizationFactory.Parallelize(typeof(JoinTestClass).Assembly);
         }
@@ -53,18 +52,19 @@ namespace Fmacj.Tests
         [Test]
         public void ForkChordAndJoin()
         {
-            JoinTestClass foo = ParallelizationFactory.GetParallelized<JoinTestClass>();
-            
-			foo.Bar(2);
-            foo.Baz(3);
-
-			double result = 0;
-
-            Thread thread = new Thread(delegate() { result = foo.Sum(); });
-            thread.Start();
-            ThreadTimeout.Timeout(thread, 10000);
-            
-            Expect(result, EqualTo(2*2 + 1.0/3));            
-        }
-    }
+            using (JoinTestClass foo = ParallelizationFactory.GetParallelized<JoinTestClass>())
+			{
+				foo.Bar(2);
+				foo.Baz(3);
+				
+				double result = 0;
+				
+				Thread thread = new Thread(delegate() { result = foo.Sum(); });
+				thread.Start();
+				ThreadTimeout.Timeout(thread, 10000);
+				
+				Expect(result, EqualTo(2*2 + 1.0/3));            
+			}
+		}
+	}
 }

@@ -23,9 +23,11 @@ namespace Fmacj.Examples.Mandelbrot
 			}
 			
 			ParallelizationFactory.Parallelize(typeof(Mandelbrot).Assembly);			
-			Mandelbrot mandelbrot = ParallelizationFactory.GetParallelized<Mandelbrot>();
+
+			Bitmap bitmap;
 			
-			Bitmap bitmap = mandelbrot.Calculate(size);
+			using (Mandelbrot mandelbrot = ParallelizationFactory.GetParallelized<Mandelbrot>())
+				bitmap = mandelbrot.Calculate(size);
 				
 			Console.WriteLine("Compressing PNG...");			
 			bitmap.Save(filename);

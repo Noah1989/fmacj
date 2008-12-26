@@ -27,7 +27,7 @@ namespace Fmacj.Runtime
         public static void RegisterBus(Bus bus, WaitOrTimerCallback callback)
         {
             if (bus.IsClosed)
-                throw new InvalidOperationException("Cannot reset Bus. Bus is Closed.");
+                throw new InvalidOperationException("Cannot register Bus. Bus is Closed.");
 
 			if (bus.RegisteredWaitHandle != null)
 				bus.RegisteredWaitHandle.Unregister(null);

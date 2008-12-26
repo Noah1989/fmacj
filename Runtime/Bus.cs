@@ -46,7 +46,9 @@ namespace Fmacj.Runtime
         {
             lock (registeredWaitHandles)
             {
-                registeredWaitHandles.Add(channel,
+				if (isClosed) return;					
+				
+				registeredWaitHandles.Add(channel,
                                           ThreadPool.RegisterWaitForSingleObject(channel.WaitHandle, ChannelCallback,
                                                                                  channel, -1, true));
             }
@@ -127,12 +129,16 @@ namespace Fmacj.Runtime
 
         public void Close()
         {
-            foreach (RegisteredWaitHandle handle in registeredWaitHandles.Values)
-                handle.Unregister(null);
-
-            registeredWaitHandle.Unregister(null);
-
-            isClosed = true;
+			lock (registeredWaitHandles)
+            {
+				foreach (RegisteredWaitHandle handle in registeredWaitHandles.Values)
+					handle.Unregister(null);
+				
+				if(registeredWaitHandle != null)
+					registeredWaitHandle.Unregister(null);
+				
+				isClosed = true;
+			}
         }
 
         public bool IsClosed
