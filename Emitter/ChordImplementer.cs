@@ -132,6 +132,7 @@ namespace Fmacj.Emitter
             generator.Emit(OpCodes.Call, baseType.GetConstructor(BindingFlags.Instance | BindingFlags.Public
                                                                   | BindingFlags.NonPublic, null, new Type[] { }, null));
 
+			// IL: Prepare "disposingEventHandler" and "disposed" fields
             disposingEventHandlerField = target.DefineField("disposingEventHandler", typeof (EventHandler), FieldAttributes.Private);
             disposedField = target.DefineField("disposed", typeof(bool), FieldAttributes.Private);
             
@@ -200,28 +201,28 @@ namespace Fmacj.Emitter
 
             Label returnLabel = generator.DefineLabel();
 
-            // If disposed, return
+            // IL: If disposed, return
             generator.Emit(OpCodes.Ldarg_0);
             generator.Emit(OpCodes.Ldfld, disposedField);
             generator.Emit(OpCodes.Brtrue, returnLabel);
 
-            // Set disposed = true
+            // IL: Set disposed = true
             generator.Emit(OpCodes.Ldarg_0);
             generator.Emit(OpCodes.Ldc_I4_1);
             generator.Emit(OpCodes.Stfld, disposedField);
 
-            // GC.SuppressFinalize(this)
+            // IL: GC.SuppressFinalize(this)
             generator.Emit(OpCodes.Ldarg_0);
             generator.EmitCall(OpCodes.Call,
                                typeof (GC).GetMethod("SuppressFinalize", new Type[] {typeof (object)}),
                                null);
 
-            // If eventHandler == null, return
+            // IL: If eventHandler == null, return
             generator.Emit(OpCodes.Ldarg_0);
             generator.Emit(OpCodes.Ldfld, disposingEventHandlerField);
             generator.Emit(OpCodes.Brfalse, returnLabel);
 
-            // Invoke eventHandler
+            // IL: Invoke disposingEventHandler
             generator.Emit(OpCodes.Ldarg_0);
             generator.Emit(OpCodes.Ldfld, disposingEventHandlerField);
             generator.Emit(OpCodes.Ldarg_0);
@@ -235,7 +236,7 @@ namespace Fmacj.Emitter
                                                                    }
                                    ), null);
             
-            // Return
+            // IL: Return
             generator.MarkLabel(returnLabel);
             generator.Emit(OpCodes.Ret);
 
@@ -251,6 +252,7 @@ namespace Fmacj.Emitter
 
             ILGenerator generator = result.GetILGenerator();
 
+			// IL: Call Dispose()
             generator.Emit(OpCodes.Ldarg_0);
             generator.EmitCall(OpCodes.Call, typeof(IDisposable).GetMethod("Dispose", new Type[] {}), null);
             generator.Emit(OpCodes.Ret);

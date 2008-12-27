@@ -16,7 +16,8 @@ FILES =  \
 	ParallelizationException.cs \
 	Properties/AssemblyInfo.cs \
 	TypeNotFoundException.cs \
-	TypeValidator.cs
+	TypeValidator.cs \
+	YieldAttribute.cs
 
 all: $(ASSEMBLY)
 

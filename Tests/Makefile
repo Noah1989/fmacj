@@ -13,7 +13,8 @@ FILES =  \
 	Properties/AssemblyInfo.cs \
 	ShortcutTest.cs \
 	ThreadTimeout.cs \
-	TypeValidatorTest.cs
+	TypeValidatorTest.cs \
+	YieldTest.cs
 
 
 NUNITDIR = ../lib/nunit
