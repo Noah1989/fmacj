@@ -53,7 +53,10 @@
     <Compile Include="TypeAnalyzer\TypeAnalyzer.cs" />
     <Compile Include="TypeAnalyzer\TypeAnalyzer.Fork.cs" />
     <Compile Include="TypeAnalyzer\TypeAnalyzer.Join.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.Yield.cs" />
     <Compile Include="TypeParallelizer.cs" />
+    <Compile Include="YieldImplementer.cs" />
+    <Compile Include="YieldInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Runtime\Fmacj.Runtime.csproj">
