@@ -24,6 +24,7 @@
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="../bin/Fmacj.Framework.dll" />
   </References>
+  <GtkDesignInfo />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile" SyncReferences="True">
     <BuildFilesVar Sync="True" Name="FILES" />
     <DeployFilesVar />

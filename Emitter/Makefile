@@ -15,7 +15,10 @@ FILES =  \
 	TypeAnalyzer/TypeAnalyzer.cs \
 	TypeAnalyzer/TypeAnalyzer.Fork.cs \
 	TypeAnalyzer/TypeAnalyzer.Join.cs \
-	TypeParallelizer.cs
+	TypeAnalyzer/TypeAnalyzer.Yield.cs \
+	TypeParallelizer.cs \
+	YieldImplementer.cs \
+	YieldInfo.cs
 
 REFERENCES =  \
 	-r:../bin/Fmacj.Framework.dll \

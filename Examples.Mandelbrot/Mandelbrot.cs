@@ -58,7 +58,7 @@ namespace Fmacj.Examples.Mandelbrot
 
 			double cy = 1.1*y/height;
 			
-			for (int x=0;x<width;x++)
+			for (int x=0; x<width; x++)
 			{
 				double cx = 2.5*x/width - 2.0;
 

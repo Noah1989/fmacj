@@ -122,7 +122,7 @@ namespace Fmacj.Emitter
 				Type channelType = forkGroup.ChannelParameters[channelParameterIndex]
 				                                .ParameterType.GetElementType();
                 generator.Emit(OpCodes.Ldarg_0);
-                    generator.Emit(OpCodes.Ldfld, channelImplementer
+                generator.Emit(OpCodes.Ldfld, channelImplementer
 				               .GetChannelField(forkGroup.ChannelNames[channelParameterIndex],
 				                                channelType));
 

@@ -49,8 +49,6 @@ namespace Fmacj.Emitter
             ImplementCallback(chord);
         }
 
-
-
         private void ImplementCallback(ChordInfo chord)
         {
             MethodBuilder callback = target.DefineMethod(string.Format("{0}Callback", chord.Name),

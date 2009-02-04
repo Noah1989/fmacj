@@ -60,7 +60,26 @@ namespace Fmacj.Tests
 				
 				ThreadTimeout.Timeout(thread, 10000);
 				
-				Expect(result,EqualTo(25));
+				Expect(result,EqualTo(23));
+			}
+		}
+
+		[Test]
+        public void YieldMultipleChannels()
+        {        
+			using (YieldTestClass yieldTestClass = ParallelizationFactory.GetParallelized<YieldTestClass>())
+			{
+				yieldTestClass.YieldMultipleChannels(23, 42);
+				
+				int result = 0;
+
+				Thread thread = new Thread(delegate() { result = ChannelResolver<int>.GetChannel(yieldTestClass, "TestChannel1").Receive()
+															   + ChannelResolver<int>.GetChannel(yieldTestClass, "TestChannel2").Receive(); });
+				thread.Start();
+				
+				ThreadTimeout.Timeout(thread, 10000);
+				
+				Expect(result,EqualTo(65));
 			}
 		}
 	}

@@ -53,6 +53,7 @@ namespace Fmacj.Emitter
             ForkImplementer forkImplementer = new ForkImplementer(typeBuilder, channelImplementer);
             ChordImplementer chordImplementer = new ChordImplementer(typeBuilder, source, channelImplementer);
 			JoinImplementer joinImplementer = new JoinImplementer(typeBuilder, channelImplementer);
+			YieldImplementer yieldImplementer = new YieldImplementer(typeBuilder, channelImplementer);
 
             foreach (ForkGroup forkGroup in typeAnalyzer.GetForkGroups())
                 forkImplementer.Implement(forkGroup);
@@ -62,6 +63,9 @@ namespace Fmacj.Emitter
 			
 			foreach (JoinGroup joinGroup in typeAnalyzer.GetJoinGroups())
 				joinImplementer.Implement(joinGroup);
+
+			foreach (YieldInfo yieldInfo in typeAnalyzer.GetYields())
+				yieldImplementer.Implement(yieldInfo);
 
             chordImplementer.ImplementConstructor();
             chordImplementer.ImplementDisposalBehavior();
