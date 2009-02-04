@@ -34,15 +34,28 @@ namespace Fmacj.Emitter
 
         private void FindChannelParameters()
         {
-            List<ParameterInfo> channelParameters = new List<ParameterInfo>();
+            List<ParameterInfo> inChannelParameters = new List<ParameterInfo>();
+            List<ParameterInfo> outChannelParameters = new List<ParameterInfo>();
 
             foreach (ParameterInfo parameter in ChordMethod.GetParameters())
             {
                 if (parameter.GetCustomAttributes(typeof(ChannelAttribute), false).Length > 0)
-                    channelParameters.Add(parameter);
+                {
+                	if(parameter.IsOut)
+                	{
+                		outChannelParameters.Add(parameter);                		
+                	}
+                	else
+                	{
+                    	inChannelParameters.Add(parameter);
+                    	if(outChannelParameters.Count != 0)
+                			throw new InvalidMethodException(SourceType.Name, ChordMethod.Name, "Output channel prameters may not precede input channel parameters.");
+                    }
+                }
             }
 
-            ChannelParameters = channelParameters.ToArray();
+            InChannelParameters = inChannelParameters.ToArray();
+            OutChannelParameters = outChannelParameters.ToArray();
         }
 
         public Type SourceType { get; private set; }
@@ -50,21 +63,41 @@ namespace Fmacj.Emitter
 
         public string Name { get { return ChordMethod.Name; } }
         
-        public ParameterInfo[] ChannelParameters
+        public ParameterInfo[] InChannelParameters
         {
             get; private set;
         }
 
-        public string[] ChannelNames
+        public ParameterInfo[] OutChannelParameters
+        {
+            get; private set;
+        }
+
+        public string[] InChannelNames
         {
             get
             {
-                string[] result = new string[ChannelParameters.Length];
+                string[] result = new string[InChannelParameters.Length];
 
-                for (int i = 0; i < ChannelParameters.Length; i++)
+                for (int i = 0; i < InChannelParameters.Length; i++)
                     result[i] =
                         ((ChannelAttribute)
-                         ChannelParameters[i].GetCustomAttributes(typeof (ChannelAttribute), false)[0]).Name;
+                         InChannelParameters[i].GetCustomAttributes(typeof (ChannelAttribute), false)[0]).Name;
+
+                return result;
+            }
+        }
+
+        public string[] OutChannelNames
+        {
+            get
+            {
+                string[] result = new string[OutChannelParameters.Length];
+
+                for (int i = 0; i < OutChannelParameters.Length; i++)
+                    result[i] =
+                        ((ChannelAttribute)
+                         OutChannelParameters[i].GetCustomAttributes(typeof (ChannelAttribute), false)[0]).Name;
 
                 return result;
             }

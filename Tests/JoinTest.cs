@@ -31,31 +31,56 @@ namespace Fmacj.Tests
         public abstract class JoinTestClass : IParallelizable
         {
 			[Fork]
-            public abstract void Bar(int val);
-
-            [Fork]
-            public abstract void Baz(int val);
-
+            public abstract void TestMethod1(int val);
             [Asynchronous]
-            protected void Bar(int val, [Channel("bar")] out int result)
+            protected void TestMethod1(int val, [Channel("TestChannel1")] out int result)
             {				
                 result = val*val;				
             }
-
+            
+            [Fork]
+            public abstract void TestMethod2(int val);
             [Asynchronous]
-            protected void Baz(int val, [Channel("baz")] out double result)
+            protected void TestMethod2(int val, [Channel("TestChannel2")] out double result)
             {				
                 result = 1/(double)val;				
-            }
+            } 
 
             [Chord]
-            protected double Sum([Channel("bar")] int bar, [Channel("baz")] double baz)
+            protected double SimpleJoin([Channel("TestChannel1")] int bar, [Channel("TestChannel2")] double baz)
             {				
                 return bar + baz;				
             }
-
             [Join]
-            public abstract double Sum();
+            public abstract double SimpleJoin();
+
+
+ 			[Fork]
+            public abstract void TestMethod3(int value);
+            [Asynchronous]
+            protected void TestMethod3(int value, [Channel("TestChannel3")] out int result)
+            {				
+                result = value ;
+            }
+
+            [Fork]
+            public abstract void TestMethod4(double value);
+            [Asynchronous]
+            protected void TestMethod4(double value, [Channel("TestChannel4")] out double result)
+            {
+                result = value;
+            }
+
+            [Chord]
+            protected string OutChannelChordJoin([Channel("TestChannel3")] int value1, [Channel("TestChannel4")] double value2, 
+            							      [Channel("OutChannel1")] out double result1, [Channel("OutChannel2")] out string result2)
+            {
+                result1 = value1 / value2;
+                result2 = "Test";
+                return result1.ToString();
+            }
+            [Join]
+            public abstract string OutChannelChordJoin();
 
             public abstract void Dispose();
         }
@@ -70,18 +95,43 @@ namespace Fmacj.Tests
         [Test]
         public void ForkChordAndJoin()
         {
-            using (JoinTestClass foo = ParallelizationFactory.GetParallelized<JoinTestClass>())
+            using (JoinTestClass joinTestClass = ParallelizationFactory.GetParallelized<JoinTestClass>())
 			{
-				foo.Bar(2);
-				foo.Baz(3);
+				joinTestClass.TestMethod1(2);
+				joinTestClass.TestMethod2(3);
 				
 				double result = 0;
 				
-				Thread thread = new Thread(delegate() { result = foo.Sum(); });
+				Thread thread = new Thread(delegate() { result = joinTestClass.SimpleJoin(); });
 				thread.Start();
 				ThreadTimeout.Timeout(thread, 10000);
 				
 				Expect(result, EqualTo(2*2 + 1.0/3));            
+			}
+		}
+
+        [Test]
+        public void JoinWithOutChannelChord()
+        {
+            using (JoinTestClass joinTestClass = ParallelizationFactory.GetParallelized<JoinTestClass>())
+			{
+				joinTestClass.TestMethod3(23);
+				joinTestClass.TestMethod4(5);
+				
+				string result = "";
+				double result1 = 0;
+				string result2 = "";
+
+				Thread thread = new Thread(delegate() { result = joinTestClass.OutChannelChordJoin();
+														result1 = ChannelResolver<double>.GetChannel(joinTestClass, "OutChannel1").Receive();
+														result2 = ChannelResolver<string>.GetChannel(joinTestClass, "OutChannel2").Receive(); });
+				thread.Start();
+				
+				ThreadTimeout.Timeout(thread, 10000);
+
+				Expect(result, EqualTo("4.6"));  
+				Expect(result1,EqualTo(4.6));
+				Expect(result2,EqualTo("Test"));
 			}
 		}
 	}

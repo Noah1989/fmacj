@@ -58,7 +58,8 @@ namespace Fmacj.Emitter
             callback.DefineParameter(1, ParameterAttributes.In, "bus");
             callback.DefineParameter(2, ParameterAttributes.In, "unused");
 
-            int channelParameterCount = chord.ChannelParameters.Length;
+            int inChannelParameterCount = chord.InChannelParameters.Length;
+            int outChannelParameterCount = chord.OutChannelParameters.Length;
 
 			Type returnType = chord.ChordMethod.ReturnType;		
 			
@@ -89,15 +90,22 @@ namespace Fmacj.Emitter
             generator.EmitCall(OpCodes.Call, typeof(ChordManager).GetMethod("RegisterBus", new Type[] { typeof(Bus), typeof(WaitOrTimerCallback) }), null);
 
             // IL: Unwrap value array
-            for (int parameterIndex = 0; parameterIndex < channelParameterCount; parameterIndex++)
+            for (int parameterIndex = 0; parameterIndex < inChannelParameterCount; parameterIndex++)
             {
                 generator.Emit(OpCodes.Ldloc_0);
                 generator.Emit(OpCodes.Ldc_I4, parameterIndex);
                 generator.Emit(OpCodes.Ldelem_Ref);
-                if (chord.ChannelParameters[parameterIndex].ParameterType.IsValueType)
-                    generator.Emit(OpCodes.Unbox_Any, chord.ChannelParameters[parameterIndex].ParameterType);
+                if (chord.InChannelParameters[parameterIndex].ParameterType.IsValueType)
+                    generator.Emit(OpCodes.Unbox_Any, chord.InChannelParameters[parameterIndex].ParameterType);
             }					
-		
+
+			// IL: Prepare out channels
+            for (int channelParameterIndex = 0; channelParameterIndex < outChannelParameterCount; channelParameterIndex++)
+            {
+                generator.DeclareLocal(chord.OutChannelParameters[channelParameterIndex].ParameterType.GetElementType());
+                generator.Emit(OpCodes.Ldloca, channelParameterIndex + 1);
+            }
+
 			// IL: Call chord method			
             generator.EmitCall(OpCodes.Call, chord.ChordMethod, null);
 			
@@ -109,6 +117,21 @@ namespace Fmacj.Emitter
 				                   .GetMethod("Send"), null);
 			}            
 
+            // IL: Handle out channel results
+            for (int channelParameterIndex = 0; channelParameterIndex < outChannelParameterCount; channelParameterIndex++)
+            {
+				Type channelType = chord.OutChannelParameters[channelParameterIndex]
+				                                .ParameterType.GetElementType();
+                generator.Emit(OpCodes.Ldarg_0);
+                generator.Emit(OpCodes.Ldfld, channelImplementer
+				               .GetChannelField(chord.OutChannelNames[channelParameterIndex],
+				                                channelType));
+
+                generator.Emit(OpCodes.Ldloc, channelParameterIndex + 1);
+				generator.EmitCall(OpCodes.Call, typeof(Channel<>)
+				                   .MakeGenericType(new Type[] { channelType })
+				                   .GetMethod("Send"), null);
+            }
 
             generator.Emit(OpCodes.Ret);
 
@@ -138,7 +161,7 @@ namespace Fmacj.Emitter
 
             foreach (ChordInfo chord in callbacks.Keys)
             {
-                int parameterCount = chord.ChannelParameters.Length;
+                int parameterCount = chord.InChannelParameters.Length;
 
                 // IL: Create channel array
                 generator.Emit(OpCodes.Ldc_I4, parameterCount);
@@ -153,8 +176,8 @@ namespace Fmacj.Emitter
 
                     generator.Emit(OpCodes.Ldarg_0);
                     generator.Emit(OpCodes.Ldfld, channelImplementer
-					               .GetChannelField(chord.ChannelNames[parameterIndex],
-					                                chord.ChannelParameters[parameterIndex].ParameterType));
+					               .GetChannelField(chord.InChannelNames[parameterIndex],
+					                                chord.InChannelParameters[parameterIndex].ParameterType));
 
                     generator.Emit(OpCodes.Stelem_Ref);
                 }

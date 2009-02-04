@@ -50,15 +50,7 @@ namespace Fmacj.Tests
             {
                 result = 1 / (double)value;
             }
-
-            [Fork]
-            public abstract void TestMethod3(int value);
-            [Asynchronous]
-            protected void TestMethod3(int value, [Channel("TestChannel3")] out int result)
-            {
-                result = -value;
-            }
-
+           
             [Chord]
             protected void TestChord([Channel("TestChannel1")] int value1, [Channel("TestChannel2")] double value2)
             {
@@ -69,7 +61,16 @@ namespace Fmacj.Tests
                 binaryWriter.Flush();
                 tcpClient.Close();
             }
+            
 
+            [Fork]
+            public abstract void TestMethod3(int value);
+            [Asynchronous]
+            protected void TestMethod3(int value, [Channel("TestChannel3")] out int result)
+            {
+                result = -value;
+            }
+ 
             [Chord]
             protected void SimpleChord([Channel("TestChannel3")] int value)
             {
@@ -80,6 +81,7 @@ namespace Fmacj.Tests
                 binaryWriter.Flush();
                 tcpClient.Close();
             }
+
 
             [Fork]
             public abstract void TestMethod4(string value);
@@ -112,8 +114,33 @@ namespace Fmacj.Tests
                 tcpClient.Close();
             }
 
-            private readonly Random random = new Random();
 
+            [Fork]
+            public abstract void TestMethod6(int value);
+            [Asynchronous]
+            protected void TestMethod6(int value, [Channel("TestChannel6")] out int result)
+            {				
+                result = value ;
+            }
+
+            [Fork]
+            public abstract void TestMethod7(double value);
+            [Asynchronous]
+            protected void TestMethod7(double value, [Channel("TestChannel7")] out double result)
+            {
+                result = value;
+            }
+
+            [Chord]
+            protected void OutChannelChord([Channel("TestChannel6")] int value1, [Channel("TestChannel7")] double value2, 
+            							   [Channel("OutChannel1")] out double result1, [Channel("OutChannel2")] out string result2)
+            {
+                result1 = value1 / value2;
+                result2 = "Test";
+            }
+            
+
+            private readonly Random random = new Random();
 
             public abstract void Dispose();
         }
@@ -244,6 +271,28 @@ namespace Fmacj.Tests
 					       string.Format("Missing value2: {0}", i));
 				}
 				
+			}
+		}
+
+		[Test]
+		public void OutChannelChord()
+		{
+			using (ChordTestClass chordTestClass = ParallelizationFactory.GetParallelized<ChordTestClass>())
+			{
+				chordTestClass.TestMethod6(5);
+				chordTestClass.TestMethod7(23);
+
+				double result1 = 0;
+				string result2 = "";
+
+				Thread thread = new Thread(delegate() { result1 = ChannelResolver<double>.GetChannel(chordTestClass, "OutChannel1").Receive();
+														result2 = ChannelResolver<string>.GetChannel(chordTestClass, "OutChannel2").Receive(); });
+				thread.Start();
+				
+				ThreadTimeout.Timeout(thread, 10000);
+				
+				Expect(result1,EqualTo(5.0/23.0));
+				Expect(result2,EqualTo("Test"));
 			}
 		}
 	}
