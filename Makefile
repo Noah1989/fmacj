@@ -1,6 +1,11 @@
 SUBDIRS = Framework \
 	  Runtime \
+	  Runtime.Network \
 	  Emitter \
+	  Components.TaskClient \
+	  Executables.DistributionServer \
+	  Executables.WorkClient \
+	  Executables.FmacjRun \
 	  Examples.Mandelbrot
 
 TESTDIR = Tests
