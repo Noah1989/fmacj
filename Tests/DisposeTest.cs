@@ -28,21 +28,32 @@ using NUnit.Framework;
 namespace Fmacj.Tests
 {
     [TestFixture]
-	public class EnumerableChannelTest : AssertionHelper
+	public class DisposeTest : AssertionHelper
 	{		
-        [Parallelizable]
-        public abstract class EnumerableChannelTestClass : IParallelizable
+		[Parallelizable]
+        public abstract class DisposeTestClass : IParallelizable
         {
-
-
-            public abstract void Dispose();
+			public bool DisposeCalled { get; private set; }
+			
+            public virtual void Dispose()
+			{
+				DisposeCalled = true;
+			}			
         }
 
 		[SetUp]
         public void SetUp()
         {
             ParallelizationFactory.Clear();
-            ParallelizationFactory.Parallelize(typeof(EnumerableChannelTestClass).Assembly);
+            ParallelizationFactory.Parallelize(typeof(DisposeTestClass).Assembly);
+		}
+
+		[Test]
+		public void CallsBaseDispose()
+		{
+			DisposeTestClass disposeTestClass = ParallelizationFactory.GetParallelized<DisposeTestClass>();
+			disposeTestClass.Dispose();
+			Expect(disposeTestClass.DisposeCalled);
 		}
 	}
 }

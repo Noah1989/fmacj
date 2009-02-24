@@ -227,6 +227,15 @@ namespace Fmacj.Emitter
             generator.Emit(OpCodes.Ldfld, disposedField);
             generator.Emit(OpCodes.Brtrue, returnLabel);
 
+			// IL: Call base.Dispose()
+		    MethodInfo baseDispose = baseType.GetMethod("Dispose",BindingFlags.Instance | BindingFlags.Public
+                                                     	| BindingFlags.NonPublic, null, new Type[] { }, null);
+			if(!baseDispose.IsAbstract)
+			{
+            	generator.Emit(OpCodes.Ldarg_0);
+            	generator.Emit(OpCodes.Call, baseDispose);
+			}
+					
             // IL: Set disposed = true
             generator.Emit(OpCodes.Ldarg_0);
             generator.Emit(OpCodes.Ldc_I4_1);
