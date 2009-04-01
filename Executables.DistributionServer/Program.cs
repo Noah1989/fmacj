@@ -17,6 +17,8 @@
 */
 
 using System;
+using System.Threading;
+using Fmacj.Emitter;
 
 namespace Fmacj.Executables.DistributionServer
 {	
@@ -24,6 +26,9 @@ namespace Fmacj.Executables.DistributionServer
 	{		
 		public static void Main()
 		{
+			ParallelizationFactory.Parallelize(typeof(Server).Assembly);
+			Server server = ParallelizationFactory.GetParallelized<Server>();
+			server.Run();
 		}
 	}
 }

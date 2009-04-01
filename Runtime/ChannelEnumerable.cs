@@ -19,47 +19,31 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fmacj.Framework;
 
 namespace Fmacj.Runtime
 {	
-	internal class ChannelEnumerator<T> : IEnumerator<T>
-	{		
-		private Channel<T> channel;
-		private T current;
+	public class ChannelEnumerable<T> : IChannelEnumerable<T>
+	{
+		private bool used = false;
 		
-		public ChannelEnumerator(Channel<T> channel)
+		private Channel<T> channel;
+				
+		public ChannelEnumerable(Channel<T> channel)
 		{
-			if(channel == null)
-				throw new ArgumentNullException("channel");
-			
 			this.channel = channel;
 		}
-		
-		public void Reset()
+
+		public IEnumerator<T> GetEnumerator()
 		{
-			throw new NotSupportedException("Reset() is not supported on channel enumerators");
-		}
-		
-		public bool MoveNext()
-		{
-			current = channel.Receive();
-			return true; 
-		}
-		
-		public T Current
-		{
-			get { return current; }
+			if (used) throw new InvalidOperationException("ChannelEnumerable can only be enumerated once.");
+			used = true;
+			return new ChannelEnumerator<T>(channel);
 		}		
 		
-		object IEnumerator.Current
-		{
-			get { return current; }
+		IEnumerator IEnumerable.GetEnumerator()
+		{			
+			return GetEnumerator();			
 		}
-		
-		public void Dispose()
-		{
-			
-		}
-
 	}
 }

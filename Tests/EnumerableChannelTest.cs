@@ -17,9 +17,13 @@
 */
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using Fmacj.Emitter;
 using Fmacj.Framework;
 using Fmacj.Runtime;
@@ -27,14 +31,33 @@ using NUnit.Framework;
 
 namespace Fmacj.Tests
 {
-    [TestFixture]
-	public class EnumerableChannelTest : AssertionHelper
-	{		
-        [Parallelizable]
+    [TestFixture, Ignore("Not implemented yet.")]
+    public class EnumerableChannelTest : AssertionHelper
+    {		
+        //[Parallelizable]
         public abstract class EnumerableChannelTestClass : IParallelizable
         {
 
-
+			[Fork]
+            public abstract void TestMethod1(int val);
+            [Asynchronous]
+            protected void TestMethod1(int val, [Channel("TestChannel1")] out int result)
+            {
+                result = -val;
+            }
+ 
+            [Chord]
+            protected void SimpleChord([Channel("TestChannel1", Enumerable = true)] IChannelEnumerable<int> values)
+            {
+                TcpClient tcpClient = new TcpClient();
+                tcpClient.Connect(IPAddress.Loopback, 23000);
+                BinaryWriter binaryWriter = new BinaryWriter(tcpClient.GetStream());
+				foreach (int val in values.Take(10))
+                	binaryWriter.Write(val);
+                binaryWriter.Flush();
+                tcpClient.Close();
+            }
+			
             public abstract void Dispose();
         }
 
@@ -44,5 +67,42 @@ namespace Fmacj.Tests
             ParallelizationFactory.Clear();
             ParallelizationFactory.Parallelize(typeof(EnumerableChannelTestClass).Assembly);
 		}
-	}
+
+        [Test]
+        public void SimpleChord()
+        {
+            using (EnumerableChannelTestClass enumerableChannelTestClass = ParallelizationFactory.GetParallelized<EnumerableChannelTestClass>())
+			{
+				TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
+				tcpListener.Start();
+
+				for (int n = 0; n < 10; n++)
+					enumerableChannelTestClass.TestMethod1(n);
+				
+				int i = 0;
+				while (!tcpListener.Pending())
+				{
+					Thread.Sleep(200);
+					if (i++ > 20)
+					{
+						tcpListener.Stop();
+						throw new TimeoutException();
+					}
+				}
+				
+				TcpClient tcpClient = tcpListener.AcceptTcpClient();
+				BinaryReader reader = new BinaryReader(tcpClient.GetStream());
+
+			    List<int> results = new List<int>();					
+				for (int n = 0; n < 10; n++)
+					results.Add(reader.ReadInt32());
+				for (int n = 0; n < 10; n++)
+					Expect(results.Contains(n));
+				
+				tcpClient.Close();
+				tcpListener.Stop();
+				
+			}
+		}
+    }
 }

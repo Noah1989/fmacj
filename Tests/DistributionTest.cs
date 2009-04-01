@@ -17,12 +17,43 @@
 */
 
 using System;
-using System.Collections.Generic;
+using System.IO;
+using System.Net.Sockets;
+using System.Reflection;
+using NUnit.Framework;
+using Fmacj.Components.TaskClient;
 
-namespace Fmacj.Framework
-{	
-	public interface IChannelEnumerable<T> : IEnumerable<T>
+namespace Fmacj.Tests
+{
+    [TestFixture]
+	public class DistributionTest : AssertionHelper
 	{
 		
+
+		private TcpClient tcpClient;
+		private Stream stream;
+		private TaskClient taskClient;
+		
+		[SetUp]
+        public void SetUp()
+        {
+			try 
+			{
+				tcpClient = new TcpClient("localhost", 23542);				
+			}
+			catch
+			{
+            	Assert.Ignore("Distribution server not responding." );			
+			}
+
+			stream = tcpClient.GetStream();
+			taskClient = new TaskClient(stream);
+		}
+
+		[Test]
+		public void Test()
+		{
+			//taskClient.ExecuteAssembly(
+		}
 	}
 }

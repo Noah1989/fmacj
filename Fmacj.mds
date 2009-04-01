@@ -3,50 +3,51 @@
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="Framework" configuration="Debug" />
       <Entry build="True" name="Runtime" configuration="Debug" />
-      <Entry build="True" name="Emitter" configuration="Debug" />
-      <Entry build="True" name="Tests" configuration="Debug" />
-      <Entry build="True" name="Examples.Mandelbrot" configuration="Debug" />
       <Entry build="True" name="Runtime.Network" configuration="Debug" />
+      <Entry build="True" name="Emitter" configuration="Debug" />
+      <Entry build="True" name="Components.TaskClient" configuration="Debug" />
+      <Entry build="True" name="Tests" configuration="Debug" />
       <Entry build="True" name="Executables.DistributionServer" configuration="Debug" />
       <Entry build="True" name="Executables.WorkClient" configuration="Debug" />
       <Entry build="True" name="Executables.FmacjRun" configuration="Debug" />
-      <Entry build="True" name="Components.TaskClient" configuration="Debug" />
+      <Entry build="True" name="Examples.Mandelbrot" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="Framework" configuration="Release" />
       <Entry build="True" name="Runtime" configuration="Release" />
-      <Entry build="True" name="Emitter" configuration="Release" />
-      <Entry build="True" name="Tests" configuration="Release" />
-      <Entry build="True" name="Examples.Mandelbrot" configuration="Release" />
       <Entry build="True" name="Runtime.Network" configuration="Release" />
+      <Entry build="True" name="Emitter" configuration="Release" />
+      <Entry build="True" name="Components.TaskClient" configuration="Release" />
+      <Entry build="True" name="Tests" configuration="Release" />
       <Entry build="True" name="Executables.DistributionServer" configuration="Release" />
       <Entry build="True" name="Executables.WorkClient" configuration="Release" />
       <Entry build="True" name="Executables.FmacjRun" configuration="Release" />
-      <Entry build="True" name="Components.TaskClient" configuration="Release" />
+      <Entry build="True" name="Examples.Mandelbrot" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Tests" single="True">
     <Execute type="None" entry="Framework" />
     <Execute type="None" entry="Runtime" />
-    <Execute type="None" entry="Emitter" />
-    <Execute type="None" entry="Tests" />
-    <Execute type="None" entry="Examples.Mandelbrot" />
     <Execute type="None" entry="Runtime.Network" />
+    <Execute type="None" entry="Emitter" />
+    <Execute type="None" entry="Components.TaskClient" />
+    <Execute type="None" entry="Tests" />
     <Execute type="None" entry="Executables.DistributionServer" />
     <Execute type="None" entry="Executables.WorkClient" />
     <Execute type="None" entry="Executables.FmacjRun" />
-    <Execute type="None" entry="Components.TaskClient" />
+    <Execute type="None" entry="Examples.Mandelbrot" />
   </StartMode>
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UpdateNearestChangeLog" />
   <Entries>
     <Entry filename="Framework/Framework.mdp" />
     <Entry filename="Runtime/Runtime.mdp" />
-    <Entry filename="Emitter/Emitter.mdp" />
-    <Entry filename="Tests/Tests.mdp" />
-    <Entry filename="Examples.Mandelbrot/Examples.Mandelbrot.mdp" />
     <Entry filename="Runtime.Network/Runtime.Network.mdp" />
+    <Entry filename="Emitter/Emitter.mdp" />
+    <Entry filename="Components.TaskClient/Components.TaskClient.mdp" />
+    <Entry filename="Tests/Tests.mdp" />
     <Entry filename="Executables.DistributionServer/Executables.DistributionServer.mdp" />
     <Entry filename="Executables.WorkClient/Executables.WorkClient.mdp" />
     <Entry filename="Executables.FmacjRun/Executables.FmacjRun.mdp" />
-    <Entry filename="Components.TaskClient/Components.TaskClient.mdp" />
+    <Entry filename="Examples.Mandelbrot/Examples.Mandelbrot.mdp" />
   </Entries>
 </Combine>

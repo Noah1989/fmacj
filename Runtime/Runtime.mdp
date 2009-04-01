@@ -20,6 +20,7 @@
     <File name="ChordManager.cs" subtype="Code" buildaction="Compile" />
     <File name="IChannel.cs" subtype="Code" buildaction="Compile" />
     <File name="ChannelEnumerator.cs" subtype="Code" buildaction="Compile" />
+    <File name="ChannelEnumerable.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="../bin/Fmacj.Framework.dll" />

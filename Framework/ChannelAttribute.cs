@@ -33,5 +33,7 @@ namespace Fmacj.Framework
         }
 
         public string Name { get; private set; }
+
+		public bool Enumerable { get; private set; }
     }
 }
