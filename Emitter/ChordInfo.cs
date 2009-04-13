@@ -29,11 +29,12 @@ namespace Fmacj.Emitter
         {
             SourceType = sourceType;
             ChordMethod = chordMethod;
-            FindChannelParameters();
+            FindParameters();
         }
 
-        private void FindChannelParameters()
+        private void FindParameters()
         {
+			List<ParameterInfo> joinParameters = new List<ParameterInfo>();
             List<ParameterInfo> inChannelParameters = new List<ParameterInfo>();
             List<ParameterInfo> outChannelParameters = new List<ParameterInfo>();
 
@@ -41,19 +42,31 @@ namespace Fmacj.Emitter
             {
                 if (parameter.GetCustomAttributes(typeof(ChannelAttribute), false).Length > 0)
                 {
-                	if(parameter.IsOut)
-                	{
-                		outChannelParameters.Add(parameter);                		
-                	}
-                	else
-                	{
-                    	inChannelParameters.Add(parameter);
-                    	if(outChannelParameters.Count != 0)
-                			throw new InvalidMethodException(SourceType.Name, ChordMethod.Name, "Output channel prameters may not precede input channel parameters.");
-                    }
+					if(parameter.IsOut)
+					{	
+                			outChannelParameters.Add(parameter);                		
+                		}
+                		else
+                		{                    	
+						if(outChannelParameters.Count != 0)
+                				throw new InvalidMethodException(SourceType.Name, ChordMethod.Name, "Output channel prameters may not precede input channel parameters.");
+						
+						inChannelParameters.Add(parameter);
+                		}
                 }
+				else
+				{
+				    if(inChannelParameters.Count != 0)
+                		throw new InvalidMethodException(SourceType.Name, ChordMethod.Name, "Input channel prameters may not precede join parameters.");
+
+					if(outChannelParameters.Count != 0)
+                		throw new InvalidMethodException(SourceType.Name, ChordMethod.Name, "Output channel prameters may not precede join parameters.");
+					
+					joinParameters.Add(parameter);
+				}
             }
 
+			JoinParameters = joinParameters.ToArray();
             InChannelParameters = inChannelParameters.ToArray();
             OutChannelParameters = outChannelParameters.ToArray();
         }
@@ -63,6 +76,11 @@ namespace Fmacj.Emitter
 
         public string Name { get { return ChordMethod.Name; } }
         
+		public ParameterInfo[] JoinParameters
+		{
+			get; private set;
+		}
+		
         public ParameterInfo[] InChannelParameters
         {
             get; private set;
@@ -72,7 +90,7 @@ namespace Fmacj.Emitter
         {
             get; private set;
         }
-
+		
         public string[] InChannelNames
         {
             get
@@ -83,6 +101,20 @@ namespace Fmacj.Emitter
                     result[i] =
                         ((ChannelAttribute)
                          InChannelParameters[i].GetCustomAttributes(typeof (ChannelAttribute), false)[0]).Name;
+
+                return result;
+            }
+        }
+		
+		public ChannelAttribute[] InChannelAttributes
+        {
+            get
+            {
+                ChannelAttribute[] result = new ChannelAttribute[InChannelParameters.Length];
+
+                for (int i = 0; i < InChannelParameters.Length; i++)
+                    result[i] = (ChannelAttribute)
+						InChannelParameters[i].GetCustomAttributes(typeof (ChannelAttribute), false)[0];
 
                 return result;
             }
@@ -102,5 +134,15 @@ namespace Fmacj.Emitter
                 return result;
             }
         }
+		
+	    public Type GetEnumerableInChannelType(int channelIndex)
+		{
+			Type parameterType = InChannelParameters[channelIndex].ParameterType;
+
+			if(parameterType.GetGenericTypeDefinition() != typeof(IChannelEnumerable<>))
+				throw new InvalidMethodException(SourceType.Name, ChordMethod.Name, "Enumerable channel prameter type must be IChannelEnumerable<>.");
+
+			return parameterType.GetGenericArguments()[0];
+		}		
     }
 }

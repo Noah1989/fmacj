@@ -1,7 +1,6 @@
 ASSEMBLY = ../bin/Fmacj.Examples.Mandelbrot.exe
 
 FILES =  \
-	ColorUtil.cs \
 	Main.cs \
 	Mandelbrot.cs \
 	Properties/AssemblyInfo.cs

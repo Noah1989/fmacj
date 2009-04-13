@@ -17,11 +17,18 @@
 */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Fmacj.Framework
 {	
-	public interface IChannelEnumerable<T> : IEnumerable<T>
+	public interface IChannelEnumerable : IEnumerable
+	{
+		void Release();
+		void WaitForRelease();
+	}
+	
+	public interface IChannelEnumerable<T> : IEnumerable<T>, IChannelEnumerable
 	{
 		
 	}

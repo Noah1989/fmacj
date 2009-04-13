@@ -63,7 +63,7 @@ namespace Fmacj.Tests
                 result = value ;
             }
 
-            [Fork]
+			[Fork]
             public abstract void TestMethod4(double value);
             [Asynchronous]
             protected void TestMethod4(double value, [Channel("TestChannel4")] out double result)
@@ -81,6 +81,24 @@ namespace Fmacj.Tests
             }
             [Join]
             public abstract string OutChannelChordJoin();
+
+			
+			[Fork]
+            public abstract void TestMethod5(int val);
+            [Asynchronous]
+            protected void TestMethod5(int val, [Channel("TestChannel5")] out double result)
+            {					
+                result = -val;								
+            } 
+
+            [Chord]
+            protected double ParameterJoin(double val1, [Channel("TestChannel5")] double val2)
+            {				
+                return val1 + val2;				
+            }
+            [Join]
+            public abstract double ParameterJoin(double val1);
+
 
             public abstract void Dispose();
         }
@@ -132,6 +150,22 @@ namespace Fmacj.Tests
 				Expect(result, EqualTo("4.6"));  
 				Expect(result1,EqualTo(4.6));
 				Expect(result2,EqualTo("Test"));
+			}
+		}
+		
+		[Test]
+        public void ParameterJoin()
+        {
+            using (JoinTestClass joinTestClass = ParallelizationFactory.GetParallelized<JoinTestClass>())
+			{
+				joinTestClass.TestMethod5(2);				
+				
+				double result = 0;
+				
+				Thread thread = new Thread(delegate() { result = joinTestClass.ParameterJoin(5); });
+				thread.Start();
+				ThreadTimeout.Timeout(thread, 10000);
+				Expect(result, EqualTo(3));            
 			}
 		}
 	}

@@ -19,14 +19,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Fmacj.Framework;
 
 namespace Fmacj.Runtime
 {	
 	public class ChannelEnumerable<T> : IChannelEnumerable<T>
 	{
-		private bool used = false;
-		
+		private bool released = false;
+		private EventWaitHandle releaseHandle = new EventWaitHandle(false, EventResetMode.ManualReset);		
 		private Channel<T> channel;
 				
 		public ChannelEnumerable(Channel<T> channel)
@@ -36,14 +37,37 @@ namespace Fmacj.Runtime
 
 		public IEnumerator<T> GetEnumerator()
 		{
-			if (used) throw new InvalidOperationException("ChannelEnumerable can only be enumerated once.");
-			used = true;
-			return new ChannelEnumerator<T>(channel);
-		}		
+			lock(releaseHandle)
+			{
+				if (released) throw new InvalidOperationException("ChannelEnumerable has already been released.");									
+				ChannelEnumerator<T> enumerator = new ChannelEnumerator<T>(channel);
+				enumerator.Disposed += delegate { Release(); };
+				return enumerator;
+			}
+		}			
 		
 		IEnumerator IEnumerable.GetEnumerator()
 		{			
 			return GetEnumerator();			
+		}
+		
+		public void Release()
+		{
+			lock(releaseHandle)
+			{
+				released = true;
+				releaseHandle.Set();
+			}
+		}
+		
+		public void WaitForRelease()
+		{
+			lock(releaseHandle)
+			{
+				if(released) return;
+			}
+			
+			releaseHandle.WaitOne();
 		}
 	}
 }

@@ -18,6 +18,7 @@
 
 using System;
 using System.Drawing;
+using System.Linq;
 using Fmacj.Framework;
 
 namespace Fmacj.Examples.Mandelbrot
@@ -27,24 +28,21 @@ namespace Fmacj.Examples.Mandelbrot
 	{		
 		private int width, height;
 		
-		private Graphics graphics;
+		private Bitmap bitmap;
 		
 		public Bitmap Calculate(int size)
 		{
 			width = size; height = size*11/25;
-			Bitmap bitmap = new Bitmap(width, height);
-
-		    graphics = Graphics.FromImage(bitmap);
-
+			bitmap = new Bitmap(width, height);
+		    
 			Console.WriteLine("Bitmap initialized.");
 			
-			for (int y = 0; y < height; y++)
-				CalculateLine(y);
+			TakeLines(height);
 			
-			for (int n = 0; n < height; n++)
-				Console.WriteLine("Rendered line {0}.", RenderLine());
-
-		    graphics.Dispose();
+			for (int y = 0; y < height; y++)
+				CalculateLine(y);				
+						
+			RenderLines();		    
 
 			return bitmap;
 		}
@@ -52,7 +50,7 @@ namespace Fmacj.Examples.Mandelbrot
 		[Fork]
 		protected abstract void CalculateLine(int y);
 		[Asynchronous]
-		protected void CalculateLine(int y, [Channel("line")] out Line line)
+		protected void CalculateLine(int y, [Channel("lines")] out Line line)
 		{
 			line = new Line(y, width, System.Threading.Thread.CurrentThread.ManagedThreadId);
 
@@ -77,28 +75,29 @@ namespace Fmacj.Examples.Mandelbrot
 			}
 		}
 
+		[Yield]
+		protected abstract void TakeLines([Channel("lineCount")] int lineCount);
+		
         [Chord]
-        protected int RenderLine([Channel("line")] Line line)
-        {
-            int y = line.Y;
-            int hue = (35*line.ColorId)%360;
-
-            Bitmap lineBitmap = new Bitmap(width, 1);
-
-            for (int x = 0; x < width; x++)
-            {
-                Color color = ColorUtil.FromHSB(hue, 100, line.Data[x]*100/255);
-                lineBitmap.SetPixel(x, 0, color);
-            }
-
-            lock(graphics) graphics.DrawImage(lineBitmap, 0, y);
-
-            lineBitmap.Dispose();
-
-            return y;
+        protected bool RenderLines([Channel("lineCount")] int lineCount, [Channel("lines", Enumerable = true)] IChannelEnumerable<Line> lines)
+        {		
+			foreach (Line line in lines.Take(lineCount))
+			{
+            	int y = line.Y;
+            	
+            	for (int x = 0; x < width; x++)
+            	{
+                	Color color = Color.FromArgb(0/*(50*line.ColorId)%255*/, line.Data[x], 0);
+                	bitmap.SetPixel(x, y, color);
+            	}            	
+				
+				Console.WriteLine("Rendered line {0}", y);
+			}
+			
+            return true;
         }
 	    [Join]
-		protected abstract int RenderLine();		
+		protected abstract bool RenderLines();		
 		
 		protected struct Line
 		{

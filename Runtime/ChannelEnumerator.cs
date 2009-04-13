@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 namespace Fmacj.Runtime
 {	
-	internal class ChannelEnumerator<T> : IEnumerator<T>
+	internal class ChannelEnumerator<T> : IEnumerator<T>, IDisposable
 	{		
 		private Channel<T> channel;
 		private T current;
@@ -58,8 +58,15 @@ namespace Fmacj.Runtime
 		
 		public void Dispose()
 		{
-			
+			OnDisposed(EventArgs.Empty);
 		}
 
+		private void OnDisposed(EventArgs e)
+		{
+			if(Disposed != null) Disposed(this, e);
+		}
+		
+		public event EventHandler Disposed;
+		
 	}
 }

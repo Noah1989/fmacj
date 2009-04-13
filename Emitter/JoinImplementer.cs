@@ -45,9 +45,27 @@ namespace Fmacj.Emitter
 			Type returnType = joinGroup.JoinMethod.ReturnType;
 			
             MethodBuilder result = target.DefineMethod(joinGroup.Name, MethodAttributes.Virtual | MethodAttributes.Public,
-                                                       returnType, new Type[] {} );            
+                                                       returnType, joinGroup.ParameterTypes );            
 
             ILGenerator generator = result.GetILGenerator();
+			
+			for (int parameterIndex = 0; parameterIndex < joinGroup.Parameters.Length; parameterIndex++)
+            {
+				// Parameters are to be attributed and named nicely
+                ParameterInfo parameter = joinGroup.Parameters[parameterIndex];
+                result.DefineParameter(parameterIndex + 1, parameter.Attributes, parameter.Name);
+						
+             	generator.Emit(OpCodes.Ldarg_0);
+				generator.Emit(OpCodes.Ldfld, channelImplementer
+			    	           .GetJoinParameterChannelField(joinGroup.Name, parameterIndex,
+				                                             parameter.ParameterType));				
+							
+				generator.Emit(OpCodes.Ldarg, parameterIndex + 1);
+				
+				generator.EmitCall(OpCodes.Call, typeof(Channel<>)
+			    	               .MakeGenericType(new Type[] { parameter.ParameterType })
+			        	           .GetMethod("Send", new Type[] {parameter.ParameterType}), null);   
+            }
 			
 			generator.Emit(OpCodes.Ldarg_0);
 			generator.Emit(OpCodes.Ldfld, channelImplementer
@@ -56,7 +74,7 @@ namespace Fmacj.Emitter
 				
 			generator.EmitCall(OpCodes.Call, typeof(Channel<>)
 			                   .MakeGenericType(new Type[] { returnType })
-			                   .GetMethod("Receive"), null);
+			                   .GetMethod("Receive", new Type[] {}), null);
 			
 			generator.Emit(OpCodes.Ret);
 

@@ -16,8 +16,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
+using Fmacj.Framework;
 
 namespace Fmacj.Runtime
 {
@@ -31,12 +33,13 @@ namespace Fmacj.Runtime
 
         private readonly Queue<T> values = new Queue<T>();
 
+		public Type DataType { get { return typeof(T); } }
+		
         public void Send(T value)
         {
             lock (values)
                 values.Enqueue(value);
-            waitHandle.Set();
-
+            waitHandle.Set();						
         }
 
         public T Receive()
@@ -54,7 +57,7 @@ namespace Fmacj.Runtime
                 waitHandle.WaitOne();
                 recieved = TryRecieve(ref result);
             }
-
+			
             return result;
         }
 
@@ -87,5 +90,10 @@ namespace Fmacj.Runtime
             value = result;
             return received;
         }
+		
+		public IChannelEnumerable GetEnumerable()
+		{
+			return new ChannelEnumerable<T>(this);
+		}
     }
 }

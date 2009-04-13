@@ -17,19 +17,16 @@
 */
 
 using System;
-using System.Threading;
-using Fmacj.Framework;
 
 namespace Fmacj.Runtime
-{
-    public interface IChannel
-    {		
-		Type DataType { get; }
+{	
+	public class ChannelOptions
+	{
+		public ChannelOptions(bool enumerable)
+		{
+			Enumerable = enumerable;
+		}
 		
-		IChannelEnumerable GetEnumerable();
-        
-		WaitHandle WaitHandle { get; }
-        
-		bool TryReceive(out object value);
-    }
+		public bool Enumerable { get; set; }
+	}
 }

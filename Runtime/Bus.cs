@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading;
+using Fmacj.Framework;
 
 namespace Fmacj.Runtime
 {
@@ -28,17 +29,28 @@ namespace Fmacj.Runtime
         private readonly IChannel[] channels;
         private readonly OrderedDictionary data = new OrderedDictionary();
         private readonly Dictionary<IChannel, RegisteredWaitHandle> registeredWaitHandles = new Dictionary<IChannel, RegisteredWaitHandle>();
-        private readonly EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-        private readonly EventWaitHandle publicWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
+        private readonly Dictionary<IChannel, ChannelOptions> channelOptions = new Dictionary<IChannel, ChannelOptions>();
+		private readonly Dictionary<IChannel, IChannelEnumerable> channelEnumerables = new Dictionary<IChannel, IChannelEnumerable>();
 
+		
+		private readonly EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+        private readonly EventWaitHandle publicWaitHandle = new EventWaitHandle(false, EventResetMode.AutoReset);
+		
+		
 		private RegisteredWaitHandle registeredWaitHandle;
 		
         private int receivedCount;
         private bool dataAvailable;
         private bool isClosed;
 
-        public Bus(IChannel[] channels)
+        public Bus(IChannel[] channels, ChannelOptions[] options)
         {
+			if(channels.Length != options.Length)
+				throw new ArgumentException("The number of channels must be equal to the number of channel options provided.");
+			
+			for(int i = 0; i < channels.Length; i++)
+				channelOptions.Add(channels[i], options[i]);
+			
             isClosed = false;
             this.channels = channels;
             Reset();
@@ -51,8 +63,9 @@ namespace Fmacj.Runtime
 
             dataAvailable = false;
             data.Clear();
-            registeredWaitHandles.Clear();
-            receivedCount = 0;
+            registeredWaitHandles.Clear();						
+            receivedCount = 0;	
+
             foreach (IChannel channel in channels)
             {
                 data.Add(channel, null);
@@ -73,7 +86,7 @@ namespace Fmacj.Runtime
         }
 
         private void ChannelCallback(object state, bool timedOut)
-        {
+        {			
             IChannel channel = state as IChannel;
             if (channel == null) throw new ArgumentException("The given object must be an IChannel.", "state");
 
@@ -84,24 +97,39 @@ namespace Fmacj.Runtime
             }
 
             object value;
-            if(channel.TryReceive(out value))
+			if(channelOptions[channel].Enumerable)
+			{
+				if(channelEnumerables.ContainsKey(channel))
+				{
+					channelEnumerables[channel].WaitForRelease();
+					channelEnumerables.Remove(channel);
+				}
+				IChannelEnumerable channelEnumerable = channel.GetEnumerable();
+				data[channel] = channelEnumerable;
+				channelEnumerables.Add(channel, channelEnumerable);
+			}
+			else if(channel.TryReceive(out value))
             {
-                data[channel] = value;
-                Interlocked.Increment(ref receivedCount);
+                data[channel] = value;                
             }
             else
             {
                 RegisterChannel(channel);
+				return;
             }
+			
+			Interlocked.Increment(ref receivedCount);
 
             // lock here because
             // setting dataAvailable
             lock (data)
             {
                 if (receivedCount == channels.Length)
+				{
                     dataAvailable = true;
-                waitHandle.Set();
-                publicWaitHandle.Set();
+                	waitHandle.Set();
+                	publicWaitHandle.Set();
+				}
             }
         }
 

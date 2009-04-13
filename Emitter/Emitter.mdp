@@ -1,4 +1,4 @@
-<Project name="Emitter" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Emitter" fileversion="2.0" language="C#" clr-version="Net_2_0" targetFramework="2.0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="Emitter" />
@@ -32,12 +32,13 @@
     <File name="TypeAnalyzer/TypeAnalyzer.Yield.cs" subtype="Code" buildaction="Compile" />
     <File name="YieldInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="YieldImplementer.cs" subtype="Code" buildaction="Compile" />
+    <File name="ConstructorImplementer.cs" subtype="Code" buildaction="Compile" />
+    <File name="DisposeImplementer.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="../bin/Fmacj.Runtime.dll" />
     <ProjectReference type="Assembly" localcopy="True" refto="../bin/Fmacj.Framework.dll" />
   </References>
-  <GtkDesignInfo />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile" SyncReferences="True">
     <BuildFilesVar Sync="True" Name="FILES" />
     <DeployFilesVar />

@@ -29,18 +29,13 @@ namespace Fmacj.Emitter
     internal class ChordImplementer
     {
         private readonly TypeBuilder target;
-        private readonly Type baseType;
 		private readonly ChannelImplementer channelImplementer;
 
         private readonly Dictionary<ChordInfo, MethodBuilder> callbacks = new Dictionary<ChordInfo, MethodBuilder>();
         
-        private FieldBuilder disposingEventHandlerField;
-        private FieldBuilder disposedField;
-
-        public ChordImplementer(TypeBuilder target, Type baseType, ChannelImplementer channelImplementer)
+        public ChordImplementer(TypeBuilder target, ChannelImplementer channelImplementer)
         {
             this.target = target;
-            this.baseType = baseType;
 			this.channelImplementer = channelImplementer;
         }
 
@@ -58,6 +53,7 @@ namespace Fmacj.Emitter
             callback.DefineParameter(1, ParameterAttributes.In, "bus");
             callback.DefineParameter(2, ParameterAttributes.In, "unused");
 
+			int joinParameterCount = chord.JoinParameters.Length;
             int inChannelParameterCount = chord.InChannelParameters.Length;
             int outChannelParameterCount = chord.OutChannelParameters.Length;
 
@@ -90,10 +86,18 @@ namespace Fmacj.Emitter
             generator.EmitCall(OpCodes.Call, typeof(ChordManager).GetMethod("RegisterBus", new Type[] { typeof(Bus), typeof(WaitOrTimerCallback) }), null);
 
             // IL: Unwrap value array
-            for (int parameterIndex = 0; parameterIndex < inChannelParameterCount; parameterIndex++)
+            for (int parameterIndex = 0; parameterIndex < joinParameterCount; parameterIndex++)
             {
                 generator.Emit(OpCodes.Ldloc_0);
                 generator.Emit(OpCodes.Ldc_I4, parameterIndex);
+                generator.Emit(OpCodes.Ldelem_Ref);
+                if (chord.JoinParameters[parameterIndex].ParameterType.IsValueType)
+                    generator.Emit(OpCodes.Unbox_Any, chord.JoinParameters[parameterIndex].ParameterType);
+            }					
+			for (int parameterIndex = 0; parameterIndex < inChannelParameterCount; parameterIndex++)
+            {
+                generator.Emit(OpCodes.Ldloc_0);
+                generator.Emit(OpCodes.Ldc_I4, parameterIndex + joinParameterCount);
                 generator.Emit(OpCodes.Ldelem_Ref);
                 if (chord.InChannelParameters[parameterIndex].ParameterType.IsValueType)
                     generator.Emit(OpCodes.Unbox_Any, chord.InChannelParameters[parameterIndex].ParameterType);
@@ -136,159 +140,11 @@ namespace Fmacj.Emitter
             generator.Emit(OpCodes.Ret);
 
             callbacks.Add(chord, callback);
-        }
-
-
-        public void ImplementConstructor()
-        {
-            ConstructorBuilder ctor = target.DefineConstructor(MethodAttributes.Public, CallingConventions.HasThis,
-                                                               new Type[] {});
-
-            ILGenerator generator = ctor.GetILGenerator();
-
-            generator.DeclareLocal(typeof (object[]));
-
-            // IL: Call base constructor
-            generator.Emit(OpCodes.Ldarg_0);
-            generator.Emit(OpCodes.Call, baseType.GetConstructor(BindingFlags.Instance | BindingFlags.Public
-                                                                  | BindingFlags.NonPublic, null, new Type[] { }, null));
-
-			// IL: Prepare "disposingEventHandler" and "disposed" fields
-            disposingEventHandlerField = target.DefineField("disposingEventHandler", typeof (EventHandler), FieldAttributes.Private);
-            disposedField = target.DefineField("disposed", typeof(bool), FieldAttributes.Private);
-            
-			channelImplementer.ImplementChannelInitialization(generator);
-
-            foreach (ChordInfo chord in callbacks.Keys)
-            {
-                int parameterCount = chord.InChannelParameters.Length;
-
-                // IL: Create channel array
-                generator.Emit(OpCodes.Ldc_I4, parameterCount);
-                generator.Emit(OpCodes.Newarr, typeof(IChannel));
-                generator.Emit(OpCodes.Stloc_0);
-
-                for (int parameterIndex = 0; parameterIndex < parameterCount; parameterIndex++)
-                {
-                    // IL: Wrap up channel array
-                    generator.Emit(OpCodes.Ldloc_0);
-                    generator.Emit(OpCodes.Ldc_I4, parameterIndex);
-
-                    generator.Emit(OpCodes.Ldarg_0);
-                    generator.Emit(OpCodes.Ldfld, channelImplementer
-					               .GetChannelField(chord.InChannelNames[parameterIndex],
-					                                chord.InChannelParameters[parameterIndex].ParameterType));
-
-                    generator.Emit(OpCodes.Stelem_Ref);
-                }
-
-
-                // IL: Register chord
-                generator.Emit(OpCodes.Ldloc_0);
-                generator.Emit(OpCodes.Ldarg_0);
-                generator.Emit(OpCodes.Ldftn, callbacks[chord]);
-                generator.Emit(OpCodes.Newobj, typeof(WaitOrTimerCallback).GetConstructor(new Type[] { typeof(object), typeof(IntPtr) }));
-                generator.Emit(OpCodes.Ldarg_0);
-                generator.Emit(OpCodes.Ldflda, disposingEventHandlerField);
-                generator.EmitCall(OpCodes.Call,
-                                   typeof (ChordManager).GetMethod("RegisterChord",
-                                                                   new Type[]
-                                                                       {
-                                                                           typeof (IChannel[]),
-                                                                           typeof (WaitOrTimerCallback),
-                                                                           typeof (EventHandler).MakeByRefType()
-                                                                       }), null);
-            }
-
-            generator.Emit(OpCodes.Ret);
-        }
-
-
-        public void ImplementDisposalBehavior()
-        {
-            target.DefineMethodOverride(GetDisposeMethodBody(), typeof(IDisposable).GetMethod("Dispose", new Type[] {}));
-            target.DefineMethodOverride(GetFinalizeMethodBody(),
-                                        typeof (object).GetMethod("Finalize",
-                                                                  BindingFlags.Instance | BindingFlags.NonPublic));
-        }
-
-        private MethodInfo GetDisposeMethodBody()
-        {
-            MethodBuilder result = target.DefineMethod("Dispose",
-                                                              MethodAttributes.Virtual | MethodAttributes.Public,
-                                                              typeof(void), new Type[] { });
-
-            ILGenerator generator = result.GetILGenerator();
-
-            Label returnLabel = generator.DefineLabel();
-
-            // IL: If disposed, return
-            generator.Emit(OpCodes.Ldarg_0);
-            generator.Emit(OpCodes.Ldfld, disposedField);
-            generator.Emit(OpCodes.Brtrue, returnLabel);
-
-			// IL: Call base.Dispose()
-		    MethodInfo baseDispose = baseType.GetMethod("Dispose",BindingFlags.Instance | BindingFlags.Public
-                                                     	| BindingFlags.NonPublic, null, new Type[] { }, null);
-			if(!baseDispose.IsAbstract)
-			{
-            	generator.Emit(OpCodes.Ldarg_0);
-            	generator.Emit(OpCodes.Call, baseDispose);
-			}
-					
-            // IL: Set disposed = true
-            generator.Emit(OpCodes.Ldarg_0);
-            generator.Emit(OpCodes.Ldc_I4_1);
-            generator.Emit(OpCodes.Stfld, disposedField);
-
-            // IL: GC.SuppressFinalize(this)
-            generator.Emit(OpCodes.Ldarg_0);
-            generator.EmitCall(OpCodes.Call,
-                               typeof (GC).GetMethod("SuppressFinalize", new Type[] {typeof (object)}),
-                               null);
-
-            // IL: If eventHandler == null, return
-            generator.Emit(OpCodes.Ldarg_0);
-            generator.Emit(OpCodes.Ldfld, disposingEventHandlerField);
-            generator.Emit(OpCodes.Brfalse, returnLabel);
-
-            // IL: Invoke disposingEventHandler
-            generator.Emit(OpCodes.Ldarg_0);
-            generator.Emit(OpCodes.Ldfld, disposingEventHandlerField);
-            generator.Emit(OpCodes.Ldarg_0);
-            generator.Emit(OpCodes.Newobj, typeof (EventArgs).GetConstructor(new Type[] {}));
-            generator.EmitCall(OpCodes.Call,
-                               typeof(EventHandler).GetMethod("Invoke",
-                                                               new Type[]
-                                                                   {
-                                                                       typeof (object),
-                                                                       typeof (EventArgs)
-                                                                   }
-                                   ), null);
-            
-            // IL: Return
-            generator.MarkLabel(returnLabel);
-            generator.Emit(OpCodes.Ret);
-
-            return result;
-        }
-
-
-        private MethodInfo GetFinalizeMethodBody()
-        {
-            MethodBuilder result = target.DefineMethod("Finalize",
-                                                              MethodAttributes.Virtual | MethodAttributes.Family,
-                                                              typeof(void), new Type[] { });
-
-            ILGenerator generator = result.GetILGenerator();
-
-			// IL: Call Dispose()
-            generator.Emit(OpCodes.Ldarg_0);
-            generator.EmitCall(OpCodes.Call, typeof(IDisposable).GetMethod("Dispose", new Type[] {}), null);
-            generator.Emit(OpCodes.Ret);
-
-            return result;
-        }
-
+        }		
+				
+		public Dictionary<ChordInfo, MethodBuilder> GetCallbacks()
+		{
+			return callbacks;
+		}
     }
 }

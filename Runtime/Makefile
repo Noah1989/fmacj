@@ -5,6 +5,7 @@ FILES =  \
 	Channel.cs \
 	ChannelEnumerable.cs \
 	ChannelEnumerator.cs \
+	ChannelOptions.cs \
 	ChordManager.cs \
 	IChannel.cs \
 	Properties/AssemblyInfo.cs

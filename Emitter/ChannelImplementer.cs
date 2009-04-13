@@ -70,6 +70,11 @@ namespace Fmacj.Emitter
 			return GetChannelFieldInternal(name + "ChannelJ", type);
 		}
 		
+		public FieldInfo GetJoinParameterChannelField(string joinName, int parameterIndex, Type type)
+		{
+			return GetChannelFieldInternal(joinName + "ChannelJP" + parameterIndex, type);
+		}
+		
 		public void ImplementChannelInitialization(ILGenerator generator)
 		{
 			foreach (FieldInfo field in channelFields.Values)

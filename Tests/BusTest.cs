@@ -81,7 +81,9 @@ namespace Fmacj.Tests
                     delegate()
                         {
                             Channel<int> channel = ChannelResolver<int>.GetChannel(busTestClass, "TestChannel3");
-                            Bus bus = new Bus(new IChannel[] {channel});
+                            Bus bus = new Bus(new IChannel[] {channel},
+											  new ChannelOptions[] {
+												  new ChannelOptions(false)});					
 					        object[] objects = bus.Receive();
 					        bus.Close();
                             Expect(objects.Length, EqualTo(1));
@@ -110,7 +112,10 @@ namespace Fmacj.Tests
                         {
                             Channel<int> channel1 = ChannelResolver<int>.GetChannel(busTestClass, "TestChannel1");
                             Channel<double> channel2 = ChannelResolver<double>.GetChannel(busTestClass, "TestChannel2");
-                            Bus bus = new Bus(new IChannel[] {channel1, channel2});
+                            Bus bus = new Bus(new IChannel[] {channel1, channel2},
+											  new ChannelOptions[] { 
+											  	  new ChannelOptions(false),
+												  new ChannelOptions(false)});;
 					        object[] objects = bus.Receive();
 					        bus.Close();
                             Expect(objects.Length, EqualTo(2));
@@ -145,7 +150,11 @@ namespace Fmacj.Tests
                         {
                             Channel<int> channel1 = ChannelResolver<int>.GetChannel(busTestClass,"TestChannel1");
                             Channel<double> channel2 = ChannelResolver<double>.GetChannel(busTestClass,"TestChannel2");
-                            var bus = new Bus(new IChannel[] {channel1, channel2});
+                            var bus = new Bus(new IChannel[] {channel1, channel2},
+											  new ChannelOptions[] { 
+											  	  new ChannelOptions(false),
+												  new ChannelOptions(false)});
+					
                             for (int i = 1; i <= 1000; i++)
                             {
 

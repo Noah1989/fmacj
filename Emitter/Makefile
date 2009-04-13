@@ -5,6 +5,8 @@ FILES =  \
 	ChannelImplementer.cs \
 	ChordImplementer.cs \
 	ChordInfo.cs \
+	ConstructorImplementer.cs \
+	DisposeImplementer.cs \
 	ForkGroup.cs \
 	ForkImplementer.cs \
 	JoinGroup.cs \

@@ -26,12 +26,12 @@ namespace Fmacj.Runtime
 {
     public static class ChordManager
     {
-        public static void RegisterChord(IChannel[] channels, WaitOrTimerCallback callback, ref EventHandler onDisposing)
+        public static void RegisterChord(IChannel[] channels, ChannelOptions[] options, WaitOrTimerCallback callback, ref EventHandler onDisposing)
         {
             if(channels.Length==0)
                 throw new ArgumentException("There must be at least one channel provided for a chord.", "channels");
 
-            Bus bus = new Bus(channels);
+            Bus bus = new Bus(channels, options);
             RegisterBus(bus, callback);
 
             onDisposing += delegate { UnregisterBus(bus); };

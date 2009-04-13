@@ -31,10 +31,10 @@ using NUnit.Framework;
 
 namespace Fmacj.Tests
 {
-    [TestFixture, Ignore("Not implemented yet.")]
+    [TestFixture]
     public class EnumerableChannelTest : AssertionHelper
     {		
-        //[Parallelizable]
+        [Parallelizable]
         public abstract class EnumerableChannelTestClass : IParallelizable
         {
 
@@ -48,14 +48,25 @@ namespace Fmacj.Tests
  
             [Chord]
             protected void SimpleChord([Channel("TestChannel1", Enumerable = true)] IChannelEnumerable<int> values)
-            {
-                TcpClient tcpClient = new TcpClient();
+            {		
+				TcpClient tcpClient = new TcpClient();
                 tcpClient.Connect(IPAddress.Loopback, 23000);
                 BinaryWriter binaryWriter = new BinaryWriter(tcpClient.GetStream());
-				foreach (int val in values.Take(10))
-                	binaryWriter.Write(val);
-                binaryWriter.Flush();
-                tcpClient.Close();
+				
+				Thread thread =
+                	new Thread(
+                    	delegate()
+                        	{								
+								foreach (int val in values.Take(10))
+                					binaryWriter.Write(val);
+                        	});
+            	
+				thread.Start();
+
+            	ThreadTimeout.Timeout(thread, 10000);
+
+				binaryWriter.Flush();
+                tcpClient.Close();				
             }
 			
             public abstract void Dispose();
@@ -76,32 +87,38 @@ namespace Fmacj.Tests
 				TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 23000);
 				tcpListener.Start();
 
-				for (int n = 0; n < 10; n++)
+				for (int n = 0; n < 20; n++)
 					enumerableChannelTestClass.TestMethod1(n);
 				
-				int i = 0;
-				while (!tcpListener.Pending())
-				{
-					Thread.Sleep(200);
-					if (i++ > 20)
+				List<int> results = new List<int>();					
+				
+				for(int c = 0; c < 2; c++)
+				{				
+					int i = 0;
+					while (!tcpListener.Pending())
 					{
-						tcpListener.Stop();
-						throw new TimeoutException();
+						Thread.Sleep(200);
+						if (i++ > 20)
+						{
+							tcpListener.Stop();
+							throw new TimeoutException();
+						}
 					}
+				
+					TcpClient tcpClient = tcpListener.AcceptTcpClient();
+					BinaryReader reader = new BinaryReader(tcpClient.GetStream());
+
+			    
+					for (int n = 0; n < 10; n++)
+						results.Add(reader.ReadInt32());				
+					
+					tcpClient.Close();
 				}
 				
-				TcpClient tcpClient = tcpListener.AcceptTcpClient();
-				BinaryReader reader = new BinaryReader(tcpClient.GetStream());
-
-			    List<int> results = new List<int>();					
-				for (int n = 0; n < 10; n++)
-					results.Add(reader.ReadInt32());
-				for (int n = 0; n < 10; n++)
-					Expect(results.Contains(n));
-				
-				tcpClient.Close();
-				tcpListener.Stop();
-				
+				for (int n = 0; n < 20; n++)
+					Expect(results.Contains(-n));
+								
+				tcpListener.Stop();				
 			}
 		}
     }
