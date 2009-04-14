@@ -43,6 +43,8 @@
     <Compile Include="ChannelImplementer.cs" />
     <Compile Include="ChordImplementer.cs" />
     <Compile Include="ChordInfo.cs" />
+    <Compile Include="ConstructorImplementer.cs" />
+    <Compile Include="DisposeImplementer.cs" />
     <Compile Include="ForkGroup.cs" />
     <Compile Include="ForkImplementer.cs" />
     <Compile Include="JoinGroup.cs" />

@@ -28,13 +28,15 @@ namespace Fmacj.Examples.Mandelbrot
 	{		
 		private int width, height;
 		
-		private Bitmap bitmap;
+		private Graphics graphics;
 		
 		public Bitmap Calculate(int size)
 		{
 			width = size; height = size*11/25;
-			bitmap = new Bitmap(width, height);
-		    
+			Bitmap bitmap = new Bitmap(width, height);
+
+		    graphics = Graphics.FromImage(bitmap);
+
 			Console.WriteLine("Bitmap initialized.");
 			
 			TakeLines(height);
@@ -52,7 +54,7 @@ namespace Fmacj.Examples.Mandelbrot
 		[Asynchronous]
 		protected void CalculateLine(int y, [Channel("lines")] out Line line)
 		{
-			line = new Line(y, width, System.Threading.Thread.CurrentThread.ManagedThreadId);
+			line = new Line(y, width);
 
 			double cy = 1.1*y/height;
 			
@@ -70,8 +72,9 @@ namespace Fmacj.Examples.Mandelbrot
 					zx = zx*zx-zy*zy + cx;
 					zy = 2.0*tx*zy + cy;
 				}
-				
-				line.Data[x] = i;
+
+                Color color = Color.FromArgb(i, i, i);
+                line.Bitmap.SetPixel(x, 0, color);
 			}
 		}
 
@@ -84,14 +87,8 @@ namespace Fmacj.Examples.Mandelbrot
 			foreach (Line line in lines.Take(lineCount))
 			{
             	int y = line.Y;
-            	
-            	for (int x = 0; x < width; x++)
-            	{
-                	Color color = Color.FromArgb(0/*(50*line.ColorId)%255*/, line.Data[x], 0);
-                	bitmap.SetPixel(x, y, color);
-            	}            	
-				
-				Console.WriteLine("Rendered line {0}", y);
+
+			    graphics.DrawImage(line.Bitmap, 0, y); 	
 			}
 			
             return true;
@@ -101,20 +98,17 @@ namespace Fmacj.Examples.Mandelbrot
 		
 		protected struct Line
 		{
-			public Line(int y, int width, int colorId)
+			public Line(int y, int width)
 			{
 				this.y = y;
-				this.data = new byte[width];
-				this.colorId = colorId;
+				bitmap = new Bitmap(width, 1);
 			}
 			
 			private int y;
-			private byte[] data;
-			private int colorId;
+			private Bitmap bitmap;
 			
 			public int Y { get { return y; } }
-			public byte[] Data { get { return data; } }
-			public int ColorId { get { return colorId; } }
+			public Bitmap Bitmap { get { return bitmap; } }
 		}
 
 	    public abstract void Dispose();

@@ -46,6 +46,7 @@
     <Compile Include="AsynchronousAttribute.cs" />
     <Compile Include="ChannelAttribute.cs" />
     <Compile Include="ChordAttribute.cs" />
+    <Compile Include="IChannelEnumerable.cs" />
     <Compile Include="InconsistentChannelTypeException.cs" />
     <Compile Include="InvalidChannelException.cs" />
     <Compile Include="InvalidMethodException.cs" />
