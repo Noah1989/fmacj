@@ -87,8 +87,8 @@ namespace Fmacj.Examples.Mandelbrot
 			foreach (Line line in lines.Take(lineCount))
 			{
             	int y = line.Y;
-
-			    graphics.DrawImage(line.Bitmap, 0, y); 	
+                graphics.DrawImage(line.Bitmap, 0, y); 	
+                line.Bitmap.Dispose();
 			}
 			
             return true;
