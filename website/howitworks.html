@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>FMACJ Parallelization Framework</title>
+		<style type="text/css">
+			<!-- 
+				@import "../../css/skidoo_redux.css"; 
+				@import "../../css/skidoo_redux_theme.css";
+			-->
+		</style>
+		<link rel="stylesheet" href="../../css/skidoo_redux_print.css" type="text/css" media="print">
+		<link rel="stylesheet" type="text/css" href="../../css/csharp.css" >		
+		<script type="text/javascript" src="../../javascript/ruthsarian_utilities.js"></script>
+		<script type="text/javascript">
+		<!--
+			var font_sizes = new Array( 100, 110, 120 ); 
+			var current_font_size = 0;
+			if ( ( typeof( loadFontSize ) ).toLowerCase() != 'undefined' ) { event_attach( 'onload' , loadFontSize ); }
+			if ( ( typeof( set_min_width ) ).toLowerCase() != 'undefined' ) { set_min_width( 'page-container' , 600 ); }
+			if ( ( typeof( sfHover ) ).toLowerCase() != 'undefined' ) { event_attach( 'onload' , function () { 
+				sfHover( 'leftmenu' );
+				sfHover( 'middlemenu' );
+			} ); }
+		//-->
+		</script>
+	</head>
+	<body>
+		<div id="page-container">
+			<div id="masthead">
+				<div class="inside">	
+<p style="float: right; margin-top:0px;">	
+	<a href="http://sourceforge.net">
+	<img src="http://sflogo.sourceforge.net/sflogo.php?group_id=237991&amp;type=4" 
+		width="125" height="37" style="border: 0;" alt="SourceForge.net Logo" /></a>
+</p>
+<h1>FMACJ Parallelization Framework</h1>
+
+				</div>
+			</div>
+			<div id="outer-column-container">
+				<div id="inner-column-container">
+					<div id="source-order-container">
+						<div id="middle-column">
+							<div class="inside">
+
+<h2>How it works</h2>
+<p>The FMACJ Parallelization Framework is made in a way that keeps
+<code>System.Threading</code> away from you. Usually programmers tried to 
+manually start Threads to make their program use multiple cores. Whereas this 
+is okay for simple programs it is most likely the shortest way to lock hell
+when used in complex applications. However, with FMACJ you don't have to think 
+about threads at all and data is exchanged via thread-safe channels so locks 
+are not needed in your code.</p>  
+<h3>The Concept</h3>
+<p>Take a look at the following Image: </p>
+<div style="text-align:center;"> 
+	<img src="images/howitworks_concept.png" alt="How it works: The Concept" />
+</div>
+<p>The different colors denote different threads. The blue and green threads
+fork from the main thread. They send their results through two different
+channels. When data is available on both channels, the purple thread can
+do calculations that depend on data from both of the first two threads. Whereas
+methods usually pass control around by calling each other, here they're sending
+<em>data</em> to each other and run independently. However, you do
+not have to do the data exchange manually. You just have to code as you are used
+to and leave a few gaps where FMACJ can jump in and break the control flow chain 
+to put in thread calls and everything that's needed for proper data flow.</p>
+<h3>Parallelizing your assembly</h3>
+<p>However, there are are some specialities that you have to keep in mind while
+programming. The most important thing to know is, how your code is turned into
+a parallelized version. This is done by a class called 
+<code>ParallelizationFactory</code> that creates dynamic assamblies containing
+classes that are derived from your classes and fills them with everything that
+is needed for parallelization. Then you can get an instance of that class from
+the factory that looks just like yours (due to derivation) but that behaves
+in a parallelized way. Here's the part of the simple hello world program from
+the <a href="index.html">welcome page</a> where these initialization steps are done:</p>
+<div class="csharpcode">
+<pre><span class="lnum">  12:  </span>      <strong>ParallelizationFactory</strong></pre>
+<pre><span class="lnum">  13:  </span>        <strong>.Parallelize</strong>(<span class="kwrd">typeof</span>(Program).Assembly);</pre>
+<pre><span class="lnum">  14:  </span>      </pre>
+<pre><span class="lnum">  15:  </span>      Program parallelized = <strong>ParallelizationFactory</strong></pre>
+<pre><span class="lnum">  16:  </span>                              <strong>.GetParallelized</strong>&lt;Program&gt;();</pre>
+</div>
+<p>The first step is to give your assembly to the factory where it is analyzed
+and parallelized types are created according to your attributes. Then in 
+step two you can get a parallelized instance of your class by calling the
+<code>GetParallelized</code> method.</p>
+<p>In order to parallelize your code there are some things you must do
+so that <code>ParallelizationFactory</code> knows what to do:</p>
+<ul>
+ <li>Mark your class with the <code>[Parallelizable]</code> attribute.
+ This indicates that you want your class to be parallelized.</li>
+ <li>Make your class implement <code>IParallelizable</code>. This is
+ necessary so that you can call <code>GetParallelized</code>
+ for your type.</li>
+ <li>Make your class <em>abstract</em>. This is because in most scenarios you will
+ need abstract methods in your class where FMACJ can implement
+ parallelization behavior. <code>ParallelizationFactory</code> won't
+ parallelize non-abstract types. This also prevents unintended use of
+ non-parallelized instances.</li>
+</ul>
+
+<h3>Forks</h3>
+<p>This is the method from the example which is executed in a parallelized way:</p>
+<div class="csharpcode">
+<pre><span class="lnum">  24:  </span>    <strong>[Fork]</strong></pre>
+<pre><span class="lnum">  25:  </span>    <strong>[Asynchronous]</strong></pre>
+<pre><span class="lnum">  26:  </span>    <span class="kwrd">public</span> <span class="kwrd"><em>virtual</em></span> <span class="kwrd">void</span> SayHello()</pre>
+<pre><span class="lnum">  27:  </span>    {</pre>
+<pre><span class="lnum">  28:  </span>      Console.WriteLine(<span class="str">"Hello from Thread {0}"</span>, </pre>
+<pre><span class="lnum">  29:  </span>        System.Threading.Thread.CurrentThread.ManagedThreadId);</pre>
+<pre><span class="lnum">  30:  </span>    }</pre>
+<pre><span class="lnum">  31:  </span>  }</pre>
+</div>
+<p>The method is marked with the <code>[Asynchronous]</code> attribute.
+This means that the calling thread should continue without waiting
+until the execution of the called method is finished. Logically, the method
+must have <code>void</code> return type.</p>
+<p>When <code>ParallelizationFactory</code> finds a <code>virtual</code>
+method marked with <code>[Fork]</code> and <code>[Asynchronous]</code>
+ it overrides it in the parallelized version and fills in the code that 
+ calls your original implementation in a seperate thread pool thread.</p>
+<div style="text-align:center;"> 
+	<img src="images/howitworks_fork.png" alt="How it works: Fork" />
+</div>
+<p>However, this approach has a major disadvantage: the asynchronous method
+does not return a value so the only way to handle a computed result would be
+writing to a field which is a major problem, not only because you might
+need a lock, but because the time when the result is available cannot be
+determined. The solution to these issues looks like this:<p>
+<!-- code formatted by http://manoli.net/csharpformat/ -->
+<div class="csharpcode">
+<pre><span class="lnum">   1:  </span><strong>[Fork]</strong></pre>
+<pre><span class="lnum">   2:  </span><span class="kwrd">public</span> <span class="kwrd"><em>abstract</em></span> <span class="kwrd">void</span> SomeMethod(<span class="kwrd">int</span> parameter);</pre>
+<pre><span class="lnum">   3:  </span><strong>[Asynchronous]</strong></pre>
+<pre><span class="lnum">   4:  </span><span class="kwrd">protected</span> <span class="kwrd">void</span> SomeMethod(<span class="kwrd">int</span> parameter,</pre>
+<pre><span class="lnum">   5:  </span>  <strong>[Channel(<span class="str">"result"</span>)]</strong> <span class="kwrd">out</span> <span class="kwrd">int</span> result)</pre>
+<pre><span class="lnum">   6:  </span>{</pre>
+<pre><span class="lnum">   7:  </span>  result = SomeComplicatedOperation(parameter);</pre>
+<pre><span class="lnum">   8:  </span>}</pre>
+</div>
+<p>
+As you can see, the method has now been split into two methods. The first
+one is <code>abstract</code> and marked with <code>Fork</code>. This is where 
+FMACJ performs the override. The <code>[Asynchronous]</code> method contains 
+your actual implementation and is called by the overriden <code>Fork</code>
+method. Both methods have the same signature except for the parameters marked
+with the <code>[Channel]</code> attribute in the asynchronous method. This is
+how <code>ParallelizationFactory</code> recognizes that the two methods belong
+together. The channel parameters are out parameters. They are where all your
+results go. The overriden implementation of the fork method handles them and
+enqueues them to the corresponding channel.
+</p>
+<div style="text-align:center;"> 
+	<img src="images/howitworks_fork_with_channels.png" 
+	alt="How it works: Fork with Channels" />
+</div>
+<h3>Channels</h3>
+<p>Channels are the objects used for communication between parallelized methods.
+They work like thread-safe queues and have an <code>EventWaitHandle</code> that
+can be used to induce further processing of the values as soon as they arrive
+or to make a join that makes the current thread wait for a result. However,
+you don't have to worry about those details because FMACJ does all the work
+for you. You just have to use the <code>[Channel]</code> attribute on your
+parameters and FMACJ generates the channel object and does all the result
+enqueuing and wait handle registering internally. However, you must name your
+channels so that FMACJ knows what you want to belong together. This is done by
+specifying the name in the channel attribute: <code>[Channel("name")]</code></p>
+<h3>Chords</h3>
+<p>Chords are asynchronous methods that are not directly called by your code.
+Therefore they do not accept ordinary parameters but only channels as described
+above. When a value is available on every channel used by the chord, FMACJ
+automatically invokes it. The following chord would be executed whenever there
+is a value available on each of the channels "value1" and "value2":</p>
+<!-- code formatted by http://manoli.net/csharpformat/ -->
+<div class="csharpcode">
+<pre><span class="lnum">   1:  </span><strong>[Chord]</strong></pre>
+<pre><span class="lnum">   2:  </span><span class="kwrd">protected</span> <span class="kwrd">void</span> SomeChord(</pre>
+<pre><span class="lnum">   3:  </span>  [Channel(<span class="str">"value1"</span>)] <span class="kwrd">int</span> value1,</pre>
+<pre><span class="lnum">   4:  </span>  [Channel(<span class="str">"value2"</span>)] <span class="kwrd">int</span> value2)</pre>
+<pre><span class="lnum">   5:  </span>{</pre>
+<pre><span class="lnum">   6:  </span>  ...</pre>
+<pre><span class="lnum">   7:  </span>}</pre>
+</div>
+<h3>Joins</h3>
+<p>The chord as described in the previous section has the same disadvantage
+that asynchronous methods had before the introduction of channels. The result
+of any computation cannot easily be passed on. That's where the
+<code>[Join]</code> attribute is used. A join is a method called by your code
+(in most cases from the main thread) that waits for a parallel computation to
+complete and then returns the result which is calculated by a chord. Chords
+can return values now:</p>
+<!-- code formatted by http://manoli.net/csharpformat/ -->
+<div class="csharpcode">
+<pre><span class="lnum">   1:  </span>[Chord]</pre>
+<pre><span class="lnum">   2:  </span><span class="kwrd">protected</span> <span class="kwrd"><strong>int</strong></span> CalculateSomething(</pre>
+<pre><span class="lnum">   3:  </span>  [Channel(<span class="str">"value1"</span>)] <span class="kwrd">int</span> value1,</pre>
+<pre><span class="lnum">   4:  </span>  [Channel(<span class="str">"value2"</span>)] <span class="kwrd">int</span> value2)</pre>
+<pre><span class="lnum">   5:  </span>{</pre>
+<pre><span class="lnum">   6:  </span>  <span class="kwrd">return</span> SomeComplicatedOperation(value1, value2);</pre>
+<pre><span class="lnum">   7:  </span>}</pre>
+<pre><span class="lnum">   8:  </span><strong>[Join]</strong></pre>
+<pre><span class="lnum">   9:  </span><span class="kwrd">public</span> <span class="kwrd"><em>abstract</em></span> <span class="kwrd"><strong>int</strong></span> CalculateSomething();</pre>
+</div>
+<p>The concept behind this is the same as with <code>[Fork]</code> and
+<code>[Asynchronous]</code>: The methods are recognized as a group due to the
+fact that their signatures are the same when you take away all channel
+parameters. The <code>[Join]</code> method is automatically implemented by
+FMACJ. If you call it the current thread will block until the corresponding
+chord had been executed once and a result has been retrieved.</p>
+							</div>
+						</div>
+						<div id="left-column">
+							<div class="inside">
+<h3>Overview</h3>
+<ul class="rMenu-wide rMenu-ver rMenu">
+	<li>
+		<a href="index.html">Welcome</a>
+	</li>	
+	<li>
+		<a href="howitworks.html">How it works</a>
+	</li>	
+</ul>
+
+<h3>Download</h3>
+<ul class="rMenu-wide rMenu-ver rMenu">
+	<li>
+		<a href="http://sourceforge.net/project/showfiles.php?group_id=237991">
+			Get FMACJ Now!	
+		</a>
+	</li>
+</ul>
+
+<h3>Author</h3>
+<ul class="rMenu-wide rMenu-ver rMenu">
+	<li>
+		<a href="http://www-user.tu-chemnitz.de/~noste/">Homepage</a>
+	</li>
+</ul>
+
+							</div>
+						</div>
+						<div class="clear-columns"><!-- do not delete --></div>
+					</div>
+					<div id="right-column">
+						<div class="inside">
+
+<h3>Information</h3>
+<p>
+<img src="../../images/underconstruction.png" alt="Under Construction" />
+This site is still under construction.
+</p>
+
+						</div>
+					</div>
+					<div class="clear-columns"><!-- do not delete --></div>
+				</div>
+			</div>
+			<div id="footer">
+				<div class="inside">
+
+<p style="float: right; margin-top:-8px;">
+    <a href="http://validator.w3.org/check?uri=referer"><img
+        src="http://www.w3.org/Icons/valid-html401-blue" style="border: none;"
+        alt="Valid HTML 4.01 Strict" height="31" width="88"></a>
+</p>
+<p>
+Website content Copyright © 2008 Stefan Noack.
+</p>
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

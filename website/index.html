@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>FMACJ Parallelization Framework</title>
+		<style type="text/css">
+			<!-- 
+				@import "../../css/skidoo_redux.css"; 
+				@import "../../css/skidoo_redux_theme.css";
+			-->
+		</style>
+		<link rel="stylesheet" href="../../css/skidoo_redux_print.css" type="text/css" media="print">
+		<link rel="stylesheet" type="text/css" href="../../css/csharp.css" >		
+		<script type="text/javascript" src="../../javascript/ruthsarian_utilities.js"></script>
+		<script type="text/javascript">
+		<!--
+			var font_sizes = new Array( 100, 110, 120 ); 
+			var current_font_size = 0;
+			if ( ( typeof( loadFontSize ) ).toLowerCase() != 'undefined' ) { event_attach( 'onload' , loadFontSize ); }
+			if ( ( typeof( set_min_width ) ).toLowerCase() != 'undefined' ) { set_min_width( 'page-container' , 600 ); }
+			if ( ( typeof( sfHover ) ).toLowerCase() != 'undefined' ) { event_attach( 'onload' , function () { 
+				sfHover( 'leftmenu' );
+				sfHover( 'middlemenu' );
+			} ); }
+		//-->
+		</script>
+	</head>
+	<body>
+		<div id="page-container">
+			<div id="masthead">
+				<div class="inside">	
+<p style="float: right; margin-top:0px;">	
+	<a href="http://sourceforge.net">
+	<img src="http://sflogo.sourceforge.net/sflogo.php?group_id=237991&amp;type=4" 
+		width="125" height="37" style="border: 0;" alt="SourceForge.net Logo" /></a>
+</p>
+<p style="float: left; margin:-11px 0px 0px -10px;">
+<img src="images/fmacj_logo_square64.png" style="border: 0;" alt="Logo" />
+</p>
+<h1>FMACJ Parallelization Framework</h1>
+
+				</div>
+			</div>
+			<div id="outer-column-container">
+				<div id="inner-column-container">
+					<div id="source-order-container">
+						<div id="middle-column">
+							<div class="inside">
+
+<p style="float: right;">
+<img src="images/fmacj_logo.png" style="border: 0; margin: 3px;" alt="Logo" />
+</p>
+<h2>Welcome</h2>
+
+<p>The FMACJ Parallelization Framework makes it easier to write .NET code that 
+uses multicore and even cluster machines efficiently. It has been inspired by
+<a href="http://u.pereslavl.ru/~vadim/MCSharp/">MC#</a> but
+instead of being a completely new language FMACJ works on almost all .NET
+languages because it's based on Attributes.</p>
+<p>FMACJ is free software and available under the terms of the
+<a href="http://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License</a>.</p>
+<p>The current beta release supports multicore parallelization only.
+Cluster support (task distribution via ethernet) will be implemented soon.</p>
+<p>Here is a very basic example that shows how easily a method can be executed
+in parallel threads by marking it with two attributes, <code>[Fork]</code> and
+<code>[Asynchronous]</code>:</p>
+<!-- code formatted by http://manoli.net/csharpformat/ -->
+<div class="csharpcode">
+<pre><span class="lnum">   1:  </span><span class="kwrd">using</span> System;</pre>
+<pre><span class="lnum">   2:  </span><span class="kwrd">using</span> <strong>Fmacj.Framework</strong>;</pre>
+<pre><span class="lnum">   3:  </span><span class="kwrd">using</span> <strong>Fmacj.Emitter</strong>;</pre>
+<pre><span class="lnum">   4:  </span>&nbsp;</pre>
+<pre><span class="lnum">   5:  </span><span class="kwrd">namespace</span> Fmacj.Examples.HelloWorld</pre>
+<pre><span class="lnum">   6:  </span>{</pre>
+<pre><span class="lnum">   7:  </span>  <strong>[Parallelizable]</strong></pre>
+<pre><span class="lnum">   8:  </span>  <span class="kwrd">public</span> <span class="kwrd"><em>abstract</em></span> <span class="kwrd">class</span> Program : <strong>IParallelizable</strong> </pre>
+<pre><span class="lnum">   9:  </span>  {</pre>
+<pre><span class="lnum">  10:  </span>    <span class="kwrd">public</span> <span class="kwrd">static</span> <span class="kwrd">void</span> Main()</pre>
+<pre><span class="lnum">  11:  </span>    {</pre>
+<pre><span class="lnum">  12:  </span>      <strong>ParallelizationFactory</strong></pre>
+<pre><span class="lnum">  13:  </span>        <strong>.Parallelize</strong>(<span class="kwrd">typeof</span>(Program).Assembly);</pre>
+<pre><span class="lnum">  14:  </span>      </pre>
+<pre><span class="lnum">  15:  </span>      Program parallelized = <strong>ParallelizationFactory</strong></pre>
+<pre><span class="lnum">  16:  </span>                              <strong>.GetParallelized</strong>&lt;Program&gt;();</pre>
+<pre><span class="lnum">  17:  </span>&nbsp;</pre>
+<pre><span class="lnum">  18:  </span>      <span class="kwrd">for</span>(<span class="kwrd">int</span> i=0; i&lt;10; i++)</pre>
+<pre><span class="lnum">  19:  </span>        parallelized.SayHello();</pre>
+<pre><span class="lnum">  20:  </span>&nbsp;</pre>
+<pre><span class="lnum">  21:  </span>      System.Threading.Thread.Sleep(1000);</pre>
+<pre><span class="lnum">  22:  </span>    }</pre>
+<pre><span class="lnum">  23:  </span>&nbsp;</pre>
+<pre><span class="lnum">  24:  </span>    <strong>[Fork]</strong></pre>
+<pre><span class="lnum">  25:  </span>    <strong>[Asynchronous]</strong></pre>
+<pre><span class="lnum">  26:  </span>    <span class="kwrd">public</span> <span class="kwrd"><em>virtual</em></span> <span class="kwrd">void</span> SayHello()</pre>
+<pre><span class="lnum">  27:  </span>    {</pre>
+<pre><span class="lnum">  28:  </span>      Console.WriteLine(<span class="str">"Hello from Thread {0}"</span>, </pre>
+<pre><span class="lnum">  29:  </span>        System.Threading.Thread.CurrentThread.ManagedThreadId);</pre>
+<pre><span class="lnum">  30:  </span>    }</pre>
+<pre><span class="lnum">  31:  </span>  }</pre>
+<pre><span class="lnum">  32:  </span>}</pre>
+</div>
+
+<p>The output of the program should be something like this:
+
+<pre class="csharpcode">
+Hello from Thread 1
+Hello from Thread 2
+Hello from Thread 6
+Hello from Thread 5
+Hello from Thread 4
+Hello from Thread 3
+Hello from Thread 1
+Hello from Thread 1
+Hello from Thread 1
+Hello from Thread 7</pre>
+
+<p>On a multicore machine the output looks rather scrambled because
+<code>Console.WriteLine</code> gets a little confused when called by
+multiple threads at a time. If you are confused, too (i.e. what is 
+ParallelizationFactory and why the hell is Program abstract?) go on reading
+<a href="howitworks.html">here</a>.
+</p>
+
+
+
+							</div>
+						</div>
+						<div id="left-column">
+							<div class="inside">
+<h3>Overview</h3>
+<ul class="rMenu-wide rMenu-ver rMenu">
+	<li>
+		<a href="index.html">Welcome</a>
+	</li>	
+	<li>
+		<a href="howitworks.html">How it works</a>
+	</li>	
+	
+</ul>
+
+<h3>Download</h3>
+<ul class="rMenu-wide rMenu-ver rMenu">
+	<li>
+		<a href="http://sourceforge.net/project/showfiles.php?group_id=237991">
+			Get FMACJ Now!		
+		</a>
+	</li>
+</ul>
+
+<h3>Author</h3>
+<ul class="rMenu-wide rMenu-ver rMenu">
+	<li>
+		<a href="http://www-user.tu-chemnitz.de/~noste/">Homepage</a>
+	</li>
+</ul>
+
+							</div>
+						</div>
+						<div class="clear-columns"><!-- do not delete --></div>
+					</div>
+					<div id="right-column">
+						<div class="inside">
+
+<h3>Information</h3>
+<p>
+<img src="../../images/underconstruction.png" alt="Under Construction" />
+This site is still under construction.
+</p>
+
+						</div>
+					</div>
+					<div class="clear-columns"><!-- do not delete --></div>
+				</div>
+			</div>
+			<div id="footer">
+				<div class="inside">
+
+<p style="float: right; margin-top:-8px;">
+    <a href="http://validator.w3.org/check?uri=referer"><img
+        src="http://www.w3.org/Icons/valid-html401-blue" style="border: none;"
+        alt="Valid HTML 4.01 Strict" height="31" width="88"></a>
+</p>
+<p>
+Website content Copyright © 2008 Stefan Noack.
+</p>
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
