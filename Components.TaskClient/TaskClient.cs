@@ -18,6 +18,7 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace Fmacj.Components.TaskClient
 {
@@ -25,9 +26,21 @@ namespace Fmacj.Components.TaskClient
 	
 	public class TaskClient
 	{
+		private Stream stream;
 		
 		public TaskClient(Stream stream)
 		{
+			this.stream = stream;
+		}
+
+		public void Run(Assembly assembly)
+		{
+			Run(assembly, assembly.EntryPoint);
+		}
+
+		public void Run(Assembly assembly, MethodInfo entryPoint)
+		{		    
+			
 		}
 	}
 }

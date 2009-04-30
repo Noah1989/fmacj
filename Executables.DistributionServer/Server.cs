@@ -7,6 +7,8 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.IO;
+using System.Reflection;
 using Fmacj.Framework;
 
 namespace Fmacj.Executables.DistributionServer
@@ -32,6 +34,7 @@ namespace Fmacj.Executables.DistributionServer
 		[Asynchronous]
 		public virtual void HandleRequest(TcpClient client)
 		{
+			Stream stream = client.GetStream();
 		}
 
 		public void Dispose()

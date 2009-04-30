@@ -53,7 +53,7 @@ namespace Fmacj.Tests
 		[Test]
 		public void Test()
 		{
-			//taskClient.ExecuteAssembly(
+			//taskClient.Run(Assembly.LoadFile("/afs/tu-chemnitz.de/home/urz/n/noste/PUBLIC/prog/fmacj/trunk/bin/Fmacj.Examples.Mandelbrot.exe"));
 		}
 	}
 }
