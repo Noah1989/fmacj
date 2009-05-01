@@ -3,11 +3,13 @@ ASSEMBLY = ../bin/Fmacj.Executables.DistributionServer.exe
 FILES =  \
 	Program.cs \
 	Properties/AssemblyInfo.cs \
-	Server.cs
+	TaskServer.cs \
+	WorkServer.cs
 
 REFERENCES =  \
 	-r:../bin/Fmacj.Emitter.dll \
-	-r:../bin/Fmacj.Framework.dll
+	-r:../bin/Fmacj.Framework.dll \
+	-r:../bin/Fmacj.Runtime.Network.dll
 
 all: $(ASSEMBLY)
 

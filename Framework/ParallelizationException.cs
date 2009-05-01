@@ -22,7 +22,7 @@ namespace Fmacj.Framework
 {
     public class ParallelizationException : Exception
     {
-        public ParallelizationException() : base("There has been an error during parallelization")
+        public ParallelizationException() : base("There has been an error during parallelization.")
         {
         }
 

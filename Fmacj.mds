@@ -1,4 +1,4 @@
-<Combine name="Fmacj" fileversion="2.0">
+<Combine fileversion="2.0" name="Fmacj">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="Framework" configuration="Debug" />

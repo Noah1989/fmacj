@@ -19,11 +19,11 @@
 using System;
 using System.IO;
 using System.Reflection;
+using Fmacj.Framework;
+using Fmacj.Runtime.Network.Communication;
 
 namespace Fmacj.Components.TaskClient
-{
-	
-	
+{	
 	public class TaskClient
 	{
 		private Stream stream;
@@ -33,14 +33,37 @@ namespace Fmacj.Components.TaskClient
 			this.stream = stream;
 		}
 
-		public void Run(Assembly assembly)
+		public void RunTask(Assembly assembly)
 		{
-			Run(assembly, assembly.EntryPoint);
+			RunTask(assembly.EntryPoint);
 		}
 
-		public void Run(Assembly assembly, MethodInfo entryPoint)
-		{		    
+		public void RunTask(MethodInfo entryPoint)
+		{	
+			Assembly assembly = entryPoint.DeclaringType.Assembly;
 			
+			if(assembly.Location == "")
+				throw new ArgumentException("The given assembly could not be located.", "assembly");
+			
+			byte[] rawAssembly = File.ReadAllBytes(assembly.Location);
+			
+		    RunTask(rawAssembly, entryPoint);
+		}
+		
+		public void RunTask(byte[] rawAssembly, MethodInfo entryPoint)
+		{
+			RunTaskRequest request = new RunTaskRequest(rawAssembly, entryPoint);
+			DistributionServerResponse response = request.Send(stream);
+			
+			HandleExceptions(response);
+		}
+		
+		private void HandleExceptions(DistributionServerResponse response)
+		{
+			ExceptionResponse exceptionResponse = response as ExceptionResponse;
+			if(exceptionResponse == null) return;
+			
+			throw new RemoteException(exceptionResponse.Exception);
 		}
 	}
 }

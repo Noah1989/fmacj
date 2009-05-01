@@ -4,7 +4,9 @@ FILES =  \
 	Properties/AssemblyInfo.cs \
 	TaskClient.cs
 
-REFERENCES =
+REFERENCES =  \
+	-r:../bin/Fmacj.Framework.dll \
+	-r:../bin/Fmacj.Runtime.Network.dll
 
 all: $(ASSEMBLY)
 

@@ -1,4 +1,4 @@
-<Project name="Components.TaskClient" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Components.TaskClient" fileversion="2.0" language="C#" clr-version="Net_2_0" targetFramework="2.0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="Components.TaskClient" />
@@ -17,14 +17,17 @@
     <File name="Properties/AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="TaskClient.cs" subtype="Code" buildaction="Compile" />
   </Contents>
-  <GtkDesignInfo />
+  <References>
+    <ProjectReference type="Assembly" localcopy="True" specificVersion="False" refto="../bin/Fmacj.Runtime.Network.dll" />
+    <ProjectReference type="Assembly" localcopy="True" specificVersion="False" refto="../bin/Fmacj.Framework.dll" />
+  </References>
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile" SyncReferences="True">
     <BuildFilesVar Sync="True" Name="FILES" />
     <DeployFilesVar />
     <ResourcesVar />
     <OthersVar />
-    <GacRefVar Sync="True" Name="REFERENCES" />
-    <AsmRefVar Sync="True" Name="REFERENCES" />
-    <ProjectRefVar Sync="True" Name="REFERENCES" />
+    <GacRefVar Sync="True" Name="REFERENCES" Prefix="-r:" />
+    <AsmRefVar Sync="True" Name="REFERENCES" Prefix="-r:" />
+    <ProjectRefVar Sync="True" Name="REFERENCES" Prefix="-r:" />
   </MonoDevelop.Autotools.MakefileInfo>
 </Project>

@@ -15,6 +15,7 @@ FILES =  \
 	ParallelizableAttribute.cs \
 	ParallelizationException.cs \
 	Properties/AssemblyInfo.cs \
+	RemoteException.cs \
 	TypeNotFoundException.cs \
 	TypeValidator.cs \
 	YieldAttribute.cs

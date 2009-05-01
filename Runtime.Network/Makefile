@@ -1,6 +1,11 @@
 ASSEMBLY = ../bin/Fmacj.Runtime.Network.dll
 
-FILES = Properties/AssemblyInfo.cs
+FILES =  \
+	Communication/DistributionServerRequest.cs \
+	Communication/DistributionServerResponse.cs \
+	Communication/ExceptionResponse.cs \
+	Communication/RunTaskRequest.cs \
+	Properties/AssemblyInfo.cs
 
 REFERENCES =
 

@@ -1,4 +1,4 @@
-<Project name="Executables.WorkClient" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Executables.WorkClient" fileversion="2.0" language="C#" clr-version="Net_2_0" targetFramework="2.0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="Executables.WorkClient" />
@@ -18,7 +18,6 @@
     <File name="Program.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <Deployment.LinuxDeployData scriptName="fmacjwc" />
-  <GtkDesignInfo />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile" SyncReferences="True">
     <BuildFilesVar Sync="True" Name="FILES" />
     <DeployFilesVar />

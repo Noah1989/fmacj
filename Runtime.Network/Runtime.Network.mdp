@@ -1,4 +1,4 @@
-<Project name="Runtime.Network" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Runtime.Network" fileversion="2.0" language="C#" clr-version="Net_2_0" targetFramework="2.0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="Runtime.Network" />
@@ -15,8 +15,11 @@
   </Configurations>
   <Contents>
     <File name="Properties/AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Communication/DistributionServerRequest.cs" subtype="Code" buildaction="Compile" />
+    <File name="Communication/DistributionServerResponse.cs" subtype="Code" buildaction="Compile" />
+    <File name="Communication/RunTaskRequest.cs" subtype="Code" buildaction="Compile" />
+    <File name="Communication/ExceptionResponse.cs" subtype="Code" buildaction="Compile" />
   </Contents>
-  <GtkDesignInfo />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile" SyncReferences="True">
     <BuildFilesVar Sync="True" Name="FILES" />
     <DeployFilesVar />

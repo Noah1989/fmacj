@@ -17,18 +17,21 @@
 */
 
 using System;
-using System.Threading;
-using Fmacj.Emitter;
+using System.Reflection;
 
 namespace Fmacj.Executables.DistributionServer
 {	
-	internal static class Program
+	internal class WorkServer
 	{		
-		public static void Main()
+		public WorkServer()
 		{
-			ParallelizationFactory.Parallelize(typeof(TaskServer).Assembly);
-			TaskServer taskServer = ParallelizationFactory.GetParallelized<TaskServer>();
-			taskServer.Run(new WorkServer());
+		}
+		
+		public void RunTask(byte[] rawAssembly, MethodInfo entryPoint)
+		{			
+			Assembly.Load(rawAssembly)
+				.GetType(entryPoint.DeclaringType.FullName)
+					.GetMethod(entryPoint.Name).Invoke(null,null);
 		}
 	}
 }

@@ -28,7 +28,10 @@ namespace Fmacj.Tests
     [TestFixture]
 	public class DistributionTest : AssertionHelper
 	{
-		
+		public static void TestEntryPoint()
+		{
+			Console.WriteLine("Running");
+		}
 
 		private TcpClient tcpClient;
 		private Stream stream;
@@ -46,6 +49,8 @@ namespace Fmacj.Tests
             	Assert.Ignore("Distribution server not responding." );			
 			}
 
+			tcpClient.SendTimeout = 5000;
+			tcpClient.ReceiveTimeout = 5000;
 			stream = tcpClient.GetStream();
 			taskClient = new TaskClient(stream);
 		}
@@ -53,7 +58,7 @@ namespace Fmacj.Tests
 		[Test]
 		public void Test()
 		{
-			//taskClient.Run(Assembly.LoadFile("/afs/tu-chemnitz.de/home/urz/n/noste/PUBLIC/prog/fmacj/trunk/bin/Fmacj.Examples.Mandelbrot.exe"));
+			taskClient.RunTask(typeof(DistributionTest).GetMethod("TestEntryPoint"));
 		}
 	}
 }

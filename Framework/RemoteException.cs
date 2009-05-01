@@ -17,18 +17,19 @@
 */
 
 using System;
-using System.Threading;
-using Fmacj.Emitter;
 
-namespace Fmacj.Executables.DistributionServer
-{	
-	internal static class Program
-	{		
-		public static void Main()
+namespace Fmacj.Framework
+{
+	public class RemoteException : Exception
+	{
+		
+		public RemoteException() : this(null)
 		{
-			ParallelizationFactory.Parallelize(typeof(TaskServer).Assembly);
-			TaskServer taskServer = ParallelizationFactory.GetParallelized<TaskServer>();
-			taskServer.Run(new WorkServer());
+		}
+		
+		public RemoteException(Exception innerException) 
+			: base("An exception was thrown while executing distributed code on a remote machine.", innerException)
+		{
 		}
 	}
 }

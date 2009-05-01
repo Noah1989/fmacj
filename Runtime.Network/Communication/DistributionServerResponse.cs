@@ -17,18 +17,22 @@
 */
 
 using System;
-using System.Threading;
-using Fmacj.Emitter;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Fmacj.Executables.DistributionServer
+namespace Fmacj.Runtime.Network.Communication
 {	
-	internal static class Program
+	[Serializable]
+	public abstract class DistributionServerResponse : ISerializable
 	{		
-		public static void Main()
+		private BinaryFormatter formatter = new BinaryFormatter();
+		
+		public void Send(Stream serverStream)
 		{
-			ParallelizationFactory.Parallelize(typeof(TaskServer).Assembly);
-			TaskServer taskServer = ParallelizationFactory.GetParallelized<TaskServer>();
-			taskServer.Run(new WorkServer());
-		}
+			formatter.Serialize(serverStream, this);			
+		}		
+		
+		public abstract void GetObjectData(SerializationInfo info, StreamingContext context);
 	}
 }

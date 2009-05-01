@@ -17,18 +17,29 @@
 */
 
 using System;
-using System.Threading;
-using Fmacj.Emitter;
+using System.Runtime.Serialization;
 
-namespace Fmacj.Executables.DistributionServer
+namespace Fmacj.Runtime.Network.Communication
 {	
-	internal static class Program
+	[Serializable]
+	public class ExceptionResponse : DistributionServerResponse
 	{		
-		public static void Main()
+		public Exception Exception { get; private set; }
+		
+		public ExceptionResponse(Exception exception)
 		{
-			ParallelizationFactory.Parallelize(typeof(TaskServer).Assembly);
-			TaskServer taskServer = ParallelizationFactory.GetParallelized<TaskServer>();
-			taskServer.Run(new WorkServer());
+			Exception = exception;	
 		}
+		
+		protected ExceptionResponse(SerializationInfo info, StreamingContext context)
+		{
+			Exception = info.GetValue("Exception", typeof(Exception)) as Exception;
+		}
+		
+		public override void GetObjectData (SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue("Exception", Exception);
+		}
+
 	}
 }
