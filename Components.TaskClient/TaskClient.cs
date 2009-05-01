@@ -33,6 +33,11 @@ namespace Fmacj.Components.TaskClient
 			this.stream = stream;
 		}
 
+		public void RunTask(Action entryPoint)
+		{
+			RunTask(entryPoint.Method);
+		}
+		
 		public void RunTask(Assembly assembly)
 		{
 			RunTask(assembly.EntryPoint);

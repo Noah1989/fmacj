@@ -19,7 +19,6 @@
 using System;
 using System.IO;
 using System.Net.Sockets;
-using System.Reflection;
 using NUnit.Framework;
 using Fmacj.Components.TaskClient;
 
@@ -58,7 +57,7 @@ namespace Fmacj.Tests
 		[Test]
 		public void Test()
 		{
-			taskClient.RunTask(typeof(DistributionTest).GetMethod("TestEntryPoint"));
+			taskClient.RunTask(TestEntryPoint);
 		}
 	}
 }
