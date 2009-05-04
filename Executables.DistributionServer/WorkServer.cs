@@ -18,14 +18,40 @@
 
 using System;
 using System.Reflection;
+using System.Collections.Generic;
+using Fmacj.Framework;
+using Fmacj.Runtime.Network.Communication;
 
 namespace Fmacj.Executables.DistributionServer
 {	
-	internal class WorkServer
+	[Parallelizable]
+	internal abstract class WorkServer : Server
 	{		
-		public WorkServer()
+		private List<WorkClientTicket> workClients = new List<WorkClientTicket>();
+		
+		public WorkServer() : base(Constants.DefaultWorkServerPort)
 		{
 		}
+		
+		public void Start()
+		{
+			StartServer();
+		}
+		
+		protected override Response HandleRequest (Request request)
+		{
+			Type requestType = request.GetType();
+			if (requestType == typeof(RegisterWorkClientRequest))
+			{
+				WorkClientTicket ticket = new WorkClientTicket();
+				workClients.Add(ticket);				
+				return new WorkClientRegisterdResponse(ticket);
+			}
+			else
+				throw new NotSupportedException(String.Format("The request of type {0} is not supported.", requestType.Name));			
+
+		}
+
 		
 		public void RunTask(byte[] rawAssembly, MethodInfo entryPoint)
 		{			

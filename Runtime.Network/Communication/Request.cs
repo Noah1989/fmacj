@@ -17,33 +17,29 @@
 */
 
 using System;
-using System.Reflection;
+using System.IO;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 
 namespace Fmacj.Runtime.Network.Communication
 {	
 	[Serializable]
-	public class RunTaskRequest : Request
-	{		
-		public byte[] RawAssembly { get; private set; }
-		public MethodInfo EntryPoint { get; private set; }
+	public abstract class Request : ISerializable
+	{	
+		private static BinaryFormatter formatter = new BinaryFormatter();			
 		
-		public RunTaskRequest(byte[] rawAssembly, MethodInfo entryPoint)
-		{
-			RawAssembly = rawAssembly;
-			EntryPoint = entryPoint;
+		public Response Send(Stream serverStream)
+		{			
+			formatter.Serialize(serverStream, this);
+			return formatter.Deserialize(serverStream) as Response;
 		}
 		
-		protected RunTaskRequest(SerializationInfo info, StreamingContext context)
+		public static Request Receive(Stream stream)
 		{
-			RawAssembly = info.GetValue("RawAssembly", typeof(byte[])) as byte[];
-			EntryPoint = info.GetValue("EntryPoint", typeof(MethodInfo)) as MethodInfo;
+			return formatter.Deserialize(stream) as Request;
 		}
 		
-		public override void GetObjectData(SerializationInfo info, StreamingContext context)
-		{
-			info.AddValue("RawAssembly", RawAssembly);
-			info.AddValue("EntryPoint", EntryPoint);
-		}
+		public abstract void GetObjectData(SerializationInfo info, StreamingContext context);
 	}
 }

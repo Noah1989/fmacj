@@ -20,6 +20,7 @@ using System;
 using System.IO;
 using System.Net.Sockets;
 using NUnit.Framework;
+using Fmacj.Framework;
 using Fmacj.Components.TaskClient;
 
 namespace Fmacj.Tests
@@ -41,11 +42,11 @@ namespace Fmacj.Tests
         {
 			try 
 			{
-				tcpClient = new TcpClient("localhost", 23542);				
+				tcpClient = new TcpClient("localhost", Constants.DefaultTaskServerPort);				
 			}
-			catch
+			catch (Exception ex)
 			{
-            	Assert.Ignore("Distribution server not responding." );			
+            	Assert.Ignore("Could not connect to distribution server: {0}.", ex);			
 			}
 
 			tcpClient.SendTimeout = 5000;

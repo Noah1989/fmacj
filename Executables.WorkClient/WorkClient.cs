@@ -17,29 +17,36 @@
 */
 
 using System;
-using System.Runtime.Serialization;
+using System.IO;
+using Fmacj.Framework;
+using Fmacj.Runtime.Network.Communication;
 
-namespace Fmacj.Runtime.Network.Communication
+namespace Fmacj.Executables.WorkClient
 {	
-	[Serializable]
-	public class ExceptionResponse : Response
-	{		
-		public Exception Exception { get; private set; }
+	internal class WorkClient : Client
+	{	
+		private WorkClientTicket ticket;
 		
-		public ExceptionResponse(Exception exception)
-		{
-			Exception = exception;	
+		public WorkClient(Stream serverStream) : base(serverStream)
+		{		
 		}
 		
-		protected ExceptionResponse(SerializationInfo info, StreamingContext context)
+		public void Start()
 		{
-			Exception = info.GetValue("Exception", typeof(Exception)) as Exception;
+			Register();
+			
+			
 		}
 		
-		public override void GetObjectData (SerializationInfo info, StreamingContext context)
+		private void Register()
 		{
-			info.AddValue("Exception", Exception);
+			RegisterWorkClientRequest request = new RegisterWorkClientRequest();
+			Response response = SendRequest(request);
+			Type responseType = response.GetType();
+			if(responseType == typeof(WorkClientRegisterdResponse))
+				ticket = (response as WorkClientRegisterdResponse).Ticket;
+			else
+				throw new NotSupportedException(String.Format("The response of type {0} was not understood.", responseType.Name));
 		}
-
 	}
 }

@@ -26,9 +26,15 @@ namespace Fmacj.Executables.DistributionServer
 	{		
 		public static void Main()
 		{
-			ParallelizationFactory.Parallelize(typeof(TaskServer).Assembly);
+			ParallelizationFactory.Parallelize(typeof(Program).Assembly);
+			
+			WorkServer workServer = ParallelizationFactory.GetParallelized<WorkServer>();
+			workServer.Start();
+			
 			TaskServer taskServer = ParallelizationFactory.GetParallelized<TaskServer>();
-			taskServer.Run(new WorkServer());
+			taskServer.Start(workServer);
+							
+			Thread.Sleep(Timeout.Infinite);
 		}
 	}
 }

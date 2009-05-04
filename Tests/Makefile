@@ -54,8 +54,10 @@ new: clean all
 compile: $(ASSEMBLY)
 
 test: $(BINDIR)/$(NUNITDLL)
-	-mono $(BINDIR)/Fmacj.Executables.DistributionServer.exe & echo $$! > ds.pid
+	-mono $(BINDIR)/Fmacj.Executables.DistributionServer.exe & echo $$! > ds.pid ; sleep 1s
+	-mono $(BINDIR)/Fmacj.Executables.WorkClient.exe & echo $$! > wc.pid ; sleep 1s
 	mono --debug $(NUNITDIR)/$(NUNITEXE) $(ASSEMBLY) ; TEST_RESULT=$$? ; \
 	kill `cat ds.pid` ; rm ds.pid ; \
+	kill `cat wc.pid` ; rm wc.pid ; \
 	[[ $$TEST_RESULT == 0 ]]
 

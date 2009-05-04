@@ -24,13 +24,10 @@ using Fmacj.Runtime.Network.Communication;
 
 namespace Fmacj.Components.TaskClient
 {	
-	public class TaskClient
+	public class TaskClient : Client
 	{
-		private Stream stream;
-		
-		public TaskClient(Stream stream)
-		{
-			this.stream = stream;
+		public TaskClient(Stream serverStream) : base(serverStream)
+	    {			
 		}
 
 		public void RunTask(Action entryPoint)
@@ -58,17 +55,7 @@ namespace Fmacj.Components.TaskClient
 		public void RunTask(byte[] rawAssembly, MethodInfo entryPoint)
 		{
 			RunTaskRequest request = new RunTaskRequest(rawAssembly, entryPoint);
-			DistributionServerResponse response = request.Send(stream);
-			
-			HandleExceptions(response);
-		}
-		
-		private void HandleExceptions(DistributionServerResponse response)
-		{
-			ExceptionResponse exceptionResponse = response as ExceptionResponse;
-			if(exceptionResponse == null) return;
-			
-			throw new RemoteException(exceptionResponse.Exception);
+			Response response = SendRequest(request);			
 		}
 	}
 }

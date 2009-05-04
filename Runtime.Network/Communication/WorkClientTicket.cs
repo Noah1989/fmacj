@@ -17,22 +17,28 @@
 */
 
 using System;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Fmacj.Runtime.Network.Communication
 {	
 	[Serializable]
-	public abstract class DistributionServerResponse : ISerializable
+	public class WorkClientTicket : ISerializable
 	{		
-		private BinaryFormatter formatter = new BinaryFormatter();
+		public Guid Guid { get; private set; }
 		
-		public void Send(Stream serverStream)
+		public WorkClientTicket()			
 		{
-			formatter.Serialize(serverStream, this);			
-		}		
+			Guid = Guid.NewGuid();
+		}
 		
-		public abstract void GetObjectData(SerializationInfo info, StreamingContext context);
+		public WorkClientTicket(SerializationInfo info, StreamingContext context)
+		{
+			Guid = (Guid) info.GetValue("Guid", typeof(Guid));
+		}
+		
+		public void GetObjectData (SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue("Guid", Guid);
+		}
 	}
 }

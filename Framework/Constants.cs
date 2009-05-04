@@ -17,29 +17,14 @@
 */
 
 using System;
-using System.Runtime.Serialization;
 
-namespace Fmacj.Runtime.Network.Communication
+namespace Fmacj.Framework
 {	
-	[Serializable]
-	public class ExceptionResponse : Response
+	public static class Constants
 	{		
-		public Exception Exception { get; private set; }
-		
-		public ExceptionResponse(Exception exception)
-		{
-			Exception = exception;	
-		}
-		
-		protected ExceptionResponse(SerializationInfo info, StreamingContext context)
-		{
-			Exception = info.GetValue("Exception", typeof(Exception)) as Exception;
-		}
-		
-		public override void GetObjectData (SerializationInfo info, StreamingContext context)
-		{
-			info.AddValue("Exception", Exception);
-		}
-
+		public const int DefaultTaskServerPort = 23540;
+		public const int DefaultWorkServerPort = 23541;
+		public const int DefaultNodeServerPortRangeMin = 23542;
+		public const int DefaultNodeServerPortRangeMax = 23558;
 	}
 }

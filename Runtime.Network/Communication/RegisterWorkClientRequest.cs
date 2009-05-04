@@ -17,33 +17,26 @@
 */
 
 using System;
-using System.Reflection;
 using System.Runtime.Serialization;
 
 namespace Fmacj.Runtime.Network.Communication
 {	
 	[Serializable]
-	public class RunTaskRequest : Request
-	{		
-		public byte[] RawAssembly { get; private set; }
-		public MethodInfo EntryPoint { get; private set; }
-		
-		public RunTaskRequest(byte[] rawAssembly, MethodInfo entryPoint)
+	public class RegisterWorkClientRequest : Request
+	{				
+		public RegisterWorkClientRequest()
 		{
-			RawAssembly = rawAssembly;
-			EntryPoint = entryPoint;
+			
 		}
 		
-		protected RunTaskRequest(SerializationInfo info, StreamingContext context)
+		protected RegisterWorkClientRequest(SerializationInfo info, StreamingContext context)
 		{
-			RawAssembly = info.GetValue("RawAssembly", typeof(byte[])) as byte[];
-			EntryPoint = info.GetValue("EntryPoint", typeof(MethodInfo)) as MethodInfo;
+			
 		}
 		
 		public override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			info.AddValue("RawAssembly", RawAssembly);
-			info.AddValue("EntryPoint", EntryPoint);
+			
 		}
 	}
 }

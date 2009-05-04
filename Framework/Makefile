@@ -4,6 +4,7 @@ FILES =  \
 	AsynchronousAttribute.cs \
 	ChannelAttribute.cs \
 	ChordAttribute.cs \
+	Constants.cs \
 	ForkAttribute.cs \
 	IChannelEnumerable.cs \
 	InconsistentChannelTypeException.cs \

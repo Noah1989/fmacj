@@ -17,8 +17,6 @@
 */
 
 using System;
-using System.Net;
-using System.Net.Sockets;
 using System.IO;
 using System.Reflection;
 using Fmacj.Framework;
@@ -27,63 +25,22 @@ using Fmacj.Runtime.Network.Communication;
 namespace Fmacj.Executables.DistributionServer
 {
 	[Parallelizable]
-	internal abstract class TaskServer : IParallelizable
+	internal abstract class TaskServer : Server
 	{		
-		private readonly TcpListener tcpListener;
 		private WorkServer workServer;
-		
-		public TaskServer()
-		{			
-			tcpListener = new TcpListener(IPAddress.Any, 23542);
-		}
 
-		public void Run(WorkServer workServer)
+		public TaskServer() : base(Constants.DefaultTaskServerPort)
+		{
+		}
+		
+		public void Start(WorkServer workServer)
 		{
 			this.workServer = workServer;
 			
-			tcpListener.Start();
-			while(true)
-				HandleClient(tcpListener.AcceptTcpClient());
-		}
-
-		[Fork]
-		[Asynchronous]
-		public virtual void HandleClient(TcpClient client)
-		{			
-			Stream clientStream = client.GetStream();
-			
-			bool running = true;
-			while (running)
-			{
-				try
-				{
-					DistributionServerRequest request = DistributionServerRequest.Receive(clientStream);
-					DistributionServerResponse response;
-					
-					try
-					{
-						response = HandleRequest(request);
-					}
-					catch (Exception ex)
-					{
-						response = new ExceptionResponse(ex);
-					}		
-					
-					response.Send(clientStream);
-				}
-				catch(EndOfStreamException)
-				{
-					running = false;
-				}
-				catch(Exception ex)
-				{
-					Console.WriteLine(ex);
-					running = false;
-				}				
-			}
+			StartServer();
 		}
 		
-		private DistributionServerResponse HandleRequest(DistributionServerRequest request)
+		protected override Response HandleRequest(Request request)
 		{
 			Type requestType = request.GetType();
 			if (requestType == typeof(RunTaskRequest))
@@ -94,14 +51,7 @@ namespace Fmacj.Executables.DistributionServer
 				throw new NotImplementedException();
 			}
 			else
-			{
-				throw new NotSupportedException(String.Format("The request of type {0} is not supported", requestType));
-			}
-		}
-
-		public void Dispose()
-		{
-			tcpListener.Stop();
+				throw new NotSupportedException(String.Format("The request of type {0} is not supported.", requestType.Name));			
 		}
 	}
 }

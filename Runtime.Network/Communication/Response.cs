@@ -20,25 +20,18 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Threading;
 
 namespace Fmacj.Runtime.Network.Communication
 {	
 	[Serializable]
-	public abstract class DistributionServerRequest : ISerializable
-	{	
-		private static BinaryFormatter formatter = new BinaryFormatter();			
+	public abstract class Response : ISerializable
+	{		
+		private BinaryFormatter formatter = new BinaryFormatter();
 		
-		public DistributionServerResponse Send(Stream serverStream)
-		{			
-			formatter.Serialize(serverStream, this);
-			return formatter.Deserialize(serverStream) as DistributionServerResponse;
-		}
-		
-		public static DistributionServerRequest Receive(Stream stream)
+		public void Send(Stream serverStream)
 		{
-			return formatter.Deserialize(stream) as DistributionServerRequest;
-		}
+			formatter.Serialize(serverStream, this);			
+		}		
 		
 		public abstract void GetObjectData(SerializationInfo info, StreamingContext context);
 	}

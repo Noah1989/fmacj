@@ -17,6 +17,9 @@
 */
 
 using System;
+using System.IO;
+using System.Net.Sockets;
+using Fmacj.Framework;
 
 namespace Fmacj.Executables.WorkClient
 {	
@@ -24,6 +27,11 @@ namespace Fmacj.Executables.WorkClient
 	{		
 		public static void Main()
 		{
+			TcpClient tcpClient = new TcpClient("localhost", Constants.DefaultWorkServerPort);				
+			Stream stream = tcpClient.GetStream();
+			
+			WorkClient workClient = new WorkClient(stream);
+			workClient.Start();
 		}
 	}
 }

@@ -17,33 +17,33 @@
 */
 
 using System;
-using System.Reflection;
-using System.Runtime.Serialization;
+using System.IO;
+using Fmacj.Framework;
 
 namespace Fmacj.Runtime.Network.Communication
 {	
-	[Serializable]
-	public class RunTaskRequest : Request
+	public abstract class Client
 	{		
-		public byte[] RawAssembly { get; private set; }
-		public MethodInfo EntryPoint { get; private set; }
+		private Stream serverStream;
 		
-		public RunTaskRequest(byte[] rawAssembly, MethodInfo entryPoint)
+		public Client(Stream serverStream)
 		{
-			RawAssembly = rawAssembly;
-			EntryPoint = entryPoint;
+			this.serverStream = serverStream;
 		}
 		
-		protected RunTaskRequest(SerializationInfo info, StreamingContext context)
+		protected Response SendRequest(Request request)
 		{
-			RawAssembly = info.GetValue("RawAssembly", typeof(byte[])) as byte[];
-			EntryPoint = info.GetValue("EntryPoint", typeof(MethodInfo)) as MethodInfo;
+			Response response = request.Send(serverStream);
+			HandleExceptions(response);
+			return response;
 		}
 		
-		public override void GetObjectData(SerializationInfo info, StreamingContext context)
+		private void HandleExceptions(Response response)
 		{
-			info.AddValue("RawAssembly", RawAssembly);
-			info.AddValue("EntryPoint", EntryPoint);
+			ExceptionResponse exceptionResponse = response as ExceptionResponse;
+			if(exceptionResponse == null) return;
+			
+			throw new RemoteException(exceptionResponse.Exception);
 		}
 	}
 }
