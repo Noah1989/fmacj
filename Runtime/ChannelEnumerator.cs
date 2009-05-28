@@ -27,6 +27,8 @@ namespace Fmacj.Runtime
 		private Channel<T> channel;
 		private T current;
 		
+		public event EventHandler Disposed;
+		
 		public ChannelEnumerator(Channel<T> channel)
 		{
 			if(channel == null)
@@ -64,9 +66,6 @@ namespace Fmacj.Runtime
 		private void OnDisposed(EventArgs e)
 		{
 			if(Disposed != null) Disposed(this, e);
-		}
-		
-		public event EventHandler Disposed;
-		
+		}		
 	}
 }

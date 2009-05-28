@@ -13,6 +13,7 @@ FILES =  \
 	IParallelizable.cs \
 	JoinAttribute.cs \
 	MovableAttribute.cs \
+	ParallelException.cs \
 	ParallelizableAttribute.cs \
 	ParallelizationException.cs \
 	Properties/AssemblyInfo.cs \
