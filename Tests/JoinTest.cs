@@ -77,7 +77,7 @@ namespace Fmacj.Tests
             {
                 result1 = value1 / value2;
                 result2 = "Test";
-                return result1.ToString();
+                return result1.ToString(System.Globalization.CultureInfo.InvariantCulture);
             }
             [Join]
             public abstract string OutChannelChordJoin();
