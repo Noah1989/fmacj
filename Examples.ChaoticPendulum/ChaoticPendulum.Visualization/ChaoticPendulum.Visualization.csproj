@@ -40,7 +40,18 @@
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties InternalTargetFrameworkVersion="3.5" />
+      <Properties InternalTargetFrameworkVersion="3.5">
+        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile" SyncReferences="true">
+          <BuildFilesVar Sync="true" Name="FILES" />
+          <DeployFilesVar />
+          <ResourcesVar Sync="true" Name="RESOURCES" />
+          <OthersVar />
+          <GacRefVar Sync="true" Name="REFERENCES" />
+          <AsmRefVar Sync="true" Name="REFERENCES" />
+          <ProjectRefVar Sync="true" Name="REFERENCES" />
+          <MessageRegex Name="Vala" />
+        </MonoDevelop.Autotools.MakefileInfo>
+      </Properties>
     </MonoDevelop>
   </ProjectExtensions>
 </Project>
