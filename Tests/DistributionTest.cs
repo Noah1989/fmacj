@@ -33,26 +33,12 @@ namespace Fmacj.Tests
 			Console.WriteLine("Running");
 		}
 
-		private TcpClient tcpClient;
-		private Stream stream;
 		private TaskClient taskClient;
 		
 		[SetUp]
         public void SetUp()
-        {
-			try 
-			{
-				tcpClient = new TcpClient("localhost", Constants.DefaultTaskServerPort);				
-			}
-			catch (Exception ex)
-			{
-            	Assert.Ignore("Could not connect to distribution server: {0}.", ex);			
-			}
-
-			tcpClient.SendTimeout = 5000;
-			tcpClient.ReceiveTimeout = 5000;
-			stream = tcpClient.GetStream();
-			taskClient = new TaskClient(stream);
+        {			
+			taskClient = new TaskClient();
 		}
 
 		[Test]

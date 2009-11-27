@@ -20,16 +20,11 @@ using System;
 using System.IO;
 using System.Reflection;
 using Fmacj.Framework;
-using Fmacj.Runtime.Network.Communication;
 
 namespace Fmacj.Components.TaskClient
 {	
-	public class TaskClient : Client
-	{
-		public TaskClient(Stream serverStream) : base(serverStream)
-	    {			
-		}
-
+	public class TaskClient
+	{	
 		public void RunTask(Action entryPoint)
 		{
 			RunTask(entryPoint.Method);
@@ -54,8 +49,7 @@ namespace Fmacj.Components.TaskClient
 		
 		public void RunTask(byte[] rawAssembly, MethodInfo entryPoint)
 		{
-			RunTaskRequest request = new RunTaskRequest(rawAssembly, entryPoint);
-			Response response = SendRequest(request);			
+			throw new NotImplementedException();	
 		}
 	}
 }

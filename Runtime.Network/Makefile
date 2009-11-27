@@ -1,16 +1,6 @@
 ASSEMBLY = ../bin/Fmacj.Runtime.Network.dll
 
-FILES =  \
-	Communication/Client.cs \
-	Communication/ExceptionResponse.cs \
-	Communication/RegisterWorkClientRequest.cs \
-	Communication/Request.cs \
-	Communication/Response.cs \
-	Communication/RunTaskRequest.cs \
-	Communication/Server.cs \
-	Communication/WorkClientRegisteredResponse.cs \
-	Communication/WorkClientTicket.cs \
-	Properties/AssemblyInfo.cs
+FILES = Properties/AssemblyInfo.cs
 
 REFERENCES = -r:../bin/Fmacj.Framework.dll
 

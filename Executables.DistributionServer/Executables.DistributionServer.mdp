@@ -16,8 +16,6 @@
   <Contents>
     <File name="Properties/AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Program.cs" subtype="Code" buildaction="Compile" />
-    <File name="TaskServer.cs" subtype="Code" buildaction="Compile" />
-    <File name="WorkServer.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" specificVersion="False" refto="../bin/Fmacj.Runtime.Network.dll" />

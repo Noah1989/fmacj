@@ -2,9 +2,7 @@ ASSEMBLY = ../bin/Fmacj.Executables.DistributionServer.exe
 
 FILES =  \
 	Program.cs \
-	Properties/AssemblyInfo.cs \
-	TaskServer.cs \
-	WorkServer.cs
+	Properties/AssemblyInfo.cs
 
 REFERENCES =  \
 	-r:../bin/Fmacj.Emitter.dll \

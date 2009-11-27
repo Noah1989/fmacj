@@ -2,8 +2,7 @@ ASSEMBLY = ../bin/Fmacj.Executables.WorkClient.exe
 
 FILES =  \
 	Program.cs \
-	Properties/AssemblyInfo.cs \
-	WorkClient.cs
+	Properties/AssemblyInfo.cs
 
 REFERENCES =  \
 	-r:../bin/Fmacj.Framework.dll \
