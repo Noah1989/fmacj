@@ -1,0 +1,6 @@
+bin/*
+*.pidb
+*.userprefs
+*.usertasks
+Tests/C:\\NUnitPrimaryTrace.txt
+Tests/TestResult.xml
