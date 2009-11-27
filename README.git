@@ -1,0 +1,24 @@
+pushing to git@noah.dnsalias.net:fmacj will commit changes to svn on sourceforge
+
+Host key fingerprint is e4:d2:b0:49:5d:dc:84:b1:76:72:ac:3e:91:03:e4:4b
++--[ RSA 2048]----+
+|        ..o=.    |
+|       + .oo.    |
+|      o E + +    |
+|     . O + *     |
+|      + S =      |
+|       . . o     |
+|          o      |
+|           .     |
+|                 |
++-----------------+
+
+* remote origin
+  URL: git@noah.dnsalias.net:fmacj
+  HEAD branch: master
+  Remote branch:
+    master tracked
+  Local branch configured for 'git pull':
+    master merges with remote master
+  Local ref configured for 'git push':
+    master pushes to master (up to date)
