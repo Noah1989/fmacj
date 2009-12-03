@@ -1,6 +1,0 @@
-Name: Emitter
-Description: Emitter
-Version: 0.1
-
-Requires: 
-Libs: -r:@expanded_libdir@/@PACKAGE@/Emitter.dll
