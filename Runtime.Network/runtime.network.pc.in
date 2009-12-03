@@ -1,6 +1,0 @@
-Name: Runtime.Network
-Description: Runtime.Network
-Version: 0.1
-
-Requires: 
-Libs: -r:@expanded_libdir@/@PACKAGE@/Runtime.Network.dll
