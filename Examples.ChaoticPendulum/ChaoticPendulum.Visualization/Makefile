@@ -18,8 +18,6 @@ PROJECT_REFERENCES =  \
 	../ChaoticPendulum.Core/bin/Debug/ChaoticPendulum.Core.dll
 BUILD_DIR = bin/Debug
 
-CHAOTICPENDULUM_CORE_DLL_MDB_SOURCE=../ChaoticPendulum.Core/bin/Debug/ChaoticPendulum.Core.dll.mdb
-CHAOTICPENDULUM_CORE_DLL_MDB=$(BUILD_DIR)/ChaoticPendulum.Core.dll.mdb
 CHAOTICPENDULUM_CORE_DLL_SOURCE=../ChaoticPendulum.Core/bin/Debug/ChaoticPendulum.Core.dll
 CHAOTICPENDULUM_VISUALIZATION_DLL_MDB_SOURCE=bin/Debug/ChaoticPendulum.Visualization.dll.mdb
 CHAOTICPENDULUM_VISUALIZATION_DLL_MDB=$(BUILD_DIR)/ChaoticPendulum.Visualization.dll.mdb
@@ -36,7 +34,6 @@ PROJECT_REFERENCES =  \
 	../ChaoticPendulum.Core/bin/Release/ChaoticPendulum.Core.dll
 BUILD_DIR = bin/Release
 
-CHAOTICPENDULUM_CORE_DLL_MDB=
 CHAOTICPENDULUM_CORE_DLL_SOURCE=../ChaoticPendulum.Core/bin/Release/ChaoticPendulum.Core.dll
 CHAOTICPENDULUM_VISUALIZATION_DLL_MDB=
 
@@ -46,7 +43,6 @@ AL=al2
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
-	$(CHAOTICPENDULUM_CORE_DLL_MDB) \
 	$(CHAOTICPENDULUM_CORE_DLL) \
 	$(CHAOTICPENDULUM_VISUALIZATION_DLL_MDB)  
 
@@ -56,10 +52,11 @@ LINUX_PKGCONFIG = \
 
 RESGEN=resgen2
 
-CHAOTICPENDULUM_VISUALIZATION_PC = $(BUILD_DIR)/chaoticpendulum.visualization.pc
 CHAOTICPENDULUM_CORE_DLL = $(BUILD_DIR)/ChaoticPendulum.Core.dll
+CHAOTICPENDULUM_VISUALIZATION_PC = $(BUILD_DIR)/chaoticpendulum.visualization.pc
 
-FILES = TrajectoryGraph.cs 
+FILES = \
+	TrajectoryGraph.cs 
 
 DATA_FILES = 
 
@@ -69,7 +66,6 @@ EXTRAS = \
 	chaoticpendulum.visualization.pc.in 
 
 REFERENCES =  \
-	../ChaoticPendulum.Core/bin/Debug/ChaoticPendulum.Core.dll \
 	System.Drawing
 
 DLL_REFERENCES = 
@@ -84,9 +80,8 @@ include $(top_srcdir)/Makefile.include
 
 
 
-$(eval $(call emit-deploy-wrapper,CHAOTICPENDULUM_VISUALIZATION_PC,chaoticpendulum.visualization.pc))
-$(eval $(call emit-deploy-target,CHAOTICPENDULUM_CORE_DLL_MDB))
 $(eval $(call emit-deploy-target,CHAOTICPENDULUM_CORE_DLL))
+$(eval $(call emit-deploy-wrapper,CHAOTICPENDULUM_VISUALIZATION_PC,chaoticpendulum.visualization.pc))
 
 
 $(eval $(call emit_resgen_targets))
@@ -108,11 +103,10 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	mkdir -p '$(DESTDIR)$(libdir)/$(PACKAGE)'
 	$(call cp,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	mkdir -p '$(DESTDIR)$(libdir)/pkgconfig'
-	$(call cp,$(CHAOTICPENDULUM_VISUALIZATION_PC),$(DESTDIR)$(libdir)/pkgconfig)
-	$(call cp,$(CHAOTICPENDULUM_CORE_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(CHAOTICPENDULUM_CORE_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(CHAOTICPENDULUM_VISUALIZATION_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	mkdir -p '$(DESTDIR)$(libdir)/pkgconfig'
+	$(call cp,$(CHAOTICPENDULUM_VISUALIZATION_PC),$(DESTDIR)$(libdir)/pkgconfig)
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -120,10 +114,9 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	make uninstall-satellite-assemblies prefix=$(prefix)
 	$(call rm,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(CHAOTICPENDULUM_VISUALIZATION_PC),$(DESTDIR)$(libdir)/pkgconfig)
-	$(call rm,$(CHAOTICPENDULUM_CORE_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(CHAOTICPENDULUM_CORE_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(CHAOTICPENDULUM_VISUALIZATION_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(CHAOTICPENDULUM_VISUALIZATION_PC),$(DESTDIR)$(libdir)/pkgconfig)
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local
