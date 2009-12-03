@@ -20,7 +20,11 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = bin/Debug
 
 CHAOTICPENDULUM_CORE_DLL_SOURCE=../ChaoticPendulum.Core/bin/Debug/ChaoticPendulum.Core.dll
+CHAOTICPENDULUM_CORE_DLL_MDB_SOURCE=../ChaoticPendulum.Core/bin/Debug/ChaoticPendulum.Core.dll.mdb
+CHAOTICPENDULUM_CORE_DLL_MDB=$(BUILD_DIR)/ChaoticPendulum.Core.dll.mdb
 CHAOTICPENDULUM_VISUALIZATION_DLL_SOURCE=../ChaoticPendulum.Visualization/bin/Debug/ChaoticPendulum.Visualization.dll
+CHAOTICPENDULUM_VISUALIZATION_DLL_MDB_SOURCE=../ChaoticPendulum.Visualization/bin/Debug/ChaoticPendulum.Visualization.dll.mdb
+CHAOTICPENDULUM_VISUALIZATION_DLL_MDB=$(BUILD_DIR)/ChaoticPendulum.Visualization.dll.mdb
 CHAOTICPENDULUM_FRONTEND_GTK_EXE_MDB_SOURCE=bin/Debug/ChaoticPendulum.Frontend.Gtk.exe.mdb
 CHAOTICPENDULUM_FRONTEND_GTK_EXE_MDB=$(BUILD_DIR)/ChaoticPendulum.Frontend.Gtk.exe.mdb
 
@@ -38,7 +42,9 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = bin/Release
 
 CHAOTICPENDULUM_CORE_DLL_SOURCE=../ChaoticPendulum.Core/bin/Release/ChaoticPendulum.Core.dll
+CHAOTICPENDULUM_CORE_DLL_MDB=
 CHAOTICPENDULUM_VISUALIZATION_DLL_SOURCE=../ChaoticPendulum.Visualization/bin/Release/ChaoticPendulum.Visualization.dll
+CHAOTICPENDULUM_VISUALIZATION_DLL_MDB=
 CHAOTICPENDULUM_FRONTEND_GTK_EXE_MDB=
 
 endif
@@ -48,7 +54,9 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(CHAOTICPENDULUM_CORE_DLL) \
+	$(CHAOTICPENDULUM_CORE_DLL_MDB) \
 	$(CHAOTICPENDULUM_VISUALIZATION_DLL) \
+	$(CHAOTICPENDULUM_VISUALIZATION_DLL_MDB) \
 	$(CHAOTICPENDULUM_FRONTEND_GTK_EXE_MDB)  
 
 
@@ -93,7 +101,9 @@ include $(top_srcdir)/Makefile.include
 
 
 $(eval $(call emit-deploy-target,CHAOTICPENDULUM_CORE_DLL))
+$(eval $(call emit-deploy-target,CHAOTICPENDULUM_CORE_DLL_MDB))
 $(eval $(call emit-deploy-target,CHAOTICPENDULUM_VISUALIZATION_DLL))
+$(eval $(call emit-deploy-target,CHAOTICPENDULUM_VISUALIZATION_DLL_MDB))
 
 
 $(eval $(call emit_resgen_targets))
@@ -116,7 +126,9 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(CHAOTICPENDULUM_CORE_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(CHAOTICPENDULUM_CORE_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(CHAOTICPENDULUM_VISUALIZATION_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(CHAOTICPENDULUM_VISUALIZATION_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(CHAOTICPENDULUM_FRONTEND_GTK_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-install-local-hook prefix=$(prefix)
 
@@ -126,7 +138,9 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(CHAOTICPENDULUM_CORE_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(CHAOTICPENDULUM_CORE_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(CHAOTICPENDULUM_VISUALIZATION_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(CHAOTICPENDULUM_VISUALIZATION_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(CHAOTICPENDULUM_FRONTEND_GTK_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-uninstall-local-hook prefix=$(prefix)
 

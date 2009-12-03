@@ -41,7 +41,7 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties InternalTargetFrameworkVersion="3.5">
-        <Deployment.LinuxDeployData generateScript="false" />
+        <Deployment.LinuxDeployData generateScript="false" generatePcFile="false" />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile" SyncReferences="true">
           <BuildFilesVar Sync="true" Name="FILES" />
           <DeployFilesVar />

@@ -1,6 +1,0 @@
-Name: ChaoticPendulum.Visualization
-Description: ChaoticPendulum.Visualization
-Version: 0.1
-
-Requires: 
-Libs: -r:@expanded_libdir@/@PACKAGE@/ChaoticPendulum.Visualization.dll
