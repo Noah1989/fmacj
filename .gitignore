@@ -4,3 +4,5 @@ bin/
 *.usertasks
 Tests/C:\\NUnitPrimaryTrace.txt
 Tests/TestResult.xml
+config.log
+config.make
