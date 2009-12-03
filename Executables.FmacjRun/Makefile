@@ -41,13 +41,9 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 PROGRAMFILES = \
 	$(EXECUTABLES_FMACJRUN_EXE_MDB)  
 
-BINARIES = \
-	$(EXECUTABLES_FMACJRUN)  
-
 
 RESGEN=resgen2
 
-EXECUTABLES_FMACJRUN = $(BUILD_DIR)/executables.fmacjrun
 
 FILES = \
 	Program.cs \
@@ -57,25 +53,23 @@ DATA_FILES =
 
 RESOURCES = 
 
-EXTRAS = \
-	executables.fmacjrun.in 
+EXTRAS = 
 
 REFERENCES =  \
 	System
 
 DLL_REFERENCES = 
 
-CLEANFILES = $(PROGRAMFILES) $(BINARIES) 
+CLEANFILES = $(PROGRAMFILES) 
 
 #Targets
-all: $(ASSEMBLY) $(PROGRAMFILES) $(BINARIES)  $(top_srcdir)/config.make
+all: $(ASSEMBLY) $(PROGRAMFILES)  $(top_srcdir)/config.make
 
 include $(top_srcdir)/Makefile.include
 #include $(srcdir)/custom-hooks.make
 
 
 
-$(eval $(call emit-deploy-wrapper,EXECUTABLES_FMACJRUN,executables.fmacjrun,x))
 
 
 $(eval $(call emit_resgen_targets))
@@ -98,8 +92,6 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(EXECUTABLES_FMACJRUN_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	mkdir -p '$(DESTDIR)$(bindir)'
-	$(call cp,$(EXECUTABLES_FMACJRUN),$(DESTDIR)$(bindir))
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -108,7 +100,6 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(EXECUTABLES_FMACJRUN_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(EXECUTABLES_FMACJRUN),$(DESTDIR)$(bindir))
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local

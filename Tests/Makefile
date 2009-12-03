@@ -30,13 +30,13 @@ RUNTIME_DLL_MDB_SOURCE=../Runtime/bin/Debug/Runtime.dll.mdb
 RUNTIME_DLL_MDB=$(BUILD_DIR)/Runtime.dll.mdb
 EMITTER_DLL_MDB_SOURCE=../Emitter/bin/Debug/Emitter.dll.mdb
 EMITTER_DLL_MDB=$(BUILD_DIR)/Emitter.dll.mdb
-NUNIT_FRAMEWORK_DLL_SOURCE=../lib/nunit/nunit.framework.dll
 COMPONENTS_TASKCLIENT_DLL_SOURCE=../Components.TaskClient/bin/Debug/Components.TaskClient.dll
 RUNTIME_NETWORK_DLL_SOURCE=../Runtime.Network/bin/Debug/Runtime.Network.dll
 RUNTIME_NETWORK_DLL_MDB_SOURCE=../Runtime.Network/bin/Debug/Runtime.Network.dll.mdb
 RUNTIME_NETWORK_DLL_MDB=$(BUILD_DIR)/Runtime.Network.dll.mdb
 COMPONENTS_TASKCLIENT_DLL_MDB_SOURCE=../Components.TaskClient/bin/Debug/Components.TaskClient.dll.mdb
 COMPONENTS_TASKCLIENT_DLL_MDB=$(BUILD_DIR)/Components.TaskClient.dll.mdb
+NUNIT_FRAMEWORK_DLL_SOURCE=../lib/nunit/nunit.framework.dll
 TESTS_DLL_MDB_SOURCE=bin/Debug/Tests.dll.mdb
 TESTS_DLL_MDB=$(BUILD_DIR)/Tests.dll.mdb
 
@@ -61,11 +61,11 @@ FRAMEWORK_DLL_MDB=
 RUNTIME_DLL_SOURCE=../Runtime/bin/Release/Runtime.dll
 RUNTIME_DLL_MDB=
 EMITTER_DLL_MDB=
-NUNIT_FRAMEWORK_DLL_SOURCE=../lib/nunit/nunit.framework.dll
 COMPONENTS_TASKCLIENT_DLL_SOURCE=../Components.TaskClient/bin/Release/Components.TaskClient.dll
 RUNTIME_NETWORK_DLL_SOURCE=../Runtime.Network/bin/Release/Runtime.Network.dll
 RUNTIME_NETWORK_DLL_MDB=
 COMPONENTS_TASKCLIENT_DLL_MDB=
+NUNIT_FRAMEWORK_DLL_SOURCE=../lib/nunit/nunit.framework.dll
 TESTS_DLL_MDB=
 
 endif
@@ -80,15 +80,12 @@ PROGRAMFILES = \
 	$(RUNTIME_DLL) \
 	$(RUNTIME_DLL_MDB) \
 	$(EMITTER_DLL_MDB) \
-	$(NUNIT_FRAMEWORK_DLL) \
 	$(COMPONENTS_TASKCLIENT_DLL) \
 	$(RUNTIME_NETWORK_DLL) \
 	$(RUNTIME_NETWORK_DLL_MDB) \
 	$(COMPONENTS_TASKCLIENT_DLL_MDB) \
+	$(NUNIT_FRAMEWORK_DLL) \
 	$(TESTS_DLL_MDB)  
-
-LINUX_PKGCONFIG = \
-	$(TESTS_PC)  
 
 
 RESGEN=resgen2
@@ -96,10 +93,9 @@ RESGEN=resgen2
 EMITTER_DLL = $(BUILD_DIR)/Emitter.dll
 FRAMEWORK_DLL = $(BUILD_DIR)/Framework.dll
 RUNTIME_DLL = $(BUILD_DIR)/Runtime.dll
-NUNIT_FRAMEWORK_DLL = $(BUILD_DIR)/nunit.framework.dll
 COMPONENTS_TASKCLIENT_DLL = $(BUILD_DIR)/Components.TaskClient.dll
 RUNTIME_NETWORK_DLL = $(BUILD_DIR)/Runtime.Network.dll
-TESTS_PC = $(BUILD_DIR)/tests.pc
+NUNIT_FRAMEWORK_DLL = $(BUILD_DIR)/nunit.framework.dll
 
 FILES = \
 	BusTest.cs \
@@ -123,8 +119,7 @@ DATA_FILES =
 
 RESOURCES = 
 
-EXTRAS = \
-	tests.pc.in 
+EXTRAS = 
 
 REFERENCES =  \
 	System \
@@ -133,10 +128,10 @@ REFERENCES =  \
 DLL_REFERENCES =  \
 	../lib/nunit/nunit.framework.dll
 
-CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
+CLEANFILES = $(PROGRAMFILES) 
 
 #Targets
-all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG)  $(top_srcdir)/config.make
+all: $(ASSEMBLY) $(PROGRAMFILES)  $(top_srcdir)/config.make
 
 include $(top_srcdir)/Makefile.include
 #include $(srcdir)/custom-hooks.make
@@ -149,12 +144,11 @@ $(eval $(call emit-deploy-target,FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-target,RUNTIME_DLL))
 $(eval $(call emit-deploy-target,RUNTIME_DLL_MDB))
 $(eval $(call emit-deploy-target,EMITTER_DLL_MDB))
-$(eval $(call emit-deploy-target,NUNIT_FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,COMPONENTS_TASKCLIENT_DLL))
 $(eval $(call emit-deploy-target,RUNTIME_NETWORK_DLL))
 $(eval $(call emit-deploy-target,RUNTIME_NETWORK_DLL_MDB))
 $(eval $(call emit-deploy-target,COMPONENTS_TASKCLIENT_DLL_MDB))
-$(eval $(call emit-deploy-wrapper,TESTS_PC,tests.pc))
+$(eval $(call emit-deploy-target,NUNIT_FRAMEWORK_DLL))
 
 
 $(eval $(call emit_resgen_targets))
@@ -182,14 +176,12 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(NUNIT_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(COMPONENTS_TASKCLIENT_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(RUNTIME_NETWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(RUNTIME_NETWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(COMPONENTS_TASKCLIENT_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(NUNIT_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(TESTS_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	mkdir -p '$(DESTDIR)$(libdir)/pkgconfig'
-	$(call cp,$(TESTS_PC),$(DESTDIR)$(libdir)/pkgconfig)
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -203,13 +195,12 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(NUNIT_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(COMPONENTS_TASKCLIENT_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(RUNTIME_NETWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(RUNTIME_NETWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(COMPONENTS_TASKCLIENT_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(NUNIT_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(TESTS_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(TESTS_PC),$(DESTDIR)$(libdir)/pkgconfig)
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local

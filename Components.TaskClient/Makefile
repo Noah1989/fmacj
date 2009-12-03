@@ -59,15 +59,11 @@ PROGRAMFILES = \
 	$(RUNTIME_NETWORK_DLL_MDB) \
 	$(COMPONENTS_TASKCLIENT_DLL_MDB)  
 
-LINUX_PKGCONFIG = \
-	$(COMPONENTS_TASKCLIENT_PC)  
-
 
 RESGEN=resgen2
 
 FRAMEWORK_DLL = $(BUILD_DIR)/Framework.dll
 RUNTIME_NETWORK_DLL = $(BUILD_DIR)/Runtime.Network.dll
-COMPONENTS_TASKCLIENT_PC = $(BUILD_DIR)/components.taskclient.pc
 
 FILES = \
 	TaskClient.cs \
@@ -77,8 +73,7 @@ DATA_FILES =
 
 RESOURCES = 
 
-EXTRAS = \
-	components.taskclient.pc.in 
+EXTRAS = 
 
 REFERENCES =  \
 	System.Core \
@@ -86,10 +81,10 @@ REFERENCES =  \
 
 DLL_REFERENCES = 
 
-CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
+CLEANFILES = $(PROGRAMFILES) 
 
 #Targets
-all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG)  $(top_srcdir)/config.make
+all: $(ASSEMBLY) $(PROGRAMFILES)  $(top_srcdir)/config.make
 
 include $(top_srcdir)/Makefile.include
 #include $(srcdir)/custom-hooks.make
@@ -100,7 +95,6 @@ $(eval $(call emit-deploy-target,FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-target,RUNTIME_NETWORK_DLL))
 $(eval $(call emit-deploy-target,RUNTIME_NETWORK_DLL_MDB))
-$(eval $(call emit-deploy-wrapper,COMPONENTS_TASKCLIENT_PC,components.taskclient.pc))
 
 
 $(eval $(call emit_resgen_targets))
@@ -127,8 +121,6 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(RUNTIME_NETWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(RUNTIME_NETWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(COMPONENTS_TASKCLIENT_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	mkdir -p '$(DESTDIR)$(libdir)/pkgconfig'
-	$(call cp,$(COMPONENTS_TASKCLIENT_PC),$(DESTDIR)$(libdir)/pkgconfig)
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -141,7 +133,6 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(RUNTIME_NETWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(RUNTIME_NETWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(COMPONENTS_TASKCLIENT_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(COMPONENTS_TASKCLIENT_PC),$(DESTDIR)$(libdir)/pkgconfig)
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local

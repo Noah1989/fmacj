@@ -59,15 +59,11 @@ PROGRAMFILES = \
 	$(RUNTIME_NETWORK_DLL_MDB) \
 	$(EXECUTABLES_WORKCLIENT_EXE_MDB)  
 
-BINARIES = \
-	$(EXECUTABLES_WORKCLIENT)  
-
 
 RESGEN=resgen2
 
 FRAMEWORK_DLL = $(BUILD_DIR)/Framework.dll
 RUNTIME_NETWORK_DLL = $(BUILD_DIR)/Runtime.Network.dll
-EXECUTABLES_WORKCLIENT = $(BUILD_DIR)/executables.workclient
 
 FILES = \
 	Program.cs \
@@ -78,18 +74,17 @@ DATA_FILES =
 
 RESOURCES = 
 
-EXTRAS = \
-	executables.workclient.in 
+EXTRAS = 
 
 REFERENCES =  \
 	System
 
 DLL_REFERENCES = 
 
-CLEANFILES = $(PROGRAMFILES) $(BINARIES) 
+CLEANFILES = $(PROGRAMFILES) 
 
 #Targets
-all: $(ASSEMBLY) $(PROGRAMFILES) $(BINARIES)  $(top_srcdir)/config.make
+all: $(ASSEMBLY) $(PROGRAMFILES)  $(top_srcdir)/config.make
 
 include $(top_srcdir)/Makefile.include
 #include $(srcdir)/custom-hooks.make
@@ -100,7 +95,6 @@ $(eval $(call emit-deploy-target,FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-target,RUNTIME_NETWORK_DLL))
 $(eval $(call emit-deploy-target,RUNTIME_NETWORK_DLL_MDB))
-$(eval $(call emit-deploy-wrapper,EXECUTABLES_WORKCLIENT,executables.workclient,x))
 
 
 $(eval $(call emit_resgen_targets))
@@ -127,8 +121,6 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(RUNTIME_NETWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(RUNTIME_NETWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(EXECUTABLES_WORKCLIENT_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	mkdir -p '$(DESTDIR)$(bindir)'
-	$(call cp,$(EXECUTABLES_WORKCLIENT),$(DESTDIR)$(bindir))
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -141,7 +133,6 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(RUNTIME_NETWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(RUNTIME_NETWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(EXECUTABLES_WORKCLIENT_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(EXECUTABLES_WORKCLIENT),$(DESTDIR)$(bindir))
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local

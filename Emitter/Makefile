@@ -59,15 +59,11 @@ PROGRAMFILES = \
 	$(RUNTIME_DLL_MDB) \
 	$(EMITTER_DLL_MDB)  
 
-LINUX_PKGCONFIG = \
-	$(EMITTER_PC)  
-
 
 RESGEN=resgen2
 
 FRAMEWORK_DLL = $(BUILD_DIR)/Framework.dll
 RUNTIME_DLL = $(BUILD_DIR)/Runtime.dll
-EMITTER_PC = $(BUILD_DIR)/emitter.pc
 
 FILES = \
 	AssemblyParallelizer.cs \
@@ -95,18 +91,17 @@ DATA_FILES =
 
 RESOURCES = 
 
-EXTRAS = \
-	emitter.pc.in 
+EXTRAS = 
 
 REFERENCES =  \
 	System
 
 DLL_REFERENCES = 
 
-CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
+CLEANFILES = $(PROGRAMFILES) 
 
 #Targets
-all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG)  $(top_srcdir)/config.make
+all: $(ASSEMBLY) $(PROGRAMFILES)  $(top_srcdir)/config.make
 
 include $(top_srcdir)/Makefile.include
 #include $(srcdir)/custom-hooks.make
@@ -117,7 +112,6 @@ $(eval $(call emit-deploy-target,FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-target,RUNTIME_DLL))
 $(eval $(call emit-deploy-target,RUNTIME_DLL_MDB))
-$(eval $(call emit-deploy-wrapper,EMITTER_PC,emitter.pc))
 
 
 $(eval $(call emit_resgen_targets))
@@ -144,8 +138,6 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	mkdir -p '$(DESTDIR)$(libdir)/pkgconfig'
-	$(call cp,$(EMITTER_PC),$(DESTDIR)$(libdir)/pkgconfig)
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -158,7 +150,6 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(EMITTER_PC),$(DESTDIR)$(libdir)/pkgconfig)
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local

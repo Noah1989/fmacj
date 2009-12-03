@@ -75,9 +75,6 @@ PROGRAMFILES = \
 	$(EMITTER_DLL_MDB) \
 	$(EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB)  
 
-BINARIES = \
-	$(EXECUTABLES_DISTRIBUTIONSERVER)  
-
 
 RESGEN=resgen2
 
@@ -85,7 +82,6 @@ FRAMEWORK_DLL = $(BUILD_DIR)/Framework.dll
 RUNTIME_NETWORK_DLL = $(BUILD_DIR)/Runtime.Network.dll
 EMITTER_DLL = $(BUILD_DIR)/Emitter.dll
 RUNTIME_DLL = $(BUILD_DIR)/Runtime.dll
-EXECUTABLES_DISTRIBUTIONSERVER = $(BUILD_DIR)/executables.distributionserver
 
 FILES = \
 	Program.cs \
@@ -97,18 +93,17 @@ DATA_FILES =
 
 RESOURCES = 
 
-EXTRAS = \
-	executables.distributionserver.in 
+EXTRAS = 
 
 REFERENCES =  \
 	System
 
 DLL_REFERENCES = 
 
-CLEANFILES = $(PROGRAMFILES) $(BINARIES) 
+CLEANFILES = $(PROGRAMFILES) 
 
 #Targets
-all: $(ASSEMBLY) $(PROGRAMFILES) $(BINARIES)  $(top_srcdir)/config.make
+all: $(ASSEMBLY) $(PROGRAMFILES)  $(top_srcdir)/config.make
 
 include $(top_srcdir)/Makefile.include
 #include $(srcdir)/custom-hooks.make
@@ -123,7 +118,6 @@ $(eval $(call emit-deploy-target,EMITTER_DLL))
 $(eval $(call emit-deploy-target,RUNTIME_DLL))
 $(eval $(call emit-deploy-target,RUNTIME_DLL_MDB))
 $(eval $(call emit-deploy-target,EMITTER_DLL_MDB))
-$(eval $(call emit-deploy-wrapper,EXECUTABLES_DISTRIBUTIONSERVER,executables.distributionserver,x))
 
 
 $(eval $(call emit_resgen_targets))
@@ -154,8 +148,6 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	mkdir -p '$(DESTDIR)$(bindir)'
-	$(call cp,$(EXECUTABLES_DISTRIBUTIONSERVER),$(DESTDIR)$(bindir))
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -172,7 +164,6 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(EXECUTABLES_DISTRIBUTIONSERVER),$(DESTDIR)$(bindir))
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local

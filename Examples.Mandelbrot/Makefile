@@ -66,16 +66,12 @@ PROGRAMFILES = \
 	$(EMITTER_DLL_MDB) \
 	$(EXAMPLES_MANDELBROT_EXE_MDB)  
 
-BINARIES = \
-	$(EXAMPLES_MANDELBROT)  
-
 
 RESGEN=resgen2
 
 FRAMEWORK_DLL = $(BUILD_DIR)/Framework.dll
 EMITTER_DLL = $(BUILD_DIR)/Emitter.dll
 RUNTIME_DLL = $(BUILD_DIR)/Runtime.dll
-EXAMPLES_MANDELBROT = $(BUILD_DIR)/examples.mandelbrot
 
 FILES = \
 	Main.cs \
@@ -86,8 +82,7 @@ DATA_FILES =
 
 RESOURCES = 
 
-EXTRAS = \
-	examples.mandelbrot.in 
+EXTRAS = 
 
 REFERENCES =  \
 	System.Drawing \
@@ -96,10 +91,10 @@ REFERENCES =  \
 
 DLL_REFERENCES = 
 
-CLEANFILES = $(PROGRAMFILES) $(BINARIES) 
+CLEANFILES = $(PROGRAMFILES) 
 
 #Targets
-all: $(ASSEMBLY) $(PROGRAMFILES) $(BINARIES)  $(top_srcdir)/config.make
+all: $(ASSEMBLY) $(PROGRAMFILES)  $(top_srcdir)/config.make
 
 include $(top_srcdir)/Makefile.include
 #include $(srcdir)/custom-hooks.make
@@ -112,7 +107,6 @@ $(eval $(call emit-deploy-target,EMITTER_DLL))
 $(eval $(call emit-deploy-target,RUNTIME_DLL))
 $(eval $(call emit-deploy-target,RUNTIME_DLL_MDB))
 $(eval $(call emit-deploy-target,EMITTER_DLL_MDB))
-$(eval $(call emit-deploy-wrapper,EXAMPLES_MANDELBROT,examples.mandelbrot,x))
 
 
 $(eval $(call emit_resgen_targets))
@@ -141,8 +135,6 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(EXAMPLES_MANDELBROT_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	mkdir -p '$(DESTDIR)$(bindir)'
-	$(call cp,$(EXAMPLES_MANDELBROT),$(DESTDIR)$(bindir))
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -157,7 +149,6 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(EXAMPLES_MANDELBROT_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(EXAMPLES_MANDELBROT),$(DESTDIR)$(bindir))
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local
