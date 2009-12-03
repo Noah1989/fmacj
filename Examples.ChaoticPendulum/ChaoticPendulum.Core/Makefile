@@ -49,14 +49,14 @@ RESGEN=resgen2
 
 CHAOTICPENDULUM_CORE_PC = $(BUILD_DIR)/chaoticpendulum.core.pc
 
-FILES =  \
+FILES = \
+	Particle.cs \
+	Vector2D.cs \
 	Attractor.cs \
 	AttractorSet.cs \
-	FluidFriction.cs \
-	Friction.cs \
-	Particle.cs \
 	Pendulum.cs \
-	Vector2D.cs 
+	Friction.cs \
+	FluidFriction.cs 
 
 DATA_FILES = 
 
@@ -65,7 +65,8 @@ RESOURCES =
 EXTRAS = \
 	chaoticpendulum.core.pc.in 
 
-REFERENCES = System.Core
+REFERENCES =  \
+	System.Core
 
 DLL_REFERENCES = 
 
@@ -101,9 +102,9 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	mkdir -p '$(DESTDIR)$(libdir)/$(PACKAGE)'
 	$(call cp,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(CHAOTICPENDULUM_CORE_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	mkdir -p '$(DESTDIR)$(libdir)/pkgconfig'
 	$(call cp,$(CHAOTICPENDULUM_CORE_PC),$(DESTDIR)$(libdir)/pkgconfig)
-	$(call cp,$(CHAOTICPENDULUM_CORE_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -111,8 +112,8 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	make uninstall-satellite-assemblies prefix=$(prefix)
 	$(call rm,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(CHAOTICPENDULUM_CORE_PC),$(DESTDIR)$(libdir)/pkgconfig)
 	$(call rm,$(CHAOTICPENDULUM_CORE_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(CHAOTICPENDULUM_CORE_PC),$(DESTDIR)$(libdir)/pkgconfig)
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local
