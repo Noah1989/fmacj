@@ -211,5 +211,7 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 install: install-local
 uninstall: uninstall-local
 clean: clean-local
+run: all
+	mono --debug ../lib/nunit/nunit-console.exe $(ASSEMBLY) 
 
 include $(top_srcdir)/rules.make
