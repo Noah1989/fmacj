@@ -97,7 +97,7 @@ COMPONENTS_TASKCLIENT_DLL = $(BUILD_DIR)/Components.TaskClient.dll
 RUNTIME_NETWORK_DLL = $(BUILD_DIR)/Runtime.Network.dll
 NUNIT_FRAMEWORK_DLL = $(BUILD_DIR)/nunit.framework.dll
 
-FILES = \
+FILES =  \
 	BusTest.cs \
 	ChannelEnumerableTest.cs \
 	ChannelResolver.cs \
@@ -109,11 +109,11 @@ FILES = \
 	ForkTest.cs \
 	JoinTest.cs \
 	ParallelizationFactoryTest.cs \
+	Properties/AssemblyInfo.cs \
 	ShortcutTest.cs \
 	ThreadTimeout.cs \
 	TypeValidatorTest.cs \
-	YieldTest.cs \
-	Properties/AssemblyInfo.cs 
+	YieldTest.cs 
 
 DATA_FILES = 
 
@@ -122,6 +122,11 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
+	../Components.TaskClient/bin/Debug/Components.TaskClient.dll \
+	../Emitter/bin/Debug/Emitter.dll \
+	../Framework/bin/Debug/Framework.dll \
+	../lib/nunit/nunit.framework.dll \
+	../Runtime/bin/Debug/Runtime.dll \
 	System \
 	System.Core
 

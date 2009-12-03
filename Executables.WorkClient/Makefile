@@ -65,10 +65,10 @@ RESGEN=resgen2
 FRAMEWORK_DLL = $(BUILD_DIR)/Framework.dll
 RUNTIME_NETWORK_DLL = $(BUILD_DIR)/Runtime.Network.dll
 
-FILES = \
+FILES =  \
 	Program.cs \
-	WorkClient.cs \
-	Properties/AssemblyInfo.cs 
+	Properties/AssemblyInfo.cs \
+	WorkClient.cs 
 
 DATA_FILES = 
 
@@ -77,6 +77,8 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
+	../Framework/bin/Debug/Framework.dll \
+	../Runtime.Network/bin/Debug/Runtime.Network.dll \
 	System
 
 DLL_REFERENCES = 

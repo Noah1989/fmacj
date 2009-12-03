@@ -83,11 +83,11 @@ RUNTIME_NETWORK_DLL = $(BUILD_DIR)/Runtime.Network.dll
 EMITTER_DLL = $(BUILD_DIR)/Emitter.dll
 RUNTIME_DLL = $(BUILD_DIR)/Runtime.dll
 
-FILES = \
+FILES =  \
 	Program.cs \
+	Properties/AssemblyInfo.cs \
 	TaskServer.cs \
-	WorkServer.cs \
-	Properties/AssemblyInfo.cs 
+	WorkServer.cs 
 
 DATA_FILES = 
 
@@ -96,6 +96,9 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
+	../Emitter/bin/Debug/Emitter.dll \
+	../Framework/bin/Debug/Framework.dll \
+	../Runtime.Network/bin/Debug/Runtime.Network.dll \
 	System
 
 DLL_REFERENCES = 

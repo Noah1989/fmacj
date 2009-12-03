@@ -65,7 +65,7 @@ RESGEN=resgen2
 FRAMEWORK_DLL = $(BUILD_DIR)/Framework.dll
 RUNTIME_DLL = $(BUILD_DIR)/Runtime.dll
 
-FILES = \
+FILES =  \
 	AssemblyParallelizer.cs \
 	ChannelImplementer.cs \
 	ChordImplementer.cs \
@@ -77,15 +77,15 @@ FILES = \
 	JoinGroup.cs \
 	JoinImplementer.cs \
 	ParallelizationFactory.cs \
-	TypeParallelizer.cs \
-	YieldImplementer.cs \
-	YieldInfo.cs \
+	Properties/AssemblyInfo.cs \
 	TypeAnalyzer/TypeAnalyzer.Chord.cs \
 	TypeAnalyzer/TypeAnalyzer.cs \
 	TypeAnalyzer/TypeAnalyzer.Fork.cs \
 	TypeAnalyzer/TypeAnalyzer.Join.cs \
 	TypeAnalyzer/TypeAnalyzer.Yield.cs \
-	Properties/AssemblyInfo.cs 
+	TypeParallelizer.cs \
+	YieldImplementer.cs \
+	YieldInfo.cs 
 
 DATA_FILES = 
 
@@ -94,6 +94,8 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
+	../Framework/bin/Debug/Framework.dll \
+	../Runtime/bin/Debug/Runtime.dll \
 	System
 
 DLL_REFERENCES = 

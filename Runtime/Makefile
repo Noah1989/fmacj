@@ -55,7 +55,7 @@ RESGEN=resgen2
 
 FRAMEWORK_DLL = $(BUILD_DIR)/Framework.dll
 
-FILES = \
+FILES =  \
 	Bus.cs \
 	Channel.cs \
 	ChannelEnumerable.cs \
@@ -72,6 +72,7 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
+	../Framework/bin/Debug/Framework.dll \
 	System
 
 DLL_REFERENCES = 

@@ -55,7 +55,7 @@ RESGEN=resgen2
 
 FRAMEWORK_DLL = $(BUILD_DIR)/Framework.dll
 
-FILES = \
+FILES =  \
 	Communication/Client.cs \
 	Communication/ExceptionResponse.cs \
 	Communication/RegisterWorkClientRequest.cs \
@@ -74,6 +74,7 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
+	../Framework/bin/Debug/Framework.dll \
 	System
 
 DLL_REFERENCES = 

@@ -73,7 +73,7 @@ FRAMEWORK_DLL = $(BUILD_DIR)/Framework.dll
 EMITTER_DLL = $(BUILD_DIR)/Emitter.dll
 RUNTIME_DLL = $(BUILD_DIR)/Runtime.dll
 
-FILES = \
+FILES =  \
 	Main.cs \
 	Mandelbrot.cs \
 	Properties/AssemblyInfo.cs 
@@ -85,9 +85,11 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
-	System.Drawing \
+	../Emitter/bin/Debug/Emitter.dll \
+	../Framework/bin/Debug/Framework.dll \
+	System \
 	System.Core \
-	System
+	System.Drawing
 
 DLL_REFERENCES = 
 

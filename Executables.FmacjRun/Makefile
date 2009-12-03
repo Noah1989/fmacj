@@ -45,7 +45,7 @@ PROGRAMFILES = \
 RESGEN=resgen2
 
 
-FILES = \
+FILES =  \
 	Program.cs \
 	Properties/AssemblyInfo.cs 
 
@@ -55,8 +55,7 @@ RESOURCES =
 
 EXTRAS = 
 
-REFERENCES =  \
-	System
+REFERENCES = System
 
 DLL_REFERENCES = 
 
