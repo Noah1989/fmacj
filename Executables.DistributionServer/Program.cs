@@ -17,18 +17,24 @@
 */
 
 using System;
-using System.Threading;
-using Fmacj.Emitter;
+using RabbitMQ.Client;
 
 namespace Fmacj.Executables.DistributionServer
 {	
 	internal static class Program
 	{		
 		public static void Main()
+		{				
+			
+		}
+		
+		public static IConnection Connect()
 		{
-			ParallelizationFactory.Parallelize(typeof(Program).Assembly);
-													
-			Thread.Sleep(Timeout.Infinite);
+			ConnectionFactory factory = new ConnectionFactory();
+			Console.WriteLine("factory created");
+			IProtocol protocol = Protocols.DefaultProtocol;
+			IConnection conn = factory.CreateConnection(protocol, "localhost");
+			Console.WriteLine("connected");
 		}
 	}
 }

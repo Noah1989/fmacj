@@ -30,21 +30,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Framework\Framework.csproj">
-      <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
-      <Name>Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Runtime.Network\Runtime.Network.csproj">
       <Project>{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}</Project>
       <Name>Runtime.Network</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Emitter\Emitter.csproj">
-      <Project>{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}</Project>
-      <Name>Emitter</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="RabbitMQ.Client, Version=1.7.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\rabbitmq\RabbitMQ.Client.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

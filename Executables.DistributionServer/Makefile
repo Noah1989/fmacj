@@ -94,8 +94,7 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
-	../Emitter/bin/Debug/Emitter.dll \
-	../Framework/bin/Debug/Framework.dll \
+	../lib/rabbitmq/RabbitMQ.Client.dll \
 	../Runtime.Network/bin/Debug/Runtime.Network.dll \
 	System
 
