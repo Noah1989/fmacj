@@ -98,22 +98,22 @@ RUNTIME_NETWORK_DLL = $(BUILD_DIR)/Runtime.Network.dll
 NUNIT_FRAMEWORK_DLL = $(BUILD_DIR)/nunit.framework.dll
 
 FILES =  \
-	BusTest.cs \
-	ChannelEnumerableTest.cs \
-	ChannelResolver.cs \
-	ChannelTest.cs \
-	ChordTest.cs \
-	DisposeTest.cs \
-	DistributionTest.cs \
-	EnumerableChannelTest.cs \
-	ForkTest.cs \
-	JoinTest.cs \
-	ParallelizationFactoryTest.cs \
+	Distribution/DistributionTest.cs \
+	Emitter/DisposeTest.cs \
+	Emitter/ParallelizationFactoryTest.cs \
+	Emitter/TypeValidatorTest.cs \
+	Helpers/ChannelResolver.cs \
+	Helpers/ThreadTimeout.cs \
+	LanguageFeatures/ChannelTest.cs \
+	LanguageFeatures/ChordTest.cs \
+	LanguageFeatures/EnumerableChannelTest.cs \
+	LanguageFeatures/ForkTest.cs \
+	LanguageFeatures/JoinTest.cs \
+	LanguageFeatures/ShortcutTest.cs \
+	LanguageFeatures/YieldTest.cs \
 	Properties/AssemblyInfo.cs \
-	ShortcutTest.cs \
-	ThreadTimeout.cs \
-	TypeValidatorTest.cs \
-	YieldTest.cs 
+	Runtime/BusTest.cs \
+	Runtime/ChannelEnumerableTest.cs 
 
 DATA_FILES = 
 
