@@ -17,14 +17,15 @@
 */
 
 using System;
+using RabbitMQ.Client.MessagePatterns;
 
-namespace Fmacj.Framework
-{	
-	public static class Constants
+namespace Fmacj.Executables.DistributionServer
+{		
+	public class TaskServer : SimpleRpcServer
 	{		
-		public const int DefaultTaskServerPort = 23540;
-		public const int DefaultWorkServerPort = 23541;
-		public const int DefaultNodeServerPortRangeMin = 23542;
-		public const int DefaultNodeServerPortRangeMax = 23558;
+		public TaskServer(Subscription subscription) : base(subscription)
+		{
+			
+		}		 
 	}
 }

@@ -18,13 +18,12 @@
 
 using System;
 
-namespace Fmacj.Executables.DistributionServer
+namespace Fmacj.Framework.Distribution
 {	
-	internal static class Program
-	{			
-		public static void Main()
-		{				
-			
-		}		
+	public class TaskTicket
+	{		
+		public TaskTicket()
+		{
+		}
 	}
 }

@@ -85,7 +85,8 @@ RUNTIME_DLL = $(BUILD_DIR)/Runtime.dll
 
 FILES =  \
 	Program.cs \
-	Properties/AssemblyInfo.cs 
+	Properties/AssemblyInfo.cs \
+	TaskServer.cs 
 
 DATA_FILES = 
 

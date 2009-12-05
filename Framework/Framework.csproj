@@ -29,7 +29,6 @@
     <Compile Include="AsynchronousAttribute.cs" />
     <Compile Include="ChannelAttribute.cs" />
     <Compile Include="ChordAttribute.cs" />
-    <Compile Include="Constants.cs" />
     <Compile Include="ForkAttribute.cs" />
     <Compile Include="IChannelEnumerable.cs" />
     <Compile Include="InconsistentChannelTypeException.cs" />
@@ -42,11 +41,12 @@
     <Compile Include="ParallelException.cs" />
     <Compile Include="ParallelizableAttribute.cs" />
     <Compile Include="ParallelizationException.cs" />
-    <Compile Include="RemoteException.cs" />
     <Compile Include="TypeNotFoundException.cs" />
     <Compile Include="TypeValidator.cs" />
     <Compile Include="YieldAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Distribution\RemoteException.cs" />
+    <Compile Include="Distribution\TaskTicket.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -68,4 +68,7 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Distribution\" />
+  </ItemGroup>
 </Project>

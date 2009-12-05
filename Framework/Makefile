@@ -49,7 +49,8 @@ FILES =  \
 	AsynchronousAttribute.cs \
 	ChannelAttribute.cs \
 	ChordAttribute.cs \
-	Constants.cs \
+	Distribution/RemoteException.cs \
+	Distribution/TaskTicket.cs \
 	ForkAttribute.cs \
 	IChannelEnumerable.cs \
 	InconsistentChannelTypeException.cs \
@@ -63,7 +64,6 @@ FILES =  \
 	ParallelizableAttribute.cs \
 	ParallelizationException.cs \
 	Properties/AssemblyInfo.cs \
-	RemoteException.cs \
 	TypeNotFoundException.cs \
 	TypeValidator.cs \
 	YieldAttribute.cs 
