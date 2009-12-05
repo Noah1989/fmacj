@@ -7,7 +7,6 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F7D3F51B-4185-47C1-92D1-BDCE400EF374}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <AssemblyName>Examples.Mandelbrot</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -17,6 +16,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Fmacj.Examples.Mandelbrot</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -24,6 +24,7 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Examples.Mandelbrot</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -34,16 +35,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Core" />
     <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Framework\Framework.csproj">
-      <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
-      <Name>Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Emitter\Emitter.csproj">
-      <Project>{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}</Project>
-      <Name>Emitter</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -62,4 +53,14 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Framework\Core.Framework.csproj">
+      <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
+      <Name>Core.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.Emitter\Core.Emitter.csproj">
+      <Project>{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}</Project>
+      <Name>Core.Emitter</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

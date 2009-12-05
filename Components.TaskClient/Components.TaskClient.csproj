@@ -7,7 +7,6 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2A0BA69A-D98B-4F1F-A112-55BFFFBF3E32}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Components.TaskClient</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -17,6 +16,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Fmacj.Components.TaskClient</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -24,19 +24,20 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Components.TaskClient</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="TaskClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Framework\Framework.csproj">
-      <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
-      <Name>Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Runtime.Network\Runtime.Network.csproj">
+    <ProjectReference Include="..\Core.Runtime.Network\Core.Runtime.Network.csproj">
       <Project>{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}</Project>
-      <Name>Runtime.Network</Name>
+      <Name>Core.Runtime.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.Framework\Core.Framework.csproj">
+      <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
+      <Name>Core.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

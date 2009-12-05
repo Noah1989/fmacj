@@ -11,29 +11,37 @@ include $(top_srcdir)/config.make
 ifeq ($(CONFIG),DEBUG)
 ASSEMBLY_COMPILER_COMMAND = gmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
-ASSEMBLY = bin/Debug/Executables.DistributionServer.exe
+ASSEMBLY = bin/Debug/Fmacj.Executables.DistributionServer.exe
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = exe
 PROJECT_REFERENCES =  \
-	../Framework/bin/Debug/Framework.dll \
-	../Runtime.Network/bin/Debug/Runtime.Network.dll \
-	../Emitter/bin/Debug/Emitter.dll
+	../Core.Runtime.Network/bin/Debug/Fmacj.Core.Runtime.Network.dll \
+	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
+	../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll
 BUILD_DIR = bin/Debug
 
-FRAMEWORK_DLL_SOURCE=../Framework/bin/Debug/Framework.dll
-FRAMEWORK_DLL_MDB_SOURCE=../Framework/bin/Debug/Framework.dll.mdb
-FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Framework.dll.mdb
-RUNTIME_NETWORK_DLL_SOURCE=../Runtime.Network/bin/Debug/Runtime.Network.dll
-RUNTIME_NETWORK_DLL_MDB_SOURCE=../Runtime.Network/bin/Debug/Runtime.Network.dll.mdb
-RUNTIME_NETWORK_DLL_MDB=$(BUILD_DIR)/Runtime.Network.dll.mdb
-EMITTER_DLL_SOURCE=../Emitter/bin/Debug/Emitter.dll
-RUNTIME_DLL_SOURCE=../Runtime/bin/Debug/Runtime.dll
-RUNTIME_DLL_MDB_SOURCE=../Runtime/bin/Debug/Runtime.dll.mdb
-RUNTIME_DLL_MDB=$(BUILD_DIR)/Runtime.dll.mdb
-EMITTER_DLL_MDB_SOURCE=../Emitter/bin/Debug/Emitter.dll.mdb
-EMITTER_DLL_MDB=$(BUILD_DIR)/Emitter.dll.mdb
-EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB_SOURCE=bin/Debug/Executables.DistributionServer.exe.mdb
-EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB=$(BUILD_DIR)/Executables.DistributionServer.exe.mdb
+FMACJ_CORE_RUNTIME_NETWORK_DLL_SOURCE=../Core.Runtime.Network/bin/Debug/Fmacj.Core.Runtime.Network.dll
+FMACJ_CORE_RUNTIME_NETWORK_DLL=$(BUILD_DIR)/Fmacj.Core.Runtime.Network.dll
+FMACJ_CORE_FRAMEWORK_DLL_SOURCE=../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll
+FMACJ_CORE_FRAMEWORK_DLL=$(BUILD_DIR)/Fmacj.Core.Framework.dll
+FMACJ_CORE_FRAMEWORK_DLL_MDB_SOURCE=../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll.mdb
+FMACJ_CORE_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Framework.dll.mdb
+FMACJ_CORE_RUNTIME_NETWORK_DLL_MDB_SOURCE=../Core.Runtime.Network/bin/Debug/Fmacj.Core.Runtime.Network.dll.mdb
+FMACJ_CORE_RUNTIME_NETWORK_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Runtime.Network.dll.mdb
+FMACJ_CORE_EMITTER_DLL_SOURCE=../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll
+FMACJ_CORE_EMITTER_DLL=$(BUILD_DIR)/Fmacj.Core.Emitter.dll
+FMACJ_CORE_RUNTIME_DLL_SOURCE=../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.dll
+FMACJ_CORE_RUNTIME_DLL=$(BUILD_DIR)/Fmacj.Core.Runtime.dll
+FMACJ_CORE_RUNTIME_DLL_MDB_SOURCE=../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.dll.mdb
+FMACJ_CORE_RUNTIME_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Runtime.dll.mdb
+FMACJ_CORE_EMITTER_DLL_MDB_SOURCE=../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll.mdb
+FMACJ_CORE_EMITTER_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Emitter.dll.mdb
+FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB_SOURCE=bin/Debug/Fmacj.Executables.DistributionServer.exe.mdb
+FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB=$(BUILD_DIR)/Fmacj.Executables.DistributionServer.exe.mdb
+RUNTIME_NETWORK_DLL=
+FRAMEWORK_DLL=
+EMITTER_DLL=
+RUNTIME_DLL=
 
 endif
 
@@ -44,20 +52,28 @@ ASSEMBLY = bin/Release/Executables.DistributionServer.exe
 ASSEMBLY_MDB = 
 COMPILE_TARGET = exe
 PROJECT_REFERENCES =  \
-	../Framework/bin/Release/Framework.dll \
-	../Runtime.Network/bin/Release/Runtime.Network.dll \
-	../Emitter/bin/Release/Emitter.dll
+	../Core.Runtime.Network/bin/Release/Runtime.Network.dll \
+	../Core.Framework/bin/Release/Framework.dll \
+	../Core.Emitter/bin/Release/Emitter.dll
 BUILD_DIR = bin/Release
 
-FRAMEWORK_DLL_SOURCE=../Framework/bin/Release/Framework.dll
-FRAMEWORK_DLL_MDB=
-RUNTIME_NETWORK_DLL_SOURCE=../Runtime.Network/bin/Release/Runtime.Network.dll
-RUNTIME_NETWORK_DLL_MDB=
-EMITTER_DLL_SOURCE=../Emitter/bin/Release/Emitter.dll
-RUNTIME_DLL_SOURCE=../Runtime/bin/Release/Runtime.dll
-RUNTIME_DLL_MDB=
-EMITTER_DLL_MDB=
-EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB=
+FMACJ_CORE_RUNTIME_NETWORK_DLL=
+FMACJ_CORE_FRAMEWORK_DLL=
+FMACJ_CORE_FRAMEWORK_DLL_MDB=
+FMACJ_CORE_RUNTIME_NETWORK_DLL_MDB=
+FMACJ_CORE_EMITTER_DLL=
+FMACJ_CORE_RUNTIME_DLL=
+FMACJ_CORE_RUNTIME_DLL_MDB=
+FMACJ_CORE_EMITTER_DLL_MDB=
+FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB=
+RUNTIME_NETWORK_DLL_SOURCE=../Core.Runtime.Network/bin/Release/Runtime.Network.dll
+RUNTIME_NETWORK_DLL=$(BUILD_DIR)/Runtime.Network.dll
+FRAMEWORK_DLL_SOURCE=../Core.Framework/bin/Release/Framework.dll
+FRAMEWORK_DLL=$(BUILD_DIR)/Framework.dll
+EMITTER_DLL_SOURCE=../Core.Emitter/bin/Release/Emitter.dll
+EMITTER_DLL=$(BUILD_DIR)/Emitter.dll
+RUNTIME_DLL_SOURCE=../Core.Runtime/bin/Release/Runtime.dll
+RUNTIME_DLL=$(BUILD_DIR)/Runtime.dll
 
 endif
 
@@ -65,29 +81,29 @@ AL=al2
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
-	$(FRAMEWORK_DLL) \
-	$(FRAMEWORK_DLL_MDB) \
+	$(FMACJ_CORE_RUNTIME_NETWORK_DLL) \
+	$(FMACJ_CORE_FRAMEWORK_DLL) \
+	$(FMACJ_CORE_FRAMEWORK_DLL_MDB) \
+	$(FMACJ_CORE_RUNTIME_NETWORK_DLL_MDB) \
+	$(FMACJ_CORE_EMITTER_DLL) \
+	$(FMACJ_CORE_RUNTIME_DLL) \
+	$(FMACJ_CORE_RUNTIME_DLL_MDB) \
+	$(FMACJ_CORE_EMITTER_DLL_MDB) \
+	$(FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB) \
 	$(RUNTIME_NETWORK_DLL) \
-	$(RUNTIME_NETWORK_DLL_MDB) \
+	$(FRAMEWORK_DLL) \
 	$(EMITTER_DLL) \
-	$(RUNTIME_DLL) \
-	$(RUNTIME_DLL_MDB) \
-	$(EMITTER_DLL_MDB) \
-	$(EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB)  
+	$(RUNTIME_DLL)  
 
 
 RESGEN=resgen2
 
-FRAMEWORK_DLL = $(BUILD_DIR)/Framework.dll
-RUNTIME_NETWORK_DLL = $(BUILD_DIR)/Runtime.Network.dll
-EMITTER_DLL = $(BUILD_DIR)/Emitter.dll
-RUNTIME_DLL = $(BUILD_DIR)/Runtime.dll
 
-FILES =  \
+FILES = \
 	Program.cs \
-	Properties/AssemblyInfo.cs \
 	TaskServer.cs \
-	WorkServer.cs 
+	WorkServer.cs \
+	Properties/AssemblyInfo.cs 
 
 DATA_FILES = 
 
@@ -96,9 +112,6 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
-	../Emitter/bin/Debug/Emitter.dll \
-	../Framework/bin/Debug/Framework.dll \
-	../Runtime.Network/bin/Debug/Runtime.Network.dll \
 	System
 
 DLL_REFERENCES = 
@@ -113,14 +126,18 @@ include $(top_srcdir)/Makefile.include
 
 
 
-$(eval $(call emit-deploy-target,FRAMEWORK_DLL))
-$(eval $(call emit-deploy-target,FRAMEWORK_DLL_MDB))
+$(eval $(call emit-deploy-target,FMACJ_CORE_RUNTIME_NETWORK_DLL))
+$(eval $(call emit-deploy-target,FMACJ_CORE_FRAMEWORK_DLL))
+$(eval $(call emit-deploy-target,FMACJ_CORE_FRAMEWORK_DLL_MDB))
+$(eval $(call emit-deploy-target,FMACJ_CORE_RUNTIME_NETWORK_DLL_MDB))
+$(eval $(call emit-deploy-target,FMACJ_CORE_EMITTER_DLL))
+$(eval $(call emit-deploy-target,FMACJ_CORE_RUNTIME_DLL))
+$(eval $(call emit-deploy-target,FMACJ_CORE_RUNTIME_DLL_MDB))
+$(eval $(call emit-deploy-target,FMACJ_CORE_EMITTER_DLL_MDB))
 $(eval $(call emit-deploy-target,RUNTIME_NETWORK_DLL))
-$(eval $(call emit-deploy-target,RUNTIME_NETWORK_DLL_MDB))
+$(eval $(call emit-deploy-target,FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,EMITTER_DLL))
 $(eval $(call emit-deploy-target,RUNTIME_DLL))
-$(eval $(call emit-deploy-target,RUNTIME_DLL_MDB))
-$(eval $(call emit-deploy-target,EMITTER_DLL_MDB))
 
 
 $(eval $(call emit_resgen_targets))
@@ -142,15 +159,19 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	mkdir -p '$(DESTDIR)$(libdir)/$(PACKAGE)'
 	$(call cp,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_CORE_RUNTIME_NETWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_CORE_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_CORE_FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_CORE_RUNTIME_NETWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_CORE_EMITTER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_CORE_RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_CORE_RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_CORE_EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(RUNTIME_NETWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(RUNTIME_NETWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(EMITTER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -158,15 +179,19 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	make uninstall-satellite-assemblies prefix=$(prefix)
 	$(call rm,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_CORE_RUNTIME_NETWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_CORE_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_CORE_FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_CORE_RUNTIME_NETWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_CORE_EMITTER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_CORE_RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_CORE_RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_CORE_EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(RUNTIME_NETWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(RUNTIME_NETWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(EMITTER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local

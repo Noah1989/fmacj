@@ -5,8 +5,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A7E4ABB9-71CE-4D8C-AF2F-5CE97F7EE0E8}</ProjectGuid>
+    <ProjectGuid>{F7D3F51B-4185-47C1-92D1-BDCE400EF374}</ProjectGuid>
     <OutputType>Exe</OutputType>
+    <AssemblyName>Examples.Mandelbrot</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -16,7 +17,6 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AssemblyName>Fmacj.Executables.DistributionServer</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -24,36 +24,28 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AssemblyName>Executables.DistributionServer</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="TaskServer.cs" />
-    <Compile Include="WorkServer.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="Mandelbrot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core.Runtime.Network\Core.Runtime.Network.csproj">
-      <Project>{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}</Project>
-      <Name>Core.Runtime.Network</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core.Framework\Core.Framework.csproj">
-      <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
-      <Name>Core.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core.Emitter\Core.Emitter.csproj">
-      <Project>{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}</Project>
-      <Name>Core.Emitter</Name>
-    </ProjectReference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Core" />
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <ProjectReference Include="..\Framework\Framework.csproj">
+      <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
+      <Name>Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties>
-        <Deployment.LinuxDeployData generateScript="false" scriptName="fmacjds" />
+      <Properties InternalTargetFrameworkVersion="3.5">
+        <Deployment.LinuxDeployData generateScript="false" scriptName="mandelbrot" />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile" SyncReferences="true">
           <BuildFilesVar Sync="true" Name="FILES" />
           <DeployFilesVar />

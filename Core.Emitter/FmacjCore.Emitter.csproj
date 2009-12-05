@@ -5,8 +5,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A7E4ABB9-71CE-4D8C-AF2F-5CE97F7EE0E8}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Emitter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -16,7 +17,6 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AssemblyName>Fmacj.Executables.DistributionServer</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -24,26 +24,37 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AssemblyName>Executables.DistributionServer</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="TaskServer.cs" />
-    <Compile Include="WorkServer.cs" />
+    <Compile Include="AssemblyParallelizer.cs" />
+    <Compile Include="ChannelImplementer.cs" />
+    <Compile Include="ChordImplementer.cs" />
+    <Compile Include="ChordInfo.cs" />
+    <Compile Include="ConstructorImplementer.cs" />
+    <Compile Include="DisposeImplementer.cs" />
+    <Compile Include="ForkGroup.cs" />
+    <Compile Include="ForkImplementer.cs" />
+    <Compile Include="JoinGroup.cs" />
+    <Compile Include="JoinImplementer.cs" />
+    <Compile Include="ParallelizationFactory.cs" />
+    <Compile Include="TypeParallelizer.cs" />
+    <Compile Include="YieldImplementer.cs" />
+    <Compile Include="YieldInfo.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.Chord.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.Fork.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.Join.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.Yield.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core.Runtime.Network\Core.Runtime.Network.csproj">
-      <Project>{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}</Project>
-      <Name>Core.Runtime.Network</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core.Framework\Core.Framework.csproj">
+    <ProjectReference Include="..\Framework\Framework.csproj">
       <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
-      <Name>Core.Framework</Name>
+      <Name>Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Core.Emitter\Core.Emitter.csproj">
-      <Project>{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}</Project>
-      <Name>Core.Emitter</Name>
+    <ProjectReference Include="..\Runtime\Runtime.csproj">
+      <Project>{16351C71-CBD2-44FE-A6A1-61065464C732}</Project>
+      <Name>Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -53,7 +64,7 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <Deployment.LinuxDeployData generateScript="false" scriptName="fmacjds" />
+        <Deployment.LinuxDeployData generatePcFile="false" />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile" SyncReferences="true">
           <BuildFilesVar Sync="true" Name="FILES" />
           <DeployFilesVar />

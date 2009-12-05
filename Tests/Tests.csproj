@@ -7,7 +7,6 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CCFDC0A2-6182-4C9F-B6AB-3602A8687CE4}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Tests</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -17,6 +16,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Fmacj.Tests</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -24,6 +24,7 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Tests</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -44,21 +45,21 @@
     <Compile Include="Distribution\DistributionTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Emitter\Emitter.csproj">
-      <Project>{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}</Project>
-      <Name>Emitter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Framework\Framework.csproj">
-      <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
-      <Name>Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Runtime\Runtime.csproj">
-      <Project>{16351C71-CBD2-44FE-A6A1-61065464C732}</Project>
-      <Name>Runtime</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Components.TaskClient\Components.TaskClient.csproj">
       <Project>{2A0BA69A-D98B-4F1F-A112-55BFFFBF3E32}</Project>
       <Name>Components.TaskClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.Runtime\Core.Runtime.csproj">
+      <Project>{16351C71-CBD2-44FE-A6A1-61065464C732}</Project>
+      <Name>Core.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.Emitter\Core.Emitter.csproj">
+      <Project>{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}</Project>
+      <Name>Core.Emitter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.Framework\Core.Framework.csproj">
+      <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
+      <Name>Core.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

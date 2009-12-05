@@ -1,14 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Framework.csproj", "{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runtime", "Runtime\Runtime.csproj", "{16351C71-CBD2-44FE-A6A1-61065464C732}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emitter", "Emitter\Emitter.csproj", "{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runtime.Network", "Runtime.Network\Runtime.Network.csproj", "{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{CCFDC0A2-6182-4C9F-B6AB-3602A8687CE4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Mandelbrot", "Examples.Mandelbrot\Examples.Mandelbrot.csproj", "{F7D3F51B-4185-47C1-92D1-BDCE400EF374}"
@@ -20,6 +12,22 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Executables.WorkClient", "Executables.WorkClient\Executables.WorkClient.csproj", "{5ED25AFC-013C-466B-B8AD-779F1FB52608}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Components.TaskClient", "Components.TaskClient\Components.TaskClient.csproj", "{2A0BA69A-D98B-4F1F-A112-55BFFFBF3E32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Emitter", "Core.Emitter\Core.Emitter.csproj", "{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Framework", "Core.Framework\Core.Framework.csproj", "{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Runtime", "Core.Runtime\Core.Runtime.csproj", "{16351C71-CBD2-44FE-A6A1-61065464C732}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Runtime.Network", "Core.Runtime.Network\Core.Runtime.Network.csproj", "{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Framework", "Framework\Core.Framework.csproj", "{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Runtime", "Runtime\Core.Runtime.csproj", "{16351C71-CBD2-44FE-A6A1-61065464C732}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Emitter", "Emitter\Core.Emitter.csproj", "{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runtime.Network", "Runtime.Network\Runtime.Network.csproj", "{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,9 +75,29 @@ Global
 		{F7D3F51B-4185-47C1-92D1-BDCE400EF374}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7D3F51B-4185-47C1-92D1-BDCE400EF374}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7D3F51B-4185-47C1-92D1-BDCE400EF374}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16351C71-CBD2-44FE-A6A1-61065464C732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16351C71-CBD2-44FE-A6A1-61065464C732}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16351C71-CBD2-44FE-A6A1-61065464C732}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16351C71-CBD2-44FE-A6A1-61065464C732}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		version = 0.1
-		StartupItem = Framework\Framework.csproj
+		StartupItem = Tests\Tests.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$1.ResourceNamePolicy = FileFormatDefault
 	EndGlobalSection
 EndGlobal

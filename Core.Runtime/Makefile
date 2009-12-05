@@ -11,27 +11,38 @@ include $(top_srcdir)/config.make
 ifeq ($(CONFIG),DEBUG)
 ASSEMBLY_COMPILER_COMMAND = gmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
-ASSEMBLY = bin/Debug/Framework.dll
+ASSEMBLY = bin/Debug/Fmacj.Core.Runtime.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
-PROJECT_REFERENCES = 
+PROJECT_REFERENCES =  \
+	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll
 BUILD_DIR = bin/Debug
 
-FRAMEWORK_DLL_MDB_SOURCE=bin/Debug/Framework.dll.mdb
-FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Framework.dll.mdb
+FMACJ_CORE_FRAMEWORK_DLL_SOURCE=../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll
+FMACJ_CORE_FRAMEWORK_DLL=$(BUILD_DIR)/Fmacj.Core.Framework.dll
+FMACJ_CORE_FRAMEWORK_DLL_MDB_SOURCE=../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll.mdb
+FMACJ_CORE_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Framework.dll.mdb
+FMACJ_CORE_RUNTIME_DLL_MDB_SOURCE=bin/Debug/Fmacj.Core.Runtime.dll.mdb
+FMACJ_CORE_RUNTIME_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Runtime.dll.mdb
+FRAMEWORK_DLL=
 
 endif
 
 ifeq ($(CONFIG),RELEASE)
 ASSEMBLY_COMPILER_COMMAND = gmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize-
-ASSEMBLY = bin/Release/Framework.dll
+ASSEMBLY = bin/Release/Runtime.dll
 ASSEMBLY_MDB = 
 COMPILE_TARGET = library
-PROJECT_REFERENCES = 
+PROJECT_REFERENCES =  \
+	../Core.Framework/bin/Release/Framework.dll
 BUILD_DIR = bin/Release
 
-FRAMEWORK_DLL_MDB=
+FMACJ_CORE_FRAMEWORK_DLL=
+FMACJ_CORE_FRAMEWORK_DLL_MDB=
+FMACJ_CORE_RUNTIME_DLL_MDB=
+FRAMEWORK_DLL_SOURCE=../Core.Framework/bin/Release/Framework.dll
+FRAMEWORK_DLL=$(BUILD_DIR)/Framework.dll
 
 endif
 
@@ -39,34 +50,24 @@ AL=al2
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
-	$(FRAMEWORK_DLL_MDB)  
+	$(FMACJ_CORE_FRAMEWORK_DLL) \
+	$(FMACJ_CORE_FRAMEWORK_DLL_MDB) \
+	$(FMACJ_CORE_RUNTIME_DLL_MDB) \
+	$(FRAMEWORK_DLL)  
 
 
 RESGEN=resgen2
 
 
-FILES =  \
-	AsynchronousAttribute.cs \
-	ChannelAttribute.cs \
-	ChordAttribute.cs \
-	Constants.cs \
-	ForkAttribute.cs \
-	IChannelEnumerable.cs \
-	InconsistentChannelTypeException.cs \
-	InvalidChannelException.cs \
-	InvalidMethodException.cs \
-	InvalidTypeException.cs \
-	IParallelizable.cs \
-	JoinAttribute.cs \
-	MovableAttribute.cs \
-	ParallelException.cs \
-	ParallelizableAttribute.cs \
-	ParallelizationException.cs \
-	Properties/AssemblyInfo.cs \
-	RemoteException.cs \
-	TypeNotFoundException.cs \
-	TypeValidator.cs \
-	YieldAttribute.cs 
+FILES = \
+	Bus.cs \
+	Channel.cs \
+	ChannelEnumerable.cs \
+	ChannelEnumerator.cs \
+	ChannelOptions.cs \
+	ChordManager.cs \
+	IChannel.cs \
+	Properties/AssemblyInfo.cs 
 
 DATA_FILES = 
 
@@ -74,7 +75,8 @@ RESOURCES =
 
 EXTRAS = 
 
-REFERENCES = System
+REFERENCES =  \
+	System
 
 DLL_REFERENCES = 
 
@@ -88,6 +90,9 @@ include $(top_srcdir)/Makefile.include
 
 
 
+$(eval $(call emit-deploy-target,FMACJ_CORE_FRAMEWORK_DLL))
+$(eval $(call emit-deploy-target,FMACJ_CORE_FRAMEWORK_DLL_MDB))
+$(eval $(call emit-deploy-target,FRAMEWORK_DLL))
 
 
 $(eval $(call emit_resgen_targets))
@@ -109,7 +114,10 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	mkdir -p '$(DESTDIR)$(libdir)/$(PACKAGE)'
 	$(call cp,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_CORE_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_CORE_FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_CORE_RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -117,7 +125,10 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	make uninstall-satellite-assemblies prefix=$(prefix)
 	$(call rm,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_CORE_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_CORE_FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_CORE_RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local

@@ -11,14 +11,14 @@ include $(top_srcdir)/config.make
 ifeq ($(CONFIG),DEBUG)
 ASSEMBLY_COMPILER_COMMAND = gmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
-ASSEMBLY = bin/Debug/Executables.FmacjRun.exe
+ASSEMBLY = bin/Debug/Fmacj.Executables.FmacjRun.exe
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = exe
 PROJECT_REFERENCES = 
 BUILD_DIR = bin/Debug
 
-EXECUTABLES_FMACJRUN_EXE_MDB_SOURCE=bin/Debug/Executables.FmacjRun.exe.mdb
-EXECUTABLES_FMACJRUN_EXE_MDB=$(BUILD_DIR)/Executables.FmacjRun.exe.mdb
+FMACJ_EXECUTABLES_FMACJRUN_EXE_MDB_SOURCE=bin/Debug/Fmacj.Executables.FmacjRun.exe.mdb
+FMACJ_EXECUTABLES_FMACJRUN_EXE_MDB=$(BUILD_DIR)/Fmacj.Executables.FmacjRun.exe.mdb
 
 endif
 
@@ -31,7 +31,7 @@ COMPILE_TARGET = exe
 PROJECT_REFERENCES = 
 BUILD_DIR = bin/Release
 
-EXECUTABLES_FMACJRUN_EXE_MDB=
+FMACJ_EXECUTABLES_FMACJRUN_EXE_MDB=
 
 endif
 
@@ -39,13 +39,13 @@ AL=al2
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
-	$(EXECUTABLES_FMACJRUN_EXE_MDB)  
+	$(FMACJ_EXECUTABLES_FMACJRUN_EXE_MDB)  
 
 
 RESGEN=resgen2
 
 
-FILES =  \
+FILES = \
 	Program.cs \
 	Properties/AssemblyInfo.cs 
 
@@ -55,7 +55,8 @@ RESOURCES =
 
 EXTRAS = 
 
-REFERENCES = System
+REFERENCES =  \
+	System
 
 DLL_REFERENCES = 
 
@@ -90,7 +91,7 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	mkdir -p '$(DESTDIR)$(libdir)/$(PACKAGE)'
 	$(call cp,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(EXECUTABLES_FMACJRUN_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_EXECUTABLES_FMACJRUN_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -98,7 +99,7 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	make uninstall-satellite-assemblies prefix=$(prefix)
 	$(call rm,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(EXECUTABLES_FMACJRUN_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_EXECUTABLES_FMACJRUN_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local
