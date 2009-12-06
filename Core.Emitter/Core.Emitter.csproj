@@ -5,9 +5,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CCFDC0A2-6182-4C9F-B6AB-3602A8687CE4}</ProjectGuid>
+    <ProjectGuid>{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Fmacj.Tests</RootNamespace>
+    <RootNamespace>Fmacj.Core.Emitter</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -17,7 +17,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AssemblyName>Fmacj.Tests</AssemblyName>
+    <AssemblyName>Fmacj.Core.Emitter</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -25,33 +25,34 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AssemblyName>Tests</AssemblyName>
+    <AssemblyName>Emitter</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AssemblyParallelizer.cs" />
+    <Compile Include="ChannelImplementer.cs" />
+    <Compile Include="ChordImplementer.cs" />
+    <Compile Include="ChordInfo.cs" />
+    <Compile Include="ConstructorImplementer.cs" />
+    <Compile Include="DisposeImplementer.cs" />
+    <Compile Include="ForkGroup.cs" />
+    <Compile Include="ForkImplementer.cs" />
+    <Compile Include="JoinGroup.cs" />
+    <Compile Include="JoinImplementer.cs" />
+    <Compile Include="ParallelizationFactory.cs" />
+    <Compile Include="TypeParallelizer.cs" />
+    <Compile Include="YieldImplementer.cs" />
+    <Compile Include="YieldInfo.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.Chord.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.Fork.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.Join.cs" />
+    <Compile Include="TypeAnalyzer\TypeAnalyzer.Yield.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="EmittedCode\ForkTest.cs" />
-    <Compile Include="EmittedCode\JoinTest.cs" />
-    <Compile Include="EmittedCode\YieldTest.cs" />
-    <Compile Include="EmittedCode\ChordTest.cs" />
-    <Compile Include="EmittedCode\ShortcutTest.cs" />
-    <Compile Include="EmittedCode\ChannelTest.cs" />
-    <Compile Include="Runtime\BusTest.cs" />
-    <Compile Include="Runtime\ChannelEnumerableTest.cs" />
-    <Compile Include="Helpers\ChannelResolver.cs" />
-    <Compile Include="EmittedCode\EnumerableChannelTest.cs" />
-    <Compile Include="Emitter\ParallelizationFactoryTest.cs" />
-    <Compile Include="Helpers\ThreadTimeout.cs" />
-    <Compile Include="Emitter\TypeValidatorTest.cs" />
-    <Compile Include="EmittedCode\DisposeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Runtime\Core.Runtime.csproj">
       <Project>{16351C71-CBD2-44FE-A6A1-61065464C732}</Project>
       <Name>Core.Runtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core.Emitter\Core.Emitter.csproj">
-      <Project>{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}</Project>
-      <Name>Core.Emitter</Name>
     </ProjectReference>
     <ProjectReference Include="..\Core.Framework\Core.Framework.csproj">
       <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
@@ -59,19 +60,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\nunit\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties InternalTargetFrameworkVersion="3.5">
+      <Properties>
         <Deployment.LinuxDeployData generatePcFile="false" />
-        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile" ExecuteTargetName="run" SyncReferences="true">
+        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile" SyncReferences="true">
           <BuildFilesVar Sync="true" Name="FILES" />
           <DeployFilesVar />
           <ResourcesVar Sync="true" Name="RESOURCES" />
@@ -83,10 +79,4 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <ItemGroup>
-    <Folder Include="EmittedCode\" />
-    <Folder Include="Runtime\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="Emitter\" />
-  </ItemGroup>
 </Project>

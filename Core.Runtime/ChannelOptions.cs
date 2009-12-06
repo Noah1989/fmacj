@@ -17,40 +17,16 @@
 */
 
 using System;
-using System.Drawing;
-using Fmacj.Core.Emitter;
 
-namespace Fmacj.Examples.Mandelbrot
-{
-	class MainClass
+namespace Fmacj.Core.Runtime
+{	
+	public class ChannelOptions
 	{
-		public static void Main(string[] args)
+		public ChannelOptions(bool enumerable)
 		{
-			int size;
-			string filename;
-			
-			try
-			{
-				size = Convert.ToInt32(args[0]);
-				filename = args[1];
-			}
-			catch
-			{
-				Console.WriteLine("Parameters: size filename");
-				return;
-			}
-			
-			ParallelizationFactory.Parallelize(typeof(Mandelbrot).Assembly);			
-
-			Bitmap bitmap;
-			
-			using (Mandelbrot mandelbrot = ParallelizationFactory.GetParallelized<Mandelbrot>())
-				bitmap = mandelbrot.Calculate(size);
-				
-			Console.WriteLine("Compressing PNG...");			
-			bitmap.Save(filename);
-			
-			Console.WriteLine("Ouput written to {0}", filename);
+			Enumerable = enumerable;
 		}
+		
+		public bool Enumerable { get; set; }
 	}
 }

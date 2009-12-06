@@ -5,9 +5,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F7D3F51B-4185-47C1-92D1-BDCE400EF374}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Fmacj.Examples.Mandelbrot</RootNamespace>
+    <ProjectGuid>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Fmacj.Core.Framework</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -17,7 +17,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AssemblyName>Fmacj.Examples.Mandelbrot</AssemblyName>
+    <AssemblyName>Fmacj.Core.Framework</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -25,23 +25,39 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AssemblyName>Examples.Mandelbrot</AssemblyName>
+    <AssemblyName>Framework</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Main.cs" />
-    <Compile Include="Mandelbrot.cs" />
+    <Compile Include="AsynchronousAttribute.cs" />
+    <Compile Include="ChannelAttribute.cs" />
+    <Compile Include="ChordAttribute.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="ForkAttribute.cs" />
+    <Compile Include="IChannelEnumerable.cs" />
+    <Compile Include="InconsistentChannelTypeException.cs" />
+    <Compile Include="InvalidChannelException.cs" />
+    <Compile Include="InvalidMethodException.cs" />
+    <Compile Include="InvalidTypeException.cs" />
+    <Compile Include="IParallelizable.cs" />
+    <Compile Include="JoinAttribute.cs" />
+    <Compile Include="MovableAttribute.cs" />
+    <Compile Include="ParallelException.cs" />
+    <Compile Include="ParallelizableAttribute.cs" />
+    <Compile Include="ParallelizationException.cs" />
+    <Compile Include="RemoteException.cs" />
+    <Compile Include="TypeNotFoundException.cs" />
+    <Compile Include="TypeValidator.cs" />
+    <Compile Include="YieldAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Core" />
     <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties InternalTargetFrameworkVersion="3.5">
-        <Deployment.LinuxDeployData generateScript="false" scriptName="mandelbrot" />
+      <Properties>
+        <Deployment.LinuxDeployData generatePcFile="false" />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile" SyncReferences="true">
           <BuildFilesVar Sync="true" Name="FILES" />
           <DeployFilesVar />
@@ -54,14 +70,4 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <ItemGroup>
-    <ProjectReference Include="..\Core.Framework\Core.Framework.csproj">
-      <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
-      <Name>Core.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core.Emitter\Core.Emitter.csproj">
-      <Project>{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}</Project>
-      <Name>Core.Emitter</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

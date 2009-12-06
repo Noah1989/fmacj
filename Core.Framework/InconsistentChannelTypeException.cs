@@ -16,41 +16,23 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-using System;
-using System.Drawing;
-using Fmacj.Core.Emitter;
-
-namespace Fmacj.Examples.Mandelbrot
+namespace Fmacj.Core.Framework
 {
-	class MainClass
-	{
-		public static void Main(string[] args)
-		{
-			int size;
-			string filename;
-			
-			try
-			{
-				size = Convert.ToInt32(args[0]);
-				filename = args[1];
-			}
-			catch
-			{
-				Console.WriteLine("Parameters: size filename");
-				return;
-			}
-			
-			ParallelizationFactory.Parallelize(typeof(Mandelbrot).Assembly);			
+    public class InconsistentChannelTypeException : ParallelizationException
+    {
+        public InconsistentChannelTypeException()
+            : base(
+                "A channel is being used with different channel types."
+                )
+        {
+        }
 
-			Bitmap bitmap;
-			
-			using (Mandelbrot mandelbrot = ParallelizationFactory.GetParallelized<Mandelbrot>())
-				bitmap = mandelbrot.Calculate(size);
-				
-			Console.WriteLine("Compressing PNG...");			
-			bitmap.Save(filename);
-			
-			Console.WriteLine("Ouput written to {0}", filename);
-		}
-	}
+        public InconsistentChannelTypeException(string channelName, string typeName)
+            : base(
+                string.Format(
+                    "A channel '{0}' of '{1}' is being used with different channel types.",
+                    channelName, typeName))
+        {
+        }
+    }
 }
