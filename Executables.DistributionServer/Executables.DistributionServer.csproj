@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A7E4ABB9-71CE-4D8C-AF2F-5CE97F7EE0E8}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <AssemblyName>Executables.DistributionServer</AssemblyName>
+    <RootNamespace>Fmacj.Executables.DistributionServer</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -17,6 +17,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Fmacj.Executables.DistributionServer</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -24,6 +25,7 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Executables.DistributionServer</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -31,16 +33,17 @@
     <Compile Include="TaskServer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Runtime.Network\Runtime.Network.csproj">
-      <Project>{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}</Project>
-      <Name>Runtime.Network</Name>
-    </ProjectReference>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; master:Executables.DistributionServer/Executables.DistributionServer.csproj
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="RabbitMQ.Client, Version=1.7.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\rabbitmq\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Runtime.Network">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Runtime.Network\bin\Debug\Runtime.Network.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -18,11 +18,11 @@
 
 using System;
 using System.Linq;
-using Fmacj.Framework;
-using Fmacj.Runtime;
+using Fmacj.Core.Framework;
+using Fmacj.Core.Runtime;
 using NUnit.Framework;
 
-namespace Fmacj.Tests
+namespace Fmacj.Tests.Runtime
 {
 	[TestFixture]	
 	public class ChannelEnumerableTest : AssertionHelper

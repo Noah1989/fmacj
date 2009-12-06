@@ -22,7 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace Fmacj.Tests
+namespace Fmacj.Tests.Helpers
 {
     internal static class ThreadTimeout
     {

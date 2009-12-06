@@ -17,7 +17,6 @@
 */
 
 using System;
-
 namespace Fmacj.Executables.DistributionServer
 {	
 	internal static class Program

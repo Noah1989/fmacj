@@ -19,12 +19,12 @@
 using System;
 using System.Reflection;
 using System.Runtime.Serialization;
-using Fmacj.Emitter;
-using Fmacj.Framework;
+using Fmacj.Core.Emitter;
+using Fmacj.Core.Framework;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
-namespace Fmacj.Tests
+namespace Fmacj.Tests.Emitter
 {
     [TestFixture]
     public class ParallelizationFactoryTest : AssertionHelper

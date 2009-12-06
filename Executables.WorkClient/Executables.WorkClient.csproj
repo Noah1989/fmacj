@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5ED25AFC-013C-466B-B8AD-779F1FB52608}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <AssemblyName>Executables.WorkClient</AssemblyName>
+    <RootNamespace>Fmacj.Executables.WorkClient</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -17,6 +17,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Fmacj.Executables.WorkClient</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -24,19 +25,16 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Executables.WorkClient</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Framework\Framework.csproj">
+    <ProjectReference Include="..\Core.Framework\Core.Framework.csproj">
       <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
-      <Name>Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Runtime.Network\Runtime.Network.csproj">
-      <Project>{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}</Project>
-      <Name>Runtime.Network</Name>
+      <Name>Core.Framework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

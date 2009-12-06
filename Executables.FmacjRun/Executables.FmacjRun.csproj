@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D2CC495A-5231-43BF-87F7-4341E75F5140}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <AssemblyName>Executables.FmacjRun</AssemblyName>
+    <RootNamespace>Fmacj.Executables.FmacjRun</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -17,6 +17,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Fmacj.Executables.FmacjRun</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -24,6 +25,7 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Executables.FmacjRun</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />

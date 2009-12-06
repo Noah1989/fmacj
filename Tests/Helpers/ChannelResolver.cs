@@ -17,10 +17,10 @@
 */
 
 using System.Reflection;
-using Fmacj.Framework;
-using Fmacj.Runtime;
+using Fmacj.Core.Framework;
+using Fmacj.Core.Runtime;
 
-namespace Fmacj.Tests
+namespace Fmacj.Tests.Helpers
 {
     public static class ChannelResolver<T>
     {

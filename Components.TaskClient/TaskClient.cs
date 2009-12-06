@@ -19,12 +19,12 @@
 using System;
 using System.IO;
 using System.Reflection;
-using Fmacj.Framework;
+using Fmacj.Core.Framework;
 
 namespace Fmacj.Components.TaskClient
 {	
 	public class TaskClient
-	{	
+	{
 		public void RunTask(Action entryPoint)
 		{
 			RunTask(entryPoint.Method);
