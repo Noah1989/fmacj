@@ -59,7 +59,7 @@ PROGRAMFILES = \
 RESGEN=resgen2
 
 
-FILES =  \
+FILES = \
 	Bus.cs \
 	Channel.cs \
 	ChannelEnumerable.cs \
@@ -76,7 +76,6 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
-	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
 	System
 
 DLL_REFERENCES = 

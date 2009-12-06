@@ -1,5 +1,5 @@
 
-EXTRA_DIST =  rules.make configure Makefile.include lib/rabbitmq/RabbitMQ.Client.dll lib/nunit/nunit.framework.dll
+EXTRA_DIST =  rules.make configure Makefile.include lib/nunit/nunit.framework.dll
 
 all: all-recursive
 
@@ -12,10 +12,10 @@ include $(top_srcdir)/rules.make
 
 #Warning: This is an automatically generated file, do not edit!
 ifeq ($(CONFIG),DEBUG)
- SUBDIRS =  Executables.DistributionServer Executables.FmacjRun Core.Framework Core.Runtime Executables.WorkClient Components.TaskClient Core.Emitter Tests Examples.Mandelbrot
+ SUBDIRS =  Core.Framework Core.Runtime Core.Emitter Tests Examples.Mandelbrot
 endif
 ifeq ($(CONFIG),RELEASE)
- SUBDIRS =  Executables.DistributionServer Executables.FmacjRun Core.Framework Core.Runtime Executables.WorkClient Components.TaskClient Core.Emitter Tests Examples.Mandelbrot
+ SUBDIRS =  Core.Framework Core.Runtime Core.Emitter Tests Examples.Mandelbrot
 endif
 
 
