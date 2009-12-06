@@ -17,7 +17,8 @@ COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.dll \
 	../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll \
-	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll
+	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
+	../Components.TaskClient/bin/Debug/Fmacj.Components.TaskClient.dll
 BUILD_DIR = bin/Debug
 
 FMACJ_CORE_RUNTIME_DLL_SOURCE=../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.dll
@@ -33,11 +34,16 @@ FMACJ_CORE_EMITTER_DLL=$(BUILD_DIR)/Fmacj.Core.Emitter.dll
 FMACJ_CORE_EMITTER_DLL_MDB_SOURCE=../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll.mdb
 FMACJ_CORE_EMITTER_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Emitter.dll.mdb
 NUNIT_FRAMEWORK_DLL_SOURCE=../lib/nunit/nunit.framework.dll
+FMACJ_COMPONENTS_TASKCLIENT_DLL_SOURCE=../Components.TaskClient/bin/Debug/Fmacj.Components.TaskClient.dll
+FMACJ_COMPONENTS_TASKCLIENT_DLL=$(BUILD_DIR)/Fmacj.Components.TaskClient.dll
+FMACJ_COMPONENTS_TASKCLIENT_DLL_MDB_SOURCE=../Components.TaskClient/bin/Debug/Fmacj.Components.TaskClient.dll.mdb
+FMACJ_COMPONENTS_TASKCLIENT_DLL_MDB=$(BUILD_DIR)/Fmacj.Components.TaskClient.dll.mdb
 FMACJ_TESTS_DLL_MDB_SOURCE=bin/Debug/Fmacj.Tests.dll.mdb
 FMACJ_TESTS_DLL_MDB=$(BUILD_DIR)/Fmacj.Tests.dll.mdb
 RUNTIME_DLL=
 FRAMEWORK_DLL=
 EMITTER_DLL=
+COMPONENTS_TASKCLIENT_DLL=
 
 endif
 
@@ -50,7 +56,8 @@ COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../Core.Runtime/bin/Release/Runtime.dll \
 	../Core.Emitter/bin/Release/Emitter.dll \
-	../Core.Framework/bin/Release/Framework.dll
+	../Core.Framework/bin/Release/Framework.dll \
+	../Components.TaskClient/bin/Release/Components.TaskClient.dll
 BUILD_DIR = bin/Release
 
 FMACJ_CORE_RUNTIME_DLL=
@@ -60,6 +67,8 @@ FMACJ_CORE_RUNTIME_DLL_MDB=
 FMACJ_CORE_EMITTER_DLL=
 FMACJ_CORE_EMITTER_DLL_MDB=
 NUNIT_FRAMEWORK_DLL_SOURCE=../lib/nunit/nunit.framework.dll
+FMACJ_COMPONENTS_TASKCLIENT_DLL=
+FMACJ_COMPONENTS_TASKCLIENT_DLL_MDB=
 FMACJ_TESTS_DLL_MDB=
 RUNTIME_DLL_SOURCE=../Core.Runtime/bin/Release/Runtime.dll
 RUNTIME_DLL=$(BUILD_DIR)/Runtime.dll
@@ -67,6 +76,8 @@ FRAMEWORK_DLL_SOURCE=../Core.Framework/bin/Release/Framework.dll
 FRAMEWORK_DLL=$(BUILD_DIR)/Framework.dll
 EMITTER_DLL_SOURCE=../Core.Emitter/bin/Release/Emitter.dll
 EMITTER_DLL=$(BUILD_DIR)/Emitter.dll
+COMPONENTS_TASKCLIENT_DLL_SOURCE=../Components.TaskClient/bin/Release/Components.TaskClient.dll
+COMPONENTS_TASKCLIENT_DLL=$(BUILD_DIR)/Components.TaskClient.dll
 
 endif
 
@@ -81,10 +92,13 @@ PROGRAMFILES = \
 	$(FMACJ_CORE_EMITTER_DLL) \
 	$(FMACJ_CORE_EMITTER_DLL_MDB) \
 	$(NUNIT_FRAMEWORK_DLL) \
+	$(FMACJ_COMPONENTS_TASKCLIENT_DLL) \
+	$(FMACJ_COMPONENTS_TASKCLIENT_DLL_MDB) \
 	$(FMACJ_TESTS_DLL_MDB) \
 	$(RUNTIME_DLL) \
 	$(FRAMEWORK_DLL) \
-	$(EMITTER_DLL)  
+	$(EMITTER_DLL) \
+	$(COMPONENTS_TASKCLIENT_DLL)  
 
 
 RESGEN=resgen2
@@ -92,6 +106,7 @@ RESGEN=resgen2
 NUNIT_FRAMEWORK_DLL = $(BUILD_DIR)/nunit.framework.dll
 
 FILES =  \
+	Distribution/DistributionTest.cs \
 	EmittedCode/ChannelTest.cs \
 	EmittedCode/ChordTest.cs \
 	EmittedCode/DisposeTest.cs \
@@ -119,12 +134,13 @@ EXTRAS = \
 	Emitter 
 
 REFERENCES =  \
+	../Components.TaskClient/bin/Debug/Fmacj.Components.TaskClient.dll \
 	../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll \
 	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
 	../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.dll \
 	../lib/nunit/nunit.framework.dll \
 	System \
-	System.Core 
+	System.Core
 
 DLL_REFERENCES =  \
 	../lib/nunit/nunit.framework.dll
@@ -146,9 +162,12 @@ $(eval $(call emit-deploy-target,FMACJ_CORE_RUNTIME_DLL_MDB))
 $(eval $(call emit-deploy-target,FMACJ_CORE_EMITTER_DLL))
 $(eval $(call emit-deploy-target,FMACJ_CORE_EMITTER_DLL_MDB))
 $(eval $(call emit-deploy-target,NUNIT_FRAMEWORK_DLL))
+$(eval $(call emit-deploy-target,FMACJ_COMPONENTS_TASKCLIENT_DLL))
+$(eval $(call emit-deploy-target,FMACJ_COMPONENTS_TASKCLIENT_DLL_MDB))
 $(eval $(call emit-deploy-target,RUNTIME_DLL))
 $(eval $(call emit-deploy-target,FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,EMITTER_DLL))
+$(eval $(call emit-deploy-target,COMPONENTS_TASKCLIENT_DLL))
 
 
 $(eval $(call emit_resgen_targets))
@@ -177,10 +196,13 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(FMACJ_CORE_EMITTER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_CORE_EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(NUNIT_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_COMPONENTS_TASKCLIENT_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(FMACJ_COMPONENTS_TASKCLIENT_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_TESTS_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(EMITTER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(COMPONENTS_TASKCLIENT_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -195,10 +217,13 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(FMACJ_CORE_EMITTER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_CORE_EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(NUNIT_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_COMPONENTS_TASKCLIENT_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(FMACJ_COMPONENTS_TASKCLIENT_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_TESTS_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(EMITTER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(COMPONENTS_TASKCLIENT_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local

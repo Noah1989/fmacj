@@ -8,7 +8,6 @@
     <ProjectGuid>{FC815507-44D4-40B7-B46C-05A220A16EC7}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Fmacj.Executables.WorkClient</RootNamespace>
-    <AssemblyName>Executables.WorkClient</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -18,6 +17,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Fmacj.Executables.WorkClient</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -25,6 +25,7 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Executables.WorkClient</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

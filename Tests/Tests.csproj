@@ -43,6 +43,7 @@
     <Compile Include="Helpers\ThreadTimeout.cs" />
     <Compile Include="Emitter\TypeValidatorTest.cs" />
     <Compile Include="EmittedCode\DisposeTest.cs" />
+    <Compile Include="Distribution\DistributionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core.Runtime\Core.Runtime.csproj">
@@ -56,6 +57,10 @@
     <ProjectReference Include="..\Core.Framework\Core.Framework.csproj">
       <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
       <Name>Core.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Components.TaskClient\Components.TaskClient.csproj">
+      <Project>{9CA480C4-1248-466D-B437-16A292F2FD8F}</Project>
+      <Name>Components.TaskClient</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

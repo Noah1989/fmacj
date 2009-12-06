@@ -8,7 +8,6 @@
     <ProjectGuid>{539723D6-B87D-4E93-9F9E-BED5FCF8D329}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Fmacj.Executables.DistributionServer</RootNamespace>
-    <AssemblyName>Executables.DistributionServer</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -18,6 +17,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Fmacj.Executables.DistributionServer</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -25,6 +25,7 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AssemblyName>Executables.DistributionServer</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
