@@ -105,23 +105,23 @@ RESGEN=resgen2
 
 NUNIT_FRAMEWORK_DLL = $(BUILD_DIR)/nunit.framework.dll
 
-FILES = \
-	Properties/AssemblyInfo.cs \
+FILES =  \
+	Distribution/DistributionTest.cs \
+	EmittedCode/ChannelTest.cs \
+	EmittedCode/ChordTest.cs \
+	EmittedCode/DisposeTest.cs \
+	EmittedCode/EnumerableChannelTest.cs \
 	EmittedCode/ForkTest.cs \
 	EmittedCode/JoinTest.cs \
-	EmittedCode/YieldTest.cs \
-	EmittedCode/ChordTest.cs \
 	EmittedCode/ShortcutTest.cs \
-	EmittedCode/ChannelTest.cs \
-	Runtime/BusTest.cs \
-	Runtime/ChannelEnumerableTest.cs \
-	Helpers/ChannelResolver.cs \
-	EmittedCode/EnumerableChannelTest.cs \
+	EmittedCode/YieldTest.cs \
 	Emitter/ParallelizationFactoryTest.cs \
-	Helpers/ThreadTimeout.cs \
 	Emitter/TypeValidatorTest.cs \
-	EmittedCode/DisposeTest.cs \
-	Distribution/DistributionTest.cs 
+	Helpers/ChannelResolver.cs \
+	Helpers/ThreadTimeout.cs \
+	Properties/AssemblyInfo.cs \
+	Runtime/BusTest.cs \
+	Runtime/ChannelEnumerableTest.cs 
 
 DATA_FILES = 
 
@@ -134,6 +134,11 @@ EXTRAS = \
 	Emitter 
 
 REFERENCES =  \
+	../Components.TaskClient/bin/Debug/Fmacj.Components.TaskClient.dll \
+	../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll \
+	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
+	../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.dll \
+	../lib/nunit/nunit.framework.dll \
 	System \
 	System.Core
 

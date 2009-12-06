@@ -45,10 +45,12 @@ PROGRAMFILES = \
 RESGEN=resgen2
 
 
-FILES = \
+FILES =  \
 	AsynchronousAttribute.cs \
 	ChannelAttribute.cs \
 	ChordAttribute.cs \
+	Distribution/RemoteException.cs \
+	Distribution/TaskTicket.cs \
 	ForkAttribute.cs \
 	IChannelEnumerable.cs \
 	InconsistentChannelTypeException.cs \
@@ -61,12 +63,10 @@ FILES = \
 	ParallelException.cs \
 	ParallelizableAttribute.cs \
 	ParallelizationException.cs \
+	Properties/AssemblyInfo.cs \
 	TypeNotFoundException.cs \
 	TypeValidator.cs \
-	YieldAttribute.cs \
-	Properties/AssemblyInfo.cs \
-	Distribution/RemoteException.cs \
-	Distribution/TaskTicket.cs 
+	YieldAttribute.cs 
 
 DATA_FILES = 
 
@@ -74,8 +74,7 @@ RESOURCES =
 
 EXTRAS = 
 
-REFERENCES =  \
-	System
+REFERENCES = System
 
 DLL_REFERENCES = 
 

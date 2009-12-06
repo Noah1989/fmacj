@@ -49,7 +49,7 @@ RESGEN=resgen2
 
 RABBITMQ_CLIENT_DLL = $(BUILD_DIR)/RabbitMQ.Client.dll
 
-FILES = \
+FILES =  \
 	Program.cs \
 	Properties/AssemblyInfo.cs \
 	TaskServer.cs 
@@ -61,6 +61,7 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
+	../lib/rabbitmq/RabbitMQ.Client.dll \
 	System
 
 DLL_REFERENCES =  \

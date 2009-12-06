@@ -59,7 +59,7 @@ PROGRAMFILES = \
 RESGEN=resgen2
 
 
-FILES = \
+FILES =  \
 	Program.cs \
 	Properties/AssemblyInfo.cs 
 
@@ -70,6 +70,7 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
+	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
 	System
 
 DLL_REFERENCES = 
