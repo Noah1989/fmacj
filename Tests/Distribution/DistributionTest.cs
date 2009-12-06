@@ -23,7 +23,7 @@ using NUnit.Framework;
 using Fmacj.Core.Framework;
 using Fmacj.Components.TaskClient;
 
-namespace Fmacj.Tests
+namespace Fmacj.Tests.Distribution
 {
     [TestFixture]
 	public class DistributionTest : AssertionHelper

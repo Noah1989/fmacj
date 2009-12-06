@@ -18,7 +18,7 @@
 
 using System;
 
-namespace Fmacj.Framework.Distribution
+namespace Fmacj.Core.Framework.Distribution
 {
 	public class RemoteException : Exception
 	{
