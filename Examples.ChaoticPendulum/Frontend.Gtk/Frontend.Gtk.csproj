@@ -8,6 +8,7 @@
     <ProjectGuid>{C344C1E1-C0BF-458D-93B6-38F9415E6424}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AssemblyName>ChaoticPendulum.Frontend.Gtk</AssemblyName>
+    <RootNamespace>ChaoticPendulum.Frontend.Gtk</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -78,13 +79,13 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <ProjectReference Include="..\ChaoticPendulum.Core\ChaoticPendulum.Core.csproj">
+    <ProjectReference Include="..\Core\Core.csproj">
       <Project>{11D9C1A3-0E53-4A7E-B7E7-3B90BCC11056}</Project>
-      <Name>ChaoticPendulum.Core</Name>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ChaoticPendulum.Visualization\ChaoticPendulum.Visualization.csproj">
+    <ProjectReference Include="..\Visualization\Visualization.csproj">
       <Project>{A696CD13-E11C-4E87-9127-AAFE98B608C6}</Project>
-      <Name>ChaoticPendulum.Visualization</Name>
+      <Name>Visualization</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

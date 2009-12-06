@@ -1,11 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChaoticPendulum.Core", "ChaoticPendulum.Core\ChaoticPendulum.Core.csproj", "{11D9C1A3-0E53-4A7E-B7E7-3B90BCC11056}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{11D9C1A3-0E53-4A7E-B7E7-3B90BCC11056}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChaoticPendulum.Frontend.Gtk", "ChaoticPendulum.Frontend.Gtk\ChaoticPendulum.Frontend.Gtk.csproj", "{C344C1E1-C0BF-458D-93B6-38F9415E6424}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visualization", "Visualization\Visualization.csproj", "{A696CD13-E11C-4E87-9127-AAFE98B608C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChaoticPendulum.Visualization", "ChaoticPendulum.Visualization\ChaoticPendulum.Visualization.csproj", "{A696CD13-E11C-4E87-9127-AAFE98B608C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frontend.Gtk", "Frontend.Gtk\Frontend.Gtk.csproj", "{C344C1E1-C0BF-458D-93B6-38F9415E6424}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "ChaoticPendulum.Core\Core.csproj", "{11D9C1A3-0E53-4A7E-B7E7-3B90BCC11056}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frontend.Gtk", "ChaoticPendulum.Frontend.Gtk\Frontend.Gtk.csproj", "{C344C1E1-C0BF-458D-93B6-38F9415E6424}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visualization", "ChaoticPendulum.Visualization\Visualization.csproj", "{A696CD13-E11C-4E87-9127-AAFE98B608C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,9 +31,21 @@ Global
 		{C344C1E1-C0BF-458D-93B6-38F9415E6424}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C344C1E1-C0BF-458D-93B6-38F9415E6424}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C344C1E1-C0BF-458D-93B6-38F9415E6424}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11D9C1A3-0E53-4A7E-B7E7-3B90BCC11056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11D9C1A3-0E53-4A7E-B7E7-3B90BCC11056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11D9C1A3-0E53-4A7E-B7E7-3B90BCC11056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11D9C1A3-0E53-4A7E-B7E7-3B90BCC11056}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A696CD13-E11C-4E87-9127-AAFE98B608C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A696CD13-E11C-4E87-9127-AAFE98B608C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A696CD13-E11C-4E87-9127-AAFE98B608C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A696CD13-E11C-4E87-9127-AAFE98B608C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C344C1E1-C0BF-458D-93B6-38F9415E6424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C344C1E1-C0BF-458D-93B6-38F9415E6424}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C344C1E1-C0BF-458D-93B6-38F9415E6424}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C344C1E1-C0BF-458D-93B6-38F9415E6424}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		version = 0.1
-		StartupItem = ChaoticPendulum.Core\ChaoticPendulum.Core.csproj
+		StartupItem = Core\Core.csproj
 	EndGlobalSection
 EndGlobal

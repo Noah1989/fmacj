@@ -5,9 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A696CD13-E11C-4E87-9127-AAFE98B608C6}</ProjectGuid>
+    <ProjectGuid>{11D9C1A3-0E53-4A7E-B7E7-3B90BCC11056}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>ChaoticPendulum.Visualization</AssemblyName>
+    <AssemblyName>ChaoticPendulum.Core</AssemblyName>
+    <RootNamespace>ChaoticPendulum.Core</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -16,7 +17,7 @@
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>3</WarningLevel>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -27,21 +28,21 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="TrajectoryGraph.cs" />
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ChaoticPendulum.Core\ChaoticPendulum.Core.csproj">
-      <Project>{11D9C1A3-0E53-4A7E-B7E7-3B90BCC11056}</Project>
-      <Name>ChaoticPendulum.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Drawing" />
+    <Compile Include="Particle.cs" />
+    <Compile Include="Vector2D.cs" />
+    <Compile Include="Attractor.cs" />
+    <Compile Include="AttractorSet.cs" />
+    <Compile Include="Pendulum.cs" />
+    <Compile Include="Friction.cs" />
+    <Compile Include="FluidFriction.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
       <Properties InternalTargetFrameworkVersion="3.5">
-        <Deployment.LinuxDeployData generatePcFile="false" />
+        <Deployment.LinuxDeployData generateScript="false" generatePcFile="false" />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile" SyncReferences="true">
           <BuildFilesVar Sync="true" Name="FILES" />
           <DeployFilesVar />

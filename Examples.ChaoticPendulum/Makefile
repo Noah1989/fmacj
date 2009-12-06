@@ -12,10 +12,10 @@ include $(top_srcdir)/rules.make
 
 #Warning: This is an automatically generated file, do not edit!
 ifeq ($(CONFIG),DEBUG)
- SUBDIRS =  ChaoticPendulum.Core ChaoticPendulum.Visualization ChaoticPendulum.Frontend.Gtk
+ SUBDIRS =  Core Visualization Frontend.Gtk
 endif
 ifeq ($(CONFIG),RELEASE)
- SUBDIRS =  ChaoticPendulum.Core ChaoticPendulum.Visualization ChaoticPendulum.Frontend.Gtk
+ SUBDIRS =  Core Visualization Frontend.Gtk
 endif
 
 
