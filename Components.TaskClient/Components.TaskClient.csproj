@@ -5,9 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2A0BA69A-D98B-4F1F-A112-55BFFFBF3E32}</ProjectGuid>
+    <ProjectGuid>{9CA480C4-1248-466D-B437-16A292F2FD8F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Fmacj.Components.TaskClient</RootNamespace>
+    <AssemblyName>Components.TaskClient</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -17,7 +18,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AssemblyName>Fmacj.Components.TaskClient</AssemblyName>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -25,37 +26,23 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AssemblyName>Components.TaskClient</AssemblyName>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="TaskClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core.Framework\Core.Framework.csproj">
-      <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
-      <Name>Core.Framework</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Core" />
-    <Reference Include="System" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties InternalTargetFrameworkVersion="3.5">
-        <Deployment.LinuxDeployData generatePcFile="false" />
-        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile" SyncReferences="true">
-          <BuildFilesVar Sync="true" Name="FILES" />
-          <DeployFilesVar />
-          <ResourcesVar Sync="true" Name="RESOURCES" />
-          <OthersVar />
-          <GacRefVar Sync="true" Name="REFERENCES" />
-          <AsmRefVar Sync="true" Name="REFERENCES" />
-          <ProjectRefVar Sync="true" Name="REFERENCES" />
-        </MonoDevelop.Autotools.MakefileInfo>
-      </Properties>
+      <Properties InternalTargetFrameworkVersion="3.5" xmlns="" />
     </MonoDevelop>
   </ProjectExtensions>
 </Project>

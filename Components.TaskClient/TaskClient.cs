@@ -19,7 +19,6 @@
 using System;
 using System.IO;
 using System.Reflection;
-using Fmacj.Core.Framework;
 
 namespace Fmacj.Components.TaskClient
 {	
