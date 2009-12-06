@@ -41,13 +41,9 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 PROGRAMFILES = \
 	$(FMACJ_EXECUTABLES_WORKCLIENT_EXE_MDB)  
 
-BINARIES = \
-	$(EXECUTABLES_WORKCLIENT)  
-
 
 RESGEN=resgen2
 
-EXECUTABLES_WORKCLIENT = $(BUILD_DIR)/executables.workclient
 
 FILES = \
 	Program.cs \
@@ -58,25 +54,23 @@ DATA_FILES =
 RESOURCES = 
 
 EXTRAS = \
-	Properties \
-	executables.workclient.in 
+	Properties 
 
 REFERENCES =  \
 	System
 
 DLL_REFERENCES = 
 
-CLEANFILES = $(PROGRAMFILES) $(BINARIES) 
+CLEANFILES = $(PROGRAMFILES) 
 
 #Targets
-all: $(ASSEMBLY) $(PROGRAMFILES) $(BINARIES)  $(top_srcdir)/config.make
+all: $(ASSEMBLY) $(PROGRAMFILES)  $(top_srcdir)/config.make
 
 include $(top_srcdir)/Makefile.include
 #include $(srcdir)/custom-hooks.make
 
 
 
-$(eval $(call emit-deploy-wrapper,EXECUTABLES_WORKCLIENT,executables.workclient,x))
 
 
 $(eval $(call emit_resgen_targets))
@@ -99,8 +93,6 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_EXECUTABLES_WORKCLIENT_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	mkdir -p '$(DESTDIR)$(bindir)'
-	$(call cp,$(EXECUTABLES_WORKCLIENT),$(DESTDIR)$(bindir))
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -109,7 +101,6 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_EXECUTABLES_WORKCLIENT_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(EXECUTABLES_WORKCLIENT),$(DESTDIR)$(bindir))
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local

@@ -44,14 +44,10 @@ PROGRAMFILES = \
 	$(RABBITMQ_CLIENT_DLL) \
 	$(FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB)  
 
-BINARIES = \
-	$(EXECUTABLES_DISTRIBUTIONSERVER)  
-
 
 RESGEN=resgen2
 
 RABBITMQ_CLIENT_DLL = $(BUILD_DIR)/RabbitMQ.Client.dll
-EXECUTABLES_DISTRIBUTIONSERVER = $(BUILD_DIR)/executables.distributionserver
 
 FILES = \
 	Properties/AssemblyInfo.cs \
@@ -62,8 +58,7 @@ DATA_FILES =
 
 RESOURCES = 
 
-EXTRAS = \
-	executables.distributionserver.in 
+EXTRAS = 
 
 REFERENCES =  \
 	System
@@ -71,10 +66,10 @@ REFERENCES =  \
 DLL_REFERENCES =  \
 	../lib/rabbitmq/RabbitMQ.Client.dll
 
-CLEANFILES = $(PROGRAMFILES) $(BINARIES) 
+CLEANFILES = $(PROGRAMFILES) 
 
 #Targets
-all: $(ASSEMBLY) $(PROGRAMFILES) $(BINARIES)  $(top_srcdir)/config.make
+all: $(ASSEMBLY) $(PROGRAMFILES)  $(top_srcdir)/config.make
 
 include $(top_srcdir)/Makefile.include
 #include $(srcdir)/custom-hooks.make
@@ -82,7 +77,6 @@ include $(top_srcdir)/Makefile.include
 
 
 $(eval $(call emit-deploy-target,RABBITMQ_CLIENT_DLL))
-$(eval $(call emit-deploy-wrapper,EXECUTABLES_DISTRIBUTIONSERVER,executables.distributionserver,x))
 
 
 $(eval $(call emit_resgen_targets))
@@ -106,8 +100,6 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(RABBITMQ_CLIENT_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	mkdir -p '$(DESTDIR)$(bindir)'
-	$(call cp,$(EXECUTABLES_DISTRIBUTIONSERVER),$(DESTDIR)$(bindir))
 	make post-install-local-hook prefix=$(prefix)
 
 uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
@@ -117,7 +109,6 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(RABBITMQ_CLIENT_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(EXECUTABLES_DISTRIBUTIONSERVER),$(DESTDIR)$(bindir))
 	make post-uninstall-local-hook prefix=$(prefix)
 
 install: install-local

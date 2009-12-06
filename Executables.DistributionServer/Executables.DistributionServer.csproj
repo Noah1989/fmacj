@@ -40,4 +40,11 @@
     <Compile Include="TaskServer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Deployment.LinuxDeployData generateScript="false" />
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>
