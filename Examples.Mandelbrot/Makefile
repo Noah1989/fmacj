@@ -73,7 +73,7 @@ PROGRAMFILES = \
 RESGEN=resgen2
 
 
-FILES = \
+FILES =  \
 	Main.cs \
 	Mandelbrot.cs \
 	Properties/AssemblyInfo.cs 
@@ -85,9 +85,11 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
-	System.Drawing \
+	../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll \
+	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
+	System \
 	System.Core \
-	System
+	System.Drawing
 
 DLL_REFERENCES = 
 
