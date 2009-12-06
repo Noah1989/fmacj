@@ -21,16 +21,10 @@ BUILD_DIR = bin/Debug
 
 FMACJ_CORE_FRAMEWORK_DLL_SOURCE=../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll
 FMACJ_CORE_FRAMEWORK_DLL=$(BUILD_DIR)/Fmacj.Core.Framework.dll
-FMACJ_CORE_FRAMEWORK_DLL_MDB_SOURCE=../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll.mdb
-FMACJ_CORE_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Framework.dll.mdb
 FMACJ_CORE_EMITTER_DLL_SOURCE=../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll
 FMACJ_CORE_EMITTER_DLL=$(BUILD_DIR)/Fmacj.Core.Emitter.dll
 FMACJ_CORE_RUNTIME_DLL_SOURCE=../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.dll
 FMACJ_CORE_RUNTIME_DLL=$(BUILD_DIR)/Fmacj.Core.Runtime.dll
-FMACJ_CORE_RUNTIME_DLL_MDB_SOURCE=../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.dll.mdb
-FMACJ_CORE_RUNTIME_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Runtime.dll.mdb
-FMACJ_CORE_EMITTER_DLL_MDB_SOURCE=../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll.mdb
-FMACJ_CORE_EMITTER_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Emitter.dll.mdb
 FMACJ_EXAMPLES_MANDELBROT_EXE_MDB_SOURCE=bin/Debug/Fmacj.Examples.Mandelbrot.exe.mdb
 FMACJ_EXAMPLES_MANDELBROT_EXE_MDB=$(BUILD_DIR)/Fmacj.Examples.Mandelbrot.exe.mdb
 FRAMEWORK_DLL=
@@ -51,11 +45,8 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = bin/Release
 
 FMACJ_CORE_FRAMEWORK_DLL=
-FMACJ_CORE_FRAMEWORK_DLL_MDB=
 FMACJ_CORE_EMITTER_DLL=
 FMACJ_CORE_RUNTIME_DLL=
-FMACJ_CORE_RUNTIME_DLL_MDB=
-FMACJ_CORE_EMITTER_DLL_MDB=
 FMACJ_EXAMPLES_MANDELBROT_EXE_MDB=
 FRAMEWORK_DLL_SOURCE=../Core.Framework/bin/Release/Framework.dll
 FRAMEWORK_DLL=$(BUILD_DIR)/Framework.dll
@@ -71,11 +62,8 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(FMACJ_CORE_FRAMEWORK_DLL) \
-	$(FMACJ_CORE_FRAMEWORK_DLL_MDB) \
 	$(FMACJ_CORE_EMITTER_DLL) \
 	$(FMACJ_CORE_RUNTIME_DLL) \
-	$(FMACJ_CORE_RUNTIME_DLL_MDB) \
-	$(FMACJ_CORE_EMITTER_DLL_MDB) \
 	$(FMACJ_EXAMPLES_MANDELBROT_EXE_MDB) \
 	$(FRAMEWORK_DLL) \
 	$(EMITTER_DLL) \
@@ -85,7 +73,7 @@ PROGRAMFILES = \
 RESGEN=resgen2
 
 
-FILES =  \
+FILES = \
 	Main.cs \
 	Mandelbrot.cs \
 	Properties/AssemblyInfo.cs 
@@ -97,11 +85,9 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
-	../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll \
-	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
-	System \
+	System.Drawing \
 	System.Core \
-	System.Drawing
+	System
 
 DLL_REFERENCES = 
 
@@ -116,11 +102,8 @@ include $(top_srcdir)/Makefile.include
 
 
 $(eval $(call emit-deploy-target,FMACJ_CORE_FRAMEWORK_DLL))
-$(eval $(call emit-deploy-target,FMACJ_CORE_FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-target,FMACJ_CORE_EMITTER_DLL))
 $(eval $(call emit-deploy-target,FMACJ_CORE_RUNTIME_DLL))
-$(eval $(call emit-deploy-target,FMACJ_CORE_RUNTIME_DLL_MDB))
-$(eval $(call emit-deploy-target,FMACJ_CORE_EMITTER_DLL_MDB))
 $(eval $(call emit-deploy-target,FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,EMITTER_DLL))
 $(eval $(call emit-deploy-target,RUNTIME_DLL))
@@ -146,11 +129,8 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_CORE_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(FMACJ_CORE_FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_CORE_EMITTER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_CORE_RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(FMACJ_CORE_RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(FMACJ_CORE_EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_EXAMPLES_MANDELBROT_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(EMITTER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
@@ -163,11 +143,8 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_CORE_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(FMACJ_CORE_FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_CORE_EMITTER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_CORE_RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(FMACJ_CORE_RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(FMACJ_CORE_EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_EXAMPLES_MANDELBROT_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(EMITTER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))

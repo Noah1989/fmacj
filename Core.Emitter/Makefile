@@ -23,10 +23,6 @@ FMACJ_CORE_RUNTIME_DLL_SOURCE=../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.dll
 FMACJ_CORE_RUNTIME_DLL=$(BUILD_DIR)/Fmacj.Core.Runtime.dll
 FMACJ_CORE_FRAMEWORK_DLL_SOURCE=../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll
 FMACJ_CORE_FRAMEWORK_DLL=$(BUILD_DIR)/Fmacj.Core.Framework.dll
-FMACJ_CORE_FRAMEWORK_DLL_MDB_SOURCE=../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll.mdb
-FMACJ_CORE_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Framework.dll.mdb
-FMACJ_CORE_RUNTIME_DLL_MDB_SOURCE=../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.dll.mdb
-FMACJ_CORE_RUNTIME_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Runtime.dll.mdb
 FMACJ_CORE_EMITTER_DLL_MDB_SOURCE=bin/Debug/Fmacj.Core.Emitter.dll.mdb
 FMACJ_CORE_EMITTER_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Emitter.dll.mdb
 RUNTIME_DLL=
@@ -47,8 +43,6 @@ BUILD_DIR = bin/Release
 
 FMACJ_CORE_RUNTIME_DLL=
 FMACJ_CORE_FRAMEWORK_DLL=
-FMACJ_CORE_FRAMEWORK_DLL_MDB=
-FMACJ_CORE_RUNTIME_DLL_MDB=
 FMACJ_CORE_EMITTER_DLL_MDB=
 RUNTIME_DLL_SOURCE=../Core.Runtime/bin/Release/Runtime.dll
 RUNTIME_DLL=$(BUILD_DIR)/Runtime.dll
@@ -63,8 +57,6 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 PROGRAMFILES = \
 	$(FMACJ_CORE_RUNTIME_DLL) \
 	$(FMACJ_CORE_FRAMEWORK_DLL) \
-	$(FMACJ_CORE_FRAMEWORK_DLL_MDB) \
-	$(FMACJ_CORE_RUNTIME_DLL_MDB) \
 	$(FMACJ_CORE_EMITTER_DLL_MDB) \
 	$(RUNTIME_DLL) \
 	$(FRAMEWORK_DLL)  
@@ -73,7 +65,7 @@ PROGRAMFILES = \
 RESGEN=resgen2
 
 
-FILES =  \
+FILES = \
 	AssemblyParallelizer.cs \
 	ChannelImplementer.cs \
 	ChordImplementer.cs \
@@ -85,15 +77,15 @@ FILES =  \
 	JoinGroup.cs \
 	JoinImplementer.cs \
 	ParallelizationFactory.cs \
-	Properties/AssemblyInfo.cs \
+	TypeParallelizer.cs \
+	YieldImplementer.cs \
+	YieldInfo.cs \
 	TypeAnalyzer/TypeAnalyzer.Chord.cs \
 	TypeAnalyzer/TypeAnalyzer.cs \
 	TypeAnalyzer/TypeAnalyzer.Fork.cs \
 	TypeAnalyzer/TypeAnalyzer.Join.cs \
 	TypeAnalyzer/TypeAnalyzer.Yield.cs \
-	TypeParallelizer.cs \
-	YieldImplementer.cs \
-	YieldInfo.cs 
+	Properties/AssemblyInfo.cs 
 
 DATA_FILES = 
 
@@ -102,8 +94,6 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
-	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
-	../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.dll \
 	System
 
 DLL_REFERENCES = 
@@ -120,8 +110,6 @@ include $(top_srcdir)/Makefile.include
 
 $(eval $(call emit-deploy-target,FMACJ_CORE_RUNTIME_DLL))
 $(eval $(call emit-deploy-target,FMACJ_CORE_FRAMEWORK_DLL))
-$(eval $(call emit-deploy-target,FMACJ_CORE_FRAMEWORK_DLL_MDB))
-$(eval $(call emit-deploy-target,FMACJ_CORE_RUNTIME_DLL_MDB))
 $(eval $(call emit-deploy-target,RUNTIME_DLL))
 $(eval $(call emit-deploy-target,FRAMEWORK_DLL))
 
@@ -147,8 +135,6 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_CORE_RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_CORE_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(FMACJ_CORE_FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(FMACJ_CORE_RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_CORE_EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
@@ -161,8 +147,6 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_CORE_RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_CORE_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(FMACJ_CORE_FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(FMACJ_CORE_RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_CORE_EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))

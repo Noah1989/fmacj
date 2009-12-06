@@ -43,13 +43,8 @@
     <Compile Include="Helpers\ThreadTimeout.cs" />
     <Compile Include="Emitter\TypeValidatorTest.cs" />
     <Compile Include="EmittedCode\DisposeTest.cs" />
-    <Compile Include="Distribution\DistributionTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Components.TaskClient\Components.TaskClient.csproj">
-      <Project>{2A0BA69A-D98B-4F1F-A112-55BFFFBF3E32}</Project>
-      <Name>Components.TaskClient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Core.Runtime\Core.Runtime.csproj">
       <Project>{16351C71-CBD2-44FE-A6A1-61065464C732}</Project>
       <Name>Core.Runtime</Name>

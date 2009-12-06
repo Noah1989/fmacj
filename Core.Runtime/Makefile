@@ -20,8 +20,6 @@ BUILD_DIR = bin/Debug
 
 FMACJ_CORE_FRAMEWORK_DLL_SOURCE=../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll
 FMACJ_CORE_FRAMEWORK_DLL=$(BUILD_DIR)/Fmacj.Core.Framework.dll
-FMACJ_CORE_FRAMEWORK_DLL_MDB_SOURCE=../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll.mdb
-FMACJ_CORE_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Framework.dll.mdb
 FMACJ_CORE_RUNTIME_DLL_MDB_SOURCE=bin/Debug/Fmacj.Core.Runtime.dll.mdb
 FMACJ_CORE_RUNTIME_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Runtime.dll.mdb
 FRAMEWORK_DLL=
@@ -39,7 +37,6 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = bin/Release
 
 FMACJ_CORE_FRAMEWORK_DLL=
-FMACJ_CORE_FRAMEWORK_DLL_MDB=
 FMACJ_CORE_RUNTIME_DLL_MDB=
 FRAMEWORK_DLL_SOURCE=../Core.Framework/bin/Release/Framework.dll
 FRAMEWORK_DLL=$(BUILD_DIR)/Framework.dll
@@ -51,7 +48,6 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(FMACJ_CORE_FRAMEWORK_DLL) \
-	$(FMACJ_CORE_FRAMEWORK_DLL_MDB) \
 	$(FMACJ_CORE_RUNTIME_DLL_MDB) \
 	$(FRAMEWORK_DLL)  
 
@@ -59,7 +55,7 @@ PROGRAMFILES = \
 RESGEN=resgen2
 
 
-FILES =  \
+FILES = \
 	Bus.cs \
 	Channel.cs \
 	ChannelEnumerable.cs \
@@ -76,7 +72,6 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
-	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
 	System
 
 DLL_REFERENCES = 
@@ -92,7 +87,6 @@ include $(top_srcdir)/Makefile.include
 
 
 $(eval $(call emit-deploy-target,FMACJ_CORE_FRAMEWORK_DLL))
-$(eval $(call emit-deploy-target,FMACJ_CORE_FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-target,FRAMEWORK_DLL))
 
 
@@ -116,7 +110,6 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_CORE_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(FMACJ_CORE_FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_CORE_RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-install-local-hook prefix=$(prefix)
@@ -127,7 +120,6 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_CORE_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(FMACJ_CORE_FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_CORE_RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-uninstall-local-hook prefix=$(prefix)

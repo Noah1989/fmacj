@@ -45,7 +45,7 @@ PROGRAMFILES = \
 RESGEN=resgen2
 
 
-FILES =  \
+FILES = \
 	AsynchronousAttribute.cs \
 	ChannelAttribute.cs \
 	ChordAttribute.cs \
@@ -62,11 +62,11 @@ FILES =  \
 	ParallelException.cs \
 	ParallelizableAttribute.cs \
 	ParallelizationException.cs \
-	Properties/AssemblyInfo.cs \
 	RemoteException.cs \
 	TypeNotFoundException.cs \
 	TypeValidator.cs \
-	YieldAttribute.cs 
+	YieldAttribute.cs \
+	Properties/AssemblyInfo.cs 
 
 DATA_FILES = 
 
@@ -74,7 +74,8 @@ RESOURCES =
 
 EXTRAS = 
 
-REFERENCES = System
+REFERENCES =  \
+	System
 
 DLL_REFERENCES = 
 
