@@ -20,12 +20,13 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading;
-using Fmacj.Emitter;
-using Fmacj.Framework;
-using Fmacj.Runtime;
+using Fmacj.Core.Emitter;
+using Fmacj.Core.Framework;
+using Fmacj.Core.Runtime;
+using Fmacj.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Fmacj.Tests
+namespace Fmacj.Tests.EmittedCode
 {
     [TestFixture]
     public class ChannelTest : AssertionHelper

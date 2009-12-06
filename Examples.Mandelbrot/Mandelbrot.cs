@@ -19,7 +19,7 @@
 using System;
 using System.Drawing;
 using System.Linq;
-using Fmacj.Framework;
+using Fmacj.Core.Framework;
 
 namespace Fmacj.Examples.Mandelbrot
 {

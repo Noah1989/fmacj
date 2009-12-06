@@ -20,9 +20,9 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using Fmacj.Framework;
+using Fmacj.Core.Framework;
 
-namespace Fmacj.Runtime.Network.Communication
+namespace Fmacj.Core.Runtime.Network.Communication
 {
 	public abstract class Server : IParallelizable
 	{		

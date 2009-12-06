@@ -20,7 +20,7 @@ using System;
 using System.Reflection;
 using System.Runtime.Serialization;
 
-namespace Fmacj.Runtime.Network.Communication
+namespace Fmacj.Core.Runtime.Network.Communication
 {	
 	[Serializable]
 	public class RunTaskRequest : Request

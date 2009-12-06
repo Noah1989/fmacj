@@ -6,7 +6,7 @@
 
 using System;
 
-namespace Framework
+namespace Fmacj.Core.Framework
 {
 	
 	

@@ -19,7 +19,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Fmacj.Runtime.Network.Communication
+namespace Fmacj.Core.Runtime.Network.Communication
 {	
 	[Serializable]
 	public class RegisterWorkClientRequest : Request

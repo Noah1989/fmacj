@@ -20,7 +20,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Fmacj.Framework
+namespace Fmacj.Core.Framework
 {	
 	public interface IChannelEnumerable : IEnumerable
 	{

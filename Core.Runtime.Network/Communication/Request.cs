@@ -22,7 +22,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 
-namespace Fmacj.Runtime.Network.Communication
+namespace Fmacj.Core.Runtime.Network.Communication
 {	
 	[Serializable]
 	public abstract class Request : ISerializable

@@ -21,14 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Runtime", "Core.Runtim
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Runtime.Network", "Core.Runtime.Network\Core.Runtime.Network.csproj", "{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Framework", "Framework\Core.Framework.csproj", "{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Runtime", "Runtime\Core.Runtime.csproj", "{16351C71-CBD2-44FE-A6A1-61065464C732}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Emitter", "Emitter\Core.Emitter.csproj", "{D3264B1D-ADEB-4DFC-BCDC-FF5CE6E701BC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runtime.Network", "Runtime.Network\Runtime.Network.csproj", "{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

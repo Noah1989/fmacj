@@ -19,8 +19,8 @@
 using System;
 using System.Reflection;
 using System.Collections.Generic;
-using Fmacj.Framework;
-using Fmacj.Runtime.Network.Communication;
+using Fmacj.Core.Framework;
+using Fmacj.Core.Runtime.Network.Communication;
 
 namespace Fmacj.Executables.DistributionServer
 {	

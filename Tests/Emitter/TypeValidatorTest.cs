@@ -17,11 +17,11 @@
 */
 
 using System.Runtime.Serialization;
-using Fmacj.Framework;
+using Fmacj.Core.Framework;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 
-namespace Fmacj.Tests
+namespace Fmacj.Tests.Emitter
 {
     [TestFixture]
     public class TypeValidatorTest : AssertionHelper

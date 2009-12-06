@@ -20,7 +20,7 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Fmacj.Emitter
+namespace Fmacj.Core.Emitter
 {
     internal class TypeParallelizer
     {

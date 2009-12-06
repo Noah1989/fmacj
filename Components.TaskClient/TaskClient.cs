@@ -19,8 +19,8 @@
 using System;
 using System.IO;
 using System.Reflection;
-using Fmacj.Framework;
-using Fmacj.Runtime.Network.Communication;
+using Fmacj.Core.Framework;
+using Fmacj.Core.Runtime.Network.Communication;
 
 namespace Fmacj.Components.TaskClient
 {	

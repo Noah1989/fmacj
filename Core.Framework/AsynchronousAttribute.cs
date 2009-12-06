@@ -18,7 +18,7 @@
 
 using System;
 
-namespace Fmacj.Framework
+namespace Fmacj.Core.Framework
 {
     [AttributeUsage(
         AttributeTargets.Method,

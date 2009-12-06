@@ -20,9 +20,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading;
-using Fmacj.Framework;
+using Fmacj.Core.Framework;
 
-namespace Fmacj.Runtime
+namespace Fmacj.Core.Runtime
 {
     public class Bus
     {

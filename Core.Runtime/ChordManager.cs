@@ -22,7 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace Fmacj.Runtime
+namespace Fmacj.Core.Runtime
 {
     public static class ChordManager
     {

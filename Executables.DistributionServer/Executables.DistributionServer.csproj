@@ -7,6 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A7E4ABB9-71CE-4D8C-AF2F-5CE97F7EE0E8}</ProjectGuid>
     <OutputType>Exe</OutputType>
+    <RootNamespace>Fmacj.Executables.DistributionServer</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

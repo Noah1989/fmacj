@@ -18,7 +18,7 @@
 
 using System;
 using System.Threading;
-using Fmacj.Emitter;
+using Fmacj.Core.Emitter;
 
 namespace Fmacj.Executables.DistributionServer
 {	

@@ -20,7 +20,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Fmacj.Runtime
+namespace Fmacj.Core.Runtime
 {	
 	internal class ChannelEnumerator<T> : IEnumerator<T>, IDisposable
 	{		

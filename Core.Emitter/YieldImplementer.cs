@@ -21,10 +21,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading;
-using Fmacj.Runtime;
-using Fmacj.Framework;
+using Fmacj.Core.Runtime;
+using Fmacj.Core.Framework;
 
-namespace Fmacj.Emitter
+namespace Fmacj.Core.Emitter
 {	
 	internal class YieldImplementer
 	{		

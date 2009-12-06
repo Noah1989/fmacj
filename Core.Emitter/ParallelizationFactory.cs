@@ -19,10 +19,10 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Fmacj.Emitter;
-using Fmacj.Framework;
+using Fmacj.Core.Emitter;
+using Fmacj.Core.Framework;
 
-namespace Fmacj.Emitter
+namespace Fmacj.Core.Emitter
 {
     public static class ParallelizationFactory 
     {

@@ -18,7 +18,7 @@
 
 using System;
 
-namespace Fmacj.Runtime
+namespace Fmacj.Core.Runtime
 {	
 	public class ChannelOptions
 	{

@@ -18,8 +18,8 @@
 
 using System;
 using System.IO;
-using Fmacj.Framework;
-using Fmacj.Runtime.Network.Communication;
+using Fmacj.Core.Framework;
+using Fmacj.Core.Runtime.Network.Communication;
 
 namespace Fmacj.Executables.WorkClient
 {	

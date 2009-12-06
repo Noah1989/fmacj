@@ -73,10 +73,10 @@ PROGRAMFILES = \
 RESGEN=resgen2
 
 
-FILES = \
+FILES =  \
 	Program.cs \
-	WorkClient.cs \
-	Properties/AssemblyInfo.cs 
+	Properties/AssemblyInfo.cs \
+	WorkClient.cs 
 
 DATA_FILES = 
 
@@ -85,6 +85,8 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
+	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
+	../Core.Runtime.Network/bin/Debug/Fmacj.Core.Runtime.Network.dll \
 	System
 
 DLL_REFERENCES = 

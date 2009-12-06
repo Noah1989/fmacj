@@ -19,9 +19,9 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Fmacj.Framework;
+using Fmacj.Core.Framework;
 
-namespace Fmacj.Emitter
+namespace Fmacj.Core.Emitter
 {
     internal struct ChordInfo
     {

@@ -99,11 +99,11 @@ PROGRAMFILES = \
 RESGEN=resgen2
 
 
-FILES = \
+FILES =  \
 	Program.cs \
+	Properties/AssemblyInfo.cs \
 	TaskServer.cs \
-	WorkServer.cs \
-	Properties/AssemblyInfo.cs 
+	WorkServer.cs 
 
 DATA_FILES = 
 
@@ -112,6 +112,9 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
+	../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll \
+	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
+	../Core.Runtime.Network/bin/Debug/Fmacj.Core.Runtime.Network.dll \
 	System
 
 DLL_REFERENCES = 

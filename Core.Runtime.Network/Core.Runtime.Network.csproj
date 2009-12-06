@@ -7,6 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B49AB1C5-62E4-431A-A1F1-1DE1255ACBD2}</ProjectGuid>
     <OutputType>Library</OutputType>
+    <RootNamespace>Fmacj.Core.Runtime.Network</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

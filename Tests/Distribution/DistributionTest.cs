@@ -20,7 +20,7 @@ using System;
 using System.IO;
 using System.Net.Sockets;
 using NUnit.Framework;
-using Fmacj.Framework;
+using Fmacj.Core.Framework;
 using Fmacj.Components.TaskClient;
 
 namespace Fmacj.Tests

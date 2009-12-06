@@ -19,9 +19,9 @@
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using Fmacj.Framework;
+using Fmacj.Core.Framework;
 
-namespace Fmacj.Emitter
+namespace Fmacj.Core.Emitter
 {
     internal class AssemblyParallelizer
     {

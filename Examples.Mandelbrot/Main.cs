@@ -18,7 +18,7 @@
 
 using System;
 using System.Drawing;
-using Fmacj.Emitter;
+using Fmacj.Core.Emitter;
 
 namespace Fmacj.Examples.Mandelbrot
 {

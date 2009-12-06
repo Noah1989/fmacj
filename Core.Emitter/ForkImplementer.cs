@@ -20,9 +20,9 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading;
-using Fmacj.Runtime;
+using Fmacj.Core.Runtime;
 
-namespace Fmacj.Emitter
+namespace Fmacj.Core.Emitter
 {
     internal class ForkImplementer
     {

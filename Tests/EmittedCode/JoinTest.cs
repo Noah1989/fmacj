@@ -18,11 +18,12 @@
 
 using System;
 using System.Threading;
-using Fmacj.Framework;
-using Fmacj.Emitter;
+using Fmacj.Core.Framework;
+using Fmacj.Core.Emitter;
+using Fmacj.Tests.Helpers;
 using NUnit.Framework;
 
-namespace Fmacj.Tests
+namespace Fmacj.Tests.EmittedCode
 {
     [TestFixture]
     public class JoinTest : AssertionHelper
