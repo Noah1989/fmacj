@@ -18,7 +18,8 @@ PROJECT_REFERENCES =  \
 	../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.dll \
 	../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll \
 	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
-	../Components.TaskClient/bin/Debug/Fmacj.Components.TaskClient.dll
+	../Components.TaskClient/bin/Debug/Fmacj.Components.TaskClient.dll \
+	../Components.TaskServer/bin/Debug/Components.TaskServer.dll
 BUILD_DIR = bin/Debug
 
 FMACJ_CORE_RUNTIME_DLL_SOURCE=../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.dll
@@ -31,12 +32,12 @@ FMACJ_CORE_RUNTIME_DLL_MDB_SOURCE=../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.d
 FMACJ_CORE_RUNTIME_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Runtime.dll.mdb
 FMACJ_CORE_EMITTER_DLL_SOURCE=../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll
 FMACJ_CORE_EMITTER_DLL=$(BUILD_DIR)/Fmacj.Core.Emitter.dll
-FMACJ_CORE_EMITTER_DLL_MDB_SOURCE=../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll.mdb
-FMACJ_CORE_EMITTER_DLL_MDB=$(BUILD_DIR)/Fmacj.Core.Emitter.dll.mdb
 FMACJ_COMPONENTS_TASKCLIENT_DLL_SOURCE=../Components.TaskClient/bin/Debug/Fmacj.Components.TaskClient.dll
 FMACJ_COMPONENTS_TASKCLIENT_DLL=$(BUILD_DIR)/Fmacj.Components.TaskClient.dll
 FMACJ_COMPONENTS_TASKCLIENT_DLL_MDB_SOURCE=../Components.TaskClient/bin/Debug/Fmacj.Components.TaskClient.dll.mdb
 FMACJ_COMPONENTS_TASKCLIENT_DLL_MDB=$(BUILD_DIR)/Fmacj.Components.TaskClient.dll.mdb
+COMPONENTS_TASKSERVER_DLL_SOURCE=../Components.TaskServer/bin/Debug/Components.TaskServer.dll
+RABBITMQ_CLIENT_DLL_SOURCE=../lib/rabbitmq/RabbitMQ.Client.dll
 NUNIT_FRAMEWORK_DLL_SOURCE=../lib/nunit/nunit.framework.dll
 FMACJ_TESTS_DLL_MDB_SOURCE=bin/Debug/Fmacj.Tests.dll.mdb
 FMACJ_TESTS_DLL_MDB=$(BUILD_DIR)/Fmacj.Tests.dll.mdb
@@ -57,7 +58,8 @@ PROJECT_REFERENCES =  \
 	../Core.Runtime/bin/Release/Runtime.dll \
 	../Core.Emitter/bin/Release/Emitter.dll \
 	../Core.Framework/bin/Release/Framework.dll \
-	../Components.TaskClient/bin/Release/Components.TaskClient.dll
+	../Components.TaskClient/bin/Release/Components.TaskClient.dll \
+	../Components.TaskServer/bin/Release/Components.TaskServer.dll
 BUILD_DIR = bin/Release
 
 FMACJ_CORE_RUNTIME_DLL=
@@ -65,9 +67,10 @@ FMACJ_CORE_FRAMEWORK_DLL=
 FMACJ_CORE_FRAMEWORK_DLL_MDB=
 FMACJ_CORE_RUNTIME_DLL_MDB=
 FMACJ_CORE_EMITTER_DLL=
-FMACJ_CORE_EMITTER_DLL_MDB=
 FMACJ_COMPONENTS_TASKCLIENT_DLL=
 FMACJ_COMPONENTS_TASKCLIENT_DLL_MDB=
+COMPONENTS_TASKSERVER_DLL_SOURCE=../Components.TaskServer/bin/Release/Components.TaskServer.dll
+RABBITMQ_CLIENT_DLL_SOURCE=../lib/rabbitmq/RabbitMQ.Client.dll
 NUNIT_FRAMEWORK_DLL_SOURCE=../lib/nunit/nunit.framework.dll
 FMACJ_TESTS_DLL_MDB=
 RUNTIME_DLL_SOURCE=../Core.Runtime/bin/Release/Runtime.dll
@@ -90,9 +93,10 @@ PROGRAMFILES = \
 	$(FMACJ_CORE_FRAMEWORK_DLL_MDB) \
 	$(FMACJ_CORE_RUNTIME_DLL_MDB) \
 	$(FMACJ_CORE_EMITTER_DLL) \
-	$(FMACJ_CORE_EMITTER_DLL_MDB) \
 	$(FMACJ_COMPONENTS_TASKCLIENT_DLL) \
 	$(FMACJ_COMPONENTS_TASKCLIENT_DLL_MDB) \
+	$(COMPONENTS_TASKSERVER_DLL) \
+	$(RABBITMQ_CLIENT_DLL) \
 	$(NUNIT_FRAMEWORK_DLL) \
 	$(FMACJ_TESTS_DLL_MDB) \
 	$(RUNTIME_DLL) \
@@ -103,25 +107,28 @@ PROGRAMFILES = \
 
 RESGEN=resgen2
 
+COMPONENTS_TASKSERVER_DLL = $(BUILD_DIR)/Components.TaskServer.dll
+RABBITMQ_CLIENT_DLL = $(BUILD_DIR)/RabbitMQ.Client.dll
 NUNIT_FRAMEWORK_DLL = $(BUILD_DIR)/nunit.framework.dll
 
-FILES =  \
-	Distribution/DistributionTest.cs \
-	EmittedCode/ChannelTest.cs \
-	EmittedCode/ChordTest.cs \
-	EmittedCode/DisposeTest.cs \
-	EmittedCode/EnumerableChannelTest.cs \
+FILES = \
+	Properties/AssemblyInfo.cs \
 	EmittedCode/ForkTest.cs \
 	EmittedCode/JoinTest.cs \
-	EmittedCode/ShortcutTest.cs \
 	EmittedCode/YieldTest.cs \
-	Emitter/ParallelizationFactoryTest.cs \
-	Emitter/TypeValidatorTest.cs \
-	Helpers/ChannelResolver.cs \
-	Helpers/ThreadTimeout.cs \
-	Properties/AssemblyInfo.cs \
+	EmittedCode/ChordTest.cs \
+	EmittedCode/ShortcutTest.cs \
+	EmittedCode/ChannelTest.cs \
 	Runtime/BusTest.cs \
-	Runtime/ChannelEnumerableTest.cs 
+	Runtime/ChannelEnumerableTest.cs \
+	Helpers/ChannelResolver.cs \
+	EmittedCode/EnumerableChannelTest.cs \
+	Emitter/ParallelizationFactoryTest.cs \
+	Helpers/ThreadTimeout.cs \
+	Emitter/TypeValidatorTest.cs \
+	EmittedCode/DisposeTest.cs \
+	Distribution/DistributionTest.cs \
+	TaskServer/TaskServerTest.cs 
 
 DATA_FILES = 
 
@@ -131,19 +138,16 @@ EXTRAS = \
 	EmittedCode \
 	Runtime \
 	Helpers \
-	Emitter 
+	Emitter \
+	TaskServer 
 
 REFERENCES =  \
-	../Components.TaskClient/bin/Debug/Fmacj.Components.TaskClient.dll \
-	../Core.Emitter/bin/Debug/Fmacj.Core.Emitter.dll \
-	../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
-	../Core.Runtime/bin/Debug/Fmacj.Core.Runtime.dll \
-	../lib/nunit/nunit.framework.dll \
 	System \
 	System.Core
 
 DLL_REFERENCES =  \
-	../lib/nunit/nunit.framework.dll
+	../lib/nunit/nunit.framework.dll \
+	../lib/rabbitmq/RabbitMQ.Client.dll
 
 CLEANFILES = $(PROGRAMFILES) 
 
@@ -160,9 +164,10 @@ $(eval $(call emit-deploy-target,FMACJ_CORE_FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,FMACJ_CORE_FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-target,FMACJ_CORE_RUNTIME_DLL_MDB))
 $(eval $(call emit-deploy-target,FMACJ_CORE_EMITTER_DLL))
-$(eval $(call emit-deploy-target,FMACJ_CORE_EMITTER_DLL_MDB))
 $(eval $(call emit-deploy-target,FMACJ_COMPONENTS_TASKCLIENT_DLL))
 $(eval $(call emit-deploy-target,FMACJ_COMPONENTS_TASKCLIENT_DLL_MDB))
+$(eval $(call emit-deploy-target,COMPONENTS_TASKSERVER_DLL))
+$(eval $(call emit-deploy-target,RABBITMQ_CLIENT_DLL))
 $(eval $(call emit-deploy-target,NUNIT_FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,RUNTIME_DLL))
 $(eval $(call emit-deploy-target,FRAMEWORK_DLL))
@@ -194,9 +199,10 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call cp,$(FMACJ_CORE_FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_CORE_RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_CORE_EMITTER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(FMACJ_CORE_EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_COMPONENTS_TASKCLIENT_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_COMPONENTS_TASKCLIENT_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(COMPONENTS_TASKSERVER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call cp,$(RABBITMQ_CLIENT_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(NUNIT_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_TESTS_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
@@ -215,9 +221,10 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	$(call rm,$(FMACJ_CORE_FRAMEWORK_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_CORE_RUNTIME_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_CORE_EMITTER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(FMACJ_CORE_EMITTER_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_COMPONENTS_TASKCLIENT_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_COMPONENTS_TASKCLIENT_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(COMPONENTS_TASKSERVER_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
+	$(call rm,$(RABBITMQ_CLIENT_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(NUNIT_FRAMEWORK_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_TESTS_DLL_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(RUNTIME_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))

@@ -63,4 +63,7 @@
       <Name>Core.Framework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Distribution\" />
+  </ItemGroup>
 </Project>

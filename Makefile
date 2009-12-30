@@ -12,10 +12,10 @@ include $(top_srcdir)/rules.make
 
 #Warning: This is an automatically generated file, do not edit!
 ifeq ($(CONFIG),DEBUG)
- SUBDIRS =  Core.Framework Core.Runtime Components.TaskClient Executables.DistributionServer Executables.WorkClient Core.Emitter Tests Examples.Mandelbrot
+ SUBDIRS =  Core.Framework Core.Runtime Components.TaskClient Executables.DistributionServer Executables.WorkClient Components.TaskServer Core.Emitter Tests Examples.Mandelbrot
 endif
 ifeq ($(CONFIG),RELEASE)
- SUBDIRS =  Core.Framework Core.Runtime Components.TaskClient Executables.DistributionServer Executables.WorkClient Core.Emitter Tests Examples.Mandelbrot
+ SUBDIRS =  Core.Framework Core.Runtime Components.TaskClient Executables.DistributionServer Executables.WorkClient Components.TaskServer Core.Emitter Tests Examples.Mandelbrot
 endif
 
 

@@ -17,15 +17,34 @@
 */
 
 using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using RabbitMQ.Client;
 using RabbitMQ.Client.MessagePatterns;
 
-namespace Fmacj.Executables.DistributionServer
+namespace Fmacj.Components.TaskServer
 {		
 	public class TaskServer : SimpleRpcServer
-	{		
+	{	
+		private BinaryFormatter formatter = new BinaryFormatter();
+		
 		public TaskServer(Subscription subscription) : base(subscription)
+		{			
+		}	
+
+		public override byte[] HandleSimpleCall(
+			bool isRedelivered, 
+		    IBasicProperties requestProperties,
+		    byte[] body,
+		    out IBasicProperties replyProperties)
 		{
+			replyProperties = this.m_subscription.Model.CreateBasicProperties();
 			
-		}		 
+			var requestStream = new MemoryStream(body);
+			var request = formatter.Deserialize(requestStream);
+		
+			throw new NotImplementedException();
+		}
+
 	}
 }

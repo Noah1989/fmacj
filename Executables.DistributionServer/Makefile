@@ -17,7 +17,6 @@ COMPILE_TARGET = exe
 PROJECT_REFERENCES = 
 BUILD_DIR = bin/Debug
 
-RABBITMQ_CLIENT_DLL_SOURCE=../lib/rabbitmq/RabbitMQ.Client.dll
 FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB_SOURCE=bin/Debug/Fmacj.Executables.DistributionServer.exe.mdb
 FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB=$(BUILD_DIR)/Fmacj.Executables.DistributionServer.exe.mdb
 
@@ -32,7 +31,6 @@ COMPILE_TARGET = exe
 PROJECT_REFERENCES = 
 BUILD_DIR = bin/Release
 
-RABBITMQ_CLIENT_DLL_SOURCE=../lib/rabbitmq/RabbitMQ.Client.dll
 FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB=
 
 endif
@@ -41,18 +39,15 @@ AL=al2
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
-	$(RABBITMQ_CLIENT_DLL) \
 	$(FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB)  
 
 
 RESGEN=resgen2
 
-RABBITMQ_CLIENT_DLL = $(BUILD_DIR)/RabbitMQ.Client.dll
 
 FILES = \
 	Properties/AssemblyInfo.cs \
-	Program.cs \
-	TaskServer.cs 
+	Program.cs 
 
 DATA_FILES = 
 
@@ -63,8 +58,7 @@ EXTRAS =
 REFERENCES =  \
 	System
 
-DLL_REFERENCES =  \
-	../lib/rabbitmq/RabbitMQ.Client.dll
+DLL_REFERENCES = 
 
 CLEANFILES = $(PROGRAMFILES) 
 
@@ -76,7 +70,6 @@ include $(top_srcdir)/Makefile.include
 
 
 
-$(eval $(call emit-deploy-target,RABBITMQ_CLIENT_DLL))
 
 
 $(eval $(call emit_resgen_targets))
@@ -98,7 +91,6 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	mkdir -p '$(DESTDIR)$(libdir)/$(PACKAGE)'
 	$(call cp,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call cp,$(RABBITMQ_CLIENT_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call cp,$(FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-install-local-hook prefix=$(prefix)
 
@@ -107,7 +99,6 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB)
 	make uninstall-satellite-assemblies prefix=$(prefix)
 	$(call rm,$(ASSEMBLY),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(ASSEMBLY_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
-	$(call rm,$(RABBITMQ_CLIENT_DLL),$(DESTDIR)$(libdir)/$(PACKAGE))
 	$(call rm,$(FMACJ_EXECUTABLES_DISTRIBUTIONSERVER_EXE_MDB),$(DESTDIR)$(libdir)/$(PACKAGE))
 	make post-uninstall-local-hook prefix=$(prefix)
 

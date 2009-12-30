@@ -50,6 +50,7 @@ FILES =  \
 	ChannelAttribute.cs \
 	ChordAttribute.cs \
 	Distribution/RemoteException.cs \
+	Distribution/TaskRequest.cs \
 	Distribution/TaskTicket.cs \
 	ForkAttribute.cs \
 	IChannelEnumerable.cs \
