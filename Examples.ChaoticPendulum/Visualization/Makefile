@@ -55,8 +55,7 @@ RESGEN=resgen2
 
 CHAOTICPENDULUM_CORE_DLL = $(BUILD_DIR)/ChaoticPendulum.Core.dll
 
-FILES = \
-	TrajectoryGraph.cs 
+FILES = TrajectoryGraph.cs 
 
 DATA_FILES = 
 
@@ -65,6 +64,7 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
+	../Core/bin/Debug/ChaoticPendulum.Core.dll \
 	System.Drawing
 
 DLL_REFERENCES = 

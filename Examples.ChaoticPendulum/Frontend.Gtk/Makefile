@@ -61,27 +61,28 @@ RESGEN=resgen2
 CHAOTICPENDULUM_CORE_DLL = $(BUILD_DIR)/ChaoticPendulum.Core.dll
 CHAOTICPENDULUM_VISUALIZATION_DLL = $(BUILD_DIR)/ChaoticPendulum.Visualization.dll
 
-FILES = \
+FILES =  \
+	AssemblyInfo.cs \
 	gtk-gui/generated.cs \
-	MainWindow.cs \
 	gtk-gui/MainWindow.cs \
 	Main.cs \
-	AssemblyInfo.cs 
+	MainWindow.cs 
 
 DATA_FILES = 
 
-RESOURCES = \
-	gtk-gui/gui.stetic 
+RESOURCES = gtk-gui/gui.stetic 
 
 EXTRAS = 
 
 REFERENCES =  \
-	System \
-	-pkg:gtk-sharp-2.0 \
-	-pkg:glib-sharp-2.0 \
-	-pkg:glade-sharp-2.0 \
+	../Core/bin/Debug/ChaoticPendulum.Core.dll \
+	../Visualization/bin/Debug/ChaoticPendulum.Visualization.dll \
 	Mono.Posix \
+	-pkg:glade-sharp-2.0 \
+	-pkg:glib-sharp-2.0 \
 	-pkg:gtk-dotnet-2.0 \
+	-pkg:gtk-sharp-2.0 \
+	System \
 	System.Drawing
 
 DLL_REFERENCES = 

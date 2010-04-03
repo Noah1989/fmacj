@@ -45,14 +45,15 @@ PROGRAMFILES = \
 RESGEN=resgen2
 
 
-FILES = \
-	Particle.cs \
-	Vector2D.cs \
+FILES =  \
 	Attractor.cs \
 	AttractorSet.cs \
-	Pendulum.cs \
+	FluidFriction.cs \
 	Friction.cs \
-	FluidFriction.cs 
+	Particle.cs \
+	Pendulum.cs \
+	SimulationMatrix.cs \
+	Vector2D.cs 
 
 DATA_FILES = 
 
@@ -61,6 +62,7 @@ RESOURCES =
 EXTRAS = 
 
 REFERENCES =  \
+	../../Core.Framework/bin/Debug/Fmacj.Core.Framework.dll \
 	System.Core
 
 DLL_REFERENCES = 

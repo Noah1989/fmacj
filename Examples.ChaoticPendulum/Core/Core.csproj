@@ -38,6 +38,7 @@
     <Compile Include="Pendulum.cs" />
     <Compile Include="Friction.cs" />
     <Compile Include="FluidFriction.cs" />
+    <Compile Include="SimulationMatrix.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -56,4 +57,10 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core.Framework\Core.Framework.csproj">
+      <Project>{C3A4C3E4-B54C-43C1-9ABB-1473FB1DBFEC}</Project>
+      <Name>Core.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

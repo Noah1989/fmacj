@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace ChaoticPendulum.Core
 {	
@@ -32,6 +33,17 @@ namespace ChaoticPendulum.Core
 		{
 			for (int i = 0; i < stepCount; i++)
 				Particle.Iterate(timeStep);
+		}
+		
+		public void SetTo(double x, double y)
+		{
+			Particle.Position = new Vector2D(x, y);
+			Particle.Velocity = Vector2D.ZeroVector;
+		}
+		
+		public int GetNearestAttracorIndex()
+		{
+			return Attractors.IndexOf(Attractors.OrderBy(a => (a.Position - Particle.Position).LengthSquared).First());
 		}
 		                  
 	}
