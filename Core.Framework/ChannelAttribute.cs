@@ -21,7 +21,7 @@ using System;
 namespace Fmacj.Core.Framework
 {
     [AttributeUsage(
-        AttributeTargets.Parameter,
+        AttributeTargets.Parameter | AttributeTargets.Method,
         AllowMultiple = false,
         Inherited = true)
     ]

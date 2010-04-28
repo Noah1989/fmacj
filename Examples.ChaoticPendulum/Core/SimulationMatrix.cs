@@ -4,16 +4,18 @@ using Fmacj.Core.Framework;
 
 namespace ChaoticPendulum.Core
 {	
-	public abstract class SimulationMatrix
+	[Parallelizable]
+	public abstract class SimulationMatrix : IParallelizable
 	{
-		protected class Row
+		public class Row
 		{
 			public int Y { get;set; }
 			public double realY { get; set; }			
 			public int[] Values { get; set; }
 		}
 		
-		private readonly int _width, _height;
+		public int Width { get; private set; } 
+		public int Height { get; private set; }
 		private readonly double _xMin, _xMax, _yMin, _yMax, _timeStep;
 		private readonly Func<Pendulum> _pendulumFactory;
 		
@@ -23,8 +25,8 @@ namespace ChaoticPendulum.Core
 		                        double timeStep,
 		                        Func<Pendulum> pendulumFactory)
 		{
-			_width = width;
-			_height = height;
+			Width = width;
+			Height = height;
 			_xMin = xMin;
 			_xMax = xMax;
 			_yMin = yMin;
@@ -43,10 +45,10 @@ namespace ChaoticPendulum.Core
 		
 		private IEnumerable<Row> InitRows()
 		{
-			for (int y = 0; y < _height; y++)
+			for (int y = 0; y < Height; y++)
 				yield return new Row { Y = y,
-									   realY = _yMin + (_yMax - _yMin )*y/_height,
-									   Values = new int[_width] };
+									   realY = _yMin + (_yMax - _yMin )*y/Height,
+									   Values = new int[Width] };
 		}
 		
 		[Chord]
@@ -57,28 +59,16 @@ namespace ChaoticPendulum.Core
 			var pendulum = _pendulumFactory.Invoke();
 			for (int x = 0; x < _width; x++)
 			{
-				double realX = _xMin + (_xMax - _xMin)*x/_width;
-				pendulum.SetTo(realX, row.Y);
+				double realX = _xMin + (_xMax - _xMin)*x/Width;
 				
+				pendulum.SetTo(realX, row.realY);
 				pendulum.Iterate(_timeStep, 1024);
 				
 				row.Values[x] = pendulum.GetNearestAttracorIndex();
 			}
 		}
 		
-		[Chord]
-		protected int[,] GetResult([Channel("calculatedRow", Enumerable = true)] IChannelEnumerable<Row> rows) 
-		{
-			var result = new int[_width, _height];
-			
-			foreach (var row in rows)
-				for (int x = 0; x < _width; x++)
-					result[x, row.Y] = row.Values[x];
-			
-			return result;
-		}
-		[Join]
-		public abstract int[,] GetResult();
-				
+		[Join, Channel("calculatedRow", Enumerable = true)]
+		public abstract IEnumerable<Row> GetRows();				
 	}
 }

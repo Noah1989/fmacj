@@ -8,7 +8,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/ChaoticPendulum.Frontend.Gtk.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="456 308">
+  <widget class="Gtk.Window" id="MainWindow" design-size="466 328">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Chaotic Pendulum</property>
     <property name="WindowPosition">CenterOnParent</property>
